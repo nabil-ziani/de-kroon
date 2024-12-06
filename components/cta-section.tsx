@@ -6,12 +6,14 @@ export default function CTASection() {
         <section className="py-24 bg-white">
             <div className="container mx-auto px-4">
                 <div className="max-w-6xl mx-auto">
-                    <div className="grid md:grid-cols-2 gap-8">
+                    <div className="grid md:grid-cols-2 gap-12">
                         {/* Donatie CTA */}
-                        <div className="bg-gradient-to-br from-crown to-crown/80 rounded-2xl p-8 md:p-12 text-white shadow-lg hover:shadow-xl transition-shadow">
+                        <div className="bg-gradient-to-br from-girl/90 to-girl/70 p-10 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                             <div className="flex flex-col h-full">
                                 <div className="mb-8">
-                                    <FaHandHoldingHeart className="w-12 h-12 mb-6" />
+                                    <div className="flex-shrink-0 w-16 h-16 bg-white/10 rounded-xl flex items-center justify-center mb-6">
+                                        <FaHandHoldingHeart className="w-8 h-8 text-white" />
+                                    </div>
                                     <h3 className="text-3xl font-bold mb-4">
                                         Steun Ons
                                     </h3>
@@ -23,7 +25,7 @@ export default function CTASection() {
                                 <div className="mt-auto">
                                     <Link
                                         href="/donatie"
-                                        className="inline-flex items-center bg-white text-crown px-6 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors uppercase tracking-wide text-sm"
+                                        className="inline-flex items-center bg-white text-girl px-6 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors uppercase tracking-wide text-sm"
                                     >
                                         Doneer nu
                                     </Link>
@@ -32,10 +34,12 @@ export default function CTASection() {
                         </div>
 
                         {/* Vrijwilliger CTA */}
-                        <div className="bg-gradient-to-br from-boy to-boy/80 rounded-2xl p-8 md:p-12 text-white shadow-lg hover:shadow-xl transition-shadow">
+                        <div className="bg-gradient-to-br from-boy/90 to-boy/70 p-10 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                             <div className="flex flex-col h-full">
                                 <div className="mb-8">
-                                    <FaUsers className="w-12 h-12 mb-6" />
+                                    <div className="flex-shrink-0 w-16 h-16 bg-white/10 rounded-xl flex items-center justify-center mb-6">
+                                        <FaUsers className="w-8 h-8 text-white" />
+                                    </div>
                                     <h3 className="text-3xl font-bold mb-4">
                                         Word Vrijwilliger
                                     </h3>
