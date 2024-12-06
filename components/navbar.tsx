@@ -10,7 +10,6 @@ export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
 
     const menuItems = [
-        { name: 'Home', href: '/' },
         { name: 'Over ons', href: '/over-ons' },
         { name: 'Onderwijs', href: '/onderwijs' },
         { name: 'Activiteiten', href: '/activiteiten' },
@@ -29,7 +28,7 @@ export default function Navbar() {
                     </Link>
 
                     {/* Desktop Menu */}
-                    <div className="hidden md:flex space-x-8">
+                    <div className="hidden md:flex items-center space-x-8">
                         {menuItems.map((item) => (
                             <Link
                                 key={item.name}

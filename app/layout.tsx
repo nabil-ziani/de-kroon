@@ -7,20 +7,18 @@ import Footer from "@/components/footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Moskee De Kroon",
-  description: "Een plek voor educatie, spiritualiteit en gemeenschap",
+  title: "De Kroon",
+  description: "Een plek voor educatie",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="nl">
       <body className={inter.className}>
         <Navbar />
-        <div className="pt-20">{children}</div>
+        <div className="pt-20">
+          {children}
+        </div>
         <Footer />
       </body>
     </html>
