@@ -40,7 +40,7 @@ export default function CourseSection() {
                 {courses.map((course) => (
                     <div
                         key={course.id}
-                        className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+                        className="bg-white/95 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
                     >
                         <div className="relative h-48">
                             <Image
@@ -51,16 +51,16 @@ export default function CourseSection() {
                             />
                         </div>
                         <div className="p-6">
-                            <span className="text-sm text-blue-600 font-semibold">
+                            <span className="text-sm text-blue font-semibold">
                                 {course.category}
                             </span>
-                            <h3 className="text-xl font-bold text-gray-900 mt-2">
+                            <h3 className="text-xl font-bold text-gray-800 mt-2">
                                 {course.title}
                             </h3>
-                            <p className="text-gray-600 mt-2">{course.description}</p>
+                            <p className="text-gray-700 mt-2">{course.description}</p>
                             <Link
                                 href={`/courses/${course.id}`}
-                                className="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                                className="mt-4 inline-block bg-green text-white px-4 py-2 rounded-lg hover:opacity-90 transition-colors"
                             >
                                 Meer informatie
                             </Link>
@@ -72,7 +72,7 @@ export default function CourseSection() {
             <div className="text-center mt-12">
                 <Link
                     href="/courses"
-                    className="inline-flex items-center justify-center bg-yellow-400 text-blue-900 px-8 py-3 rounded-lg font-semibold hover:bg-yellow-300 transition-colors"
+                    className="inline-flex items-center justify-center bg-yellow text-blue px-8 py-3 rounded-lg font-semibold hover:opacity-90 transition-colors"
                 >
                     Bekijk alle cursussen
                     <svg

@@ -5,7 +5,7 @@ export default function Hero() {
     return (
         <div className="relative min-h-[80vh] flex items-center">
             {/* Gradient Background */}
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-400 opacity-90" />
+            <div className="absolute inset-0 bg-gradient-to-r from-blue to-green opacity-90" />
 
             {/* Content */}
             <div className="container mx-auto px-4 relative z-10">
@@ -20,7 +20,7 @@ export default function Hero() {
                         <div className="flex flex-wrap gap-4">
                             <Link
                                 href="/courses"
-                                className="bg-yellow-400 text-blue-900 px-6 py-3 rounded-lg font-semibold hover:bg-yellow-300 transition-colors"
+                                className="bg-yellow text-blue px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition-colors"
                             >
                                 Bekijk onze cursussen
                             </Link>

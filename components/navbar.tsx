@@ -24,8 +24,8 @@ export default function Navbar() {
                 <div className="flex justify-between items-center h-20">
                     {/* Logo */}
                     <Link href="/" className="flex items-center space-x-3">
-                        <Logo />
-                        <span className="font-bold text-xl text-blue-900">De Kroon</span>
+                        <LogoAlt />
+                        <span className="font-bold text-xl text-blue">De Kroon</span>
                     </Link>
 
                     {/* Desktop Menu */}
@@ -34,14 +34,14 @@ export default function Navbar() {
                             <Link
                                 key={item.name}
                                 href={item.href}
-                                className="text-gray-600 hover:text-blue-600 transition-colors"
+                                className="text-gray-600 hover:text-blue transition-colors"
                             >
                                 {item.name}
                             </Link>
                         ))}
                         <Link
                             href="/donatie"
-                            className="bg-yellow-400 text-blue-900 px-4 py-2 rounded-lg font-semibold hover:bg-yellow-300 transition-colors"
+                            className="bg-green text-white px-4 py-2 rounded-lg font-semibold hover:opacity-90 transition-colors"
                         >
                             Doneer
                         </Link>
@@ -79,7 +79,7 @@ export default function Navbar() {
                                 <Link
                                     key={item.name}
                                     href={item.href}
-                                    className="text-gray-600 hover:text-blue-600 transition-colors"
+                                    className="text-gray-600 hover:text-blue transition-colors"
                                     onClick={() => setIsOpen(false)}
                                 >
                                     {item.name}
@@ -87,7 +87,7 @@ export default function Navbar() {
                             ))}
                             <Link
                                 href="/donatie"
-                                className="bg-yellow-400 text-blue-900 px-4 py-2 rounded-lg font-semibold hover:bg-yellow-300 transition-colors inline-block text-center"
+                                className="bg-green text-white px-4 py-2 rounded-lg font-semibold hover:opacity-90 transition-colors inline-block text-center"
                                 onClick={() => setIsOpen(false)}
                             >
                                 Doneer

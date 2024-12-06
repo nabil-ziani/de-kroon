@@ -39,7 +39,7 @@ export default function VolunteerSection() {
         <div className="max-w-7xl mx-auto">
             {/* Intro Text */}
             <div className="text-center max-w-3xl mx-auto mb-12">
-                <p className="text-gray-600 text-lg">
+                <p className="text-gray-700 text-lg">
                     Word onderdeel van onze gemeenschap en help mee om een verschil te maken.
                     We hebben verschillende mogelijkheden om bij te dragen.
                 </p>
@@ -53,11 +53,11 @@ export default function VolunteerSection() {
                         className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow"
                     >
                         <span className="text-4xl mb-4 block">{role.icon}</span>
-                        <h3 className="text-xl font-bold text-blue-900 mb-2">
+                        <h3 className="text-xl font-bold text-blue mb-2">
                             {role.title}
                         </h3>
                         <p className="text-gray-600 mb-4">{role.description}</p>
-                        <div className="flex items-center text-sm text-blue-600">
+                        <div className="flex items-center text-sm text-blue">
                             <svg
                                 className="w-5 h-5 mr-2"
                                 fill="none"

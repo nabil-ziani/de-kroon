@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Kroon basis -->
+    <path
+        d="M24 75L42 45L60 66L78 45L96 75V90H24V75Z"
+        fill="#7ac991"
+    />
+    <!-- Kroon punten -->
+    <path
+        d="M42 45L36 30L42 45ZM60 66L54 24L60 66ZM78 45L84 30L78 45Z"
+        stroke="#50aae3"
+        stroke-width="6"
+        stroke-linecap="round"
+    />
+    <!-- Gestileerde kinderen silhouetten -->
+    <path
+        d="M48 84C48 72 60 72 60 72C60 72 72 72 72 84"
+        stroke="#50aae3"
+        stroke-width="6"
+        stroke-linecap="round"
+    />
+    <!-- Boek/onderwijs element -->
+    <path
+        d="M36 96H84C84 102 78 108 60 108C42 108 36 102 36 96Z"
+        fill="#50aae3"
+    />
+</svg>

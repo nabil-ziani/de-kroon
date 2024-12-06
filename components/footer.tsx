@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function Footer() {
     return (
-        <footer className="bg-blue-900 text-white">
+        <footer className="bg-blue text-white">
             <div className="container mx-auto px-4 py-16">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     {/* Contact Info */}
@@ -13,12 +13,12 @@ export default function Footer() {
                             <li>Straatnaam 123</li>
                             <li>1234 AB Stad</li>
                             <li className="pt-2">
-                                <a href="tel:+31612345678" className="hover:text-yellow-400">
+                                <a href="tel:+31612345678" className="hover:text-green">
                                     +31 6 12345678
                                 </a>
                             </li>
                             <li>
-                                <a href="mailto:info@moskeedekroon.nl" className="hover:text-yellow-400">
+                                <a href="mailto:info@moskeedekroon.nl" className="hover:text-green">
                                     info@moskeedekroon.nl
                                 </a>
                             </li>
@@ -30,22 +30,22 @@ export default function Footer() {
                         <h3 className="text-xl font-bold mb-4">Snelle Links</h3>
                         <ul className="space-y-2">
                             <li>
-                                <Link href="/gebedstijden" className="hover:text-yellow-400">
+                                <Link href="/gebedstijden" className="hover:text-green">
                                     Gebedstijden
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/onderwijs" className="hover:text-yellow-400">
+                                <Link href="/onderwijs" className="hover:text-green">
                                     Onderwijs
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/activiteiten" className="hover:text-yellow-400">
+                                <Link href="/activiteiten" className="hover:text-green">
                                     Activiteiten
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/donatie" className="hover:text-yellow-400">
+                                <Link href="/donatie" className="hover:text-green">
                                     Doneren
                                 </Link>
                             </li>
@@ -69,7 +69,7 @@ export default function Footer() {
                         <div className="flex space-x-4 mb-6">
                             <a
                                 href="#"
-                                className="hover:text-yellow-400"
+                                className="hover:text-green"
                                 aria-label="Facebook"
                             >
                                 <svg
@@ -87,7 +87,7 @@ export default function Footer() {
                             </a>
                             <a
                                 href="#"
-                                className="hover:text-yellow-400"
+                                className="hover:text-green"
                                 aria-label="Instagram"
                             >
                                 <svg
@@ -114,7 +114,7 @@ export default function Footer() {
                                 />
                                 <button
                                     type="submit"
-                                    className="bg-yellow-400 text-blue-900 px-4 py-2 rounded-r-lg font-semibold hover:bg-yellow-300 transition-colors"
+                                    className="bg-green text-white px-4 py-2 rounded-r-lg font-semibold hover:opacity-90 transition-colors"
                                 >
                                     Aanmelden
                                 </button>

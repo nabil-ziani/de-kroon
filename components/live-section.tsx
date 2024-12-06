@@ -16,7 +16,7 @@ export default function LiveSection() {
 
                 {/* Schedule & Info */}
                 <div>
-                    <h3 className="text-2xl font-bold text-blue-900 mb-4">
+                    <h3 className="text-2xl font-bold text-blue mb-4">
                         Live Uitzendingen
                     </h3>
                     <p className="text-gray-600 mb-6">
@@ -29,10 +29,10 @@ export default function LiveSection() {
                         <div className="bg-white rounded-lg p-4 shadow-md">
                             <div className="flex justify-between items-center">
                                 <div>
-                                    <h4 className="font-semibold text-blue-900">Vrijdagpreek</h4>
+                                    <h4 className="font-semibold text-blue">Vrijdagpreek</h4>
                                     <p className="text-sm text-gray-600">Vrijdag 19:30</p>
                                 </div>
-                                <span className="bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full">
+                                <span className="bg-green/20 text-green text-xs px-3 py-1 rounded-full">
                                     Wekelijks
                                 </span>
                             </div>
@@ -54,7 +54,7 @@ export default function LiveSection() {
                     {/* Archive Link */}
                     <a
                         href="/archief"
-                        className="inline-flex items-center text-blue-600 hover:text-blue-700 mt-6"
+                        className="inline-flex items-center text-blue hover:opacity-80 mt-6"
                     >
                         Bekijk eerdere uitzendingen
                         <svg

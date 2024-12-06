@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function CTASection() {
     return (
-        <section className="py-16 bg-blue-600">
+        <section className="py-16 bg-blue">
             <div className="container mx-auto px-4">
                 <div className="max-w-4xl mx-auto text-center">
                     <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
@@ -15,13 +15,13 @@ export default function CTASection() {
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Link
                             href="/donatie"
-                            className="bg-yellow-400 text-blue-900 px-8 py-4 rounded-lg font-semibold hover:bg-yellow-300 transition-colors"
+                            className="bg-yellow text-blue px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition-colors"
                         >
                             Doneer nu
                         </Link>
                         <Link
                             href="/vrijwilliger"
-                            className="bg-white/10 text-white px-8 py-4 rounded-lg font-semibold hover:bg-white/20 transition-colors"
+                            className="bg-green text-white px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition-colors"
                         >
                             Word vrijwilliger
                         </Link>
