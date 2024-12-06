@@ -1,10 +1,13 @@
+'use client';
+
 import Link from 'next/link';
+import { FaChalkboardTeacher, FaCalendarAlt, FaPencilAlt, FaVideo } from 'react-icons/fa';
 
 type VolunteerRole = {
     title: string;
     description: string;
     commitment: string;
-    icon: string;
+    icon: React.ElementType;
 };
 
 export default function VolunteerSection() {
@@ -13,75 +16,63 @@ export default function VolunteerSection() {
             title: 'Onderwijs Assistent',
             description: 'Help onze docenten bij het lesgeven aan kinderen tijdens de weekend school.',
             commitment: '4 uur per week',
-            icon: '👥',
+            icon: FaChalkboardTeacher,
         },
         {
             title: 'Evenementen Organisator',
             description: 'Organiseer en coördineer moskee evenementen en activiteiten.',
             commitment: 'Flexibel',
-            icon: '📅',
+            icon: FaCalendarAlt,
         },
         {
             title: 'Administratieve Ondersteuning',
             description: 'Help bij de dagelijkse administratie en communicatie.',
             commitment: '2-4 uur per week',
-            icon: '📝',
+            icon: FaPencilAlt,
         },
         {
             title: 'Technische Ondersteuning',
             description: 'Ondersteun bij livestreams en technische faciliteiten.',
             commitment: 'Op oproepbasis',
-            icon: '🎥',
+            icon: FaVideo,
         },
     ];
 
     return (
-        <div className="max-w-7xl mx-auto">
-            {/* Intro Text */}
-            <div className="text-center max-w-3xl mx-auto mb-12">
-                <p className="text-gray-600 text-lg">
-                    Word onderdeel van onze gemeenschap en help mee om een verschil te maken.
-                    We hebben verschillende mogelijkheden om bij te dragen.
-                </p>
-            </div>
-
-            {/* Volunteer Roles Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-                {volunteerRoles.map((role) => (
-                    <div
-                        key={role.title}
-                        className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow"
-                    >
-                        <span className="text-4xl mb-4 block">{role.icon}</span>
-                        <h3 className="text-xl font-bold text-boy mb-2">
-                            {role.title}
-                        </h3>
-                        <p className="text-gray-600 mb-4">{role.description}</p>
-                        <div className="flex items-center text-sm text-boy">
-                            <svg
-                                className="w-5 h-5 mr-2"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                                />
-                            </svg>
-                            {role.commitment}
+        <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                {volunteerRoles.map((role) => {
+                    const Icon = role.icon;
+                    return (
+                        <div
+                            key={role.title}
+                            className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                        >
+                            <div className="text-center">
+                                <div className="mb-6 text-crown">
+                                    <Icon className="w-12 h-12 mx-auto" />
+                                </div>
+                                <div className="space-y-3">
+                                    <h3 className="text-xl font-bold text-gray-800">
+                                        {role.title}
+                                    </h3>
+                                    <p className="text-gray-600">
+                                        {role.description}
+                                    </p>
+                                    <div className="flex items-center justify-center text-sm text-gray-500 pt-2">
+                                        <span className="font-medium">{role.commitment}</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    );
+                })}
             </div>
 
-            {/* Call to Action */}
-            <div className="text-center">
+            <div className="text-center mt-12">
                 <Link
                     href="/vrijwilliger-worden"
-                    className="inline-flex items-center justify-center bg-boy text-white px-8 py-3 rounded-lg font-semibold hover:opacity-90 transition-colors"
+                    className="inline-flex items-center justify-center bg-crown/90 hover:bg-crown text-white px-8 py-3 rounded-lg font-semibold transition-colors uppercase tracking-wide text-sm"
                 >
                     Word vrijwilliger
                     <svg

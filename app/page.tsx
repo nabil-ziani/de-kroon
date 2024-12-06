@@ -18,7 +18,7 @@ export default function Home() {
       <Hero />
 
       {/* Prayer Times Section */}
-      <section id="prayer-times" className="py-24 bg-gradient-to-b from-white to-[#fff9e8]">
+      <section id="prayer-times" className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mb-16">
             <h2 className="text-5xl mb-4 text-gray-800">
@@ -33,34 +33,49 @@ export default function Home() {
       </section>
 
       {/* Courses Section */}
-      <section id="courses" className="py-16 bg-blue">
+      <section id="courses" className="py-24 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center text-white mb-8">
-            Onze Cursussen
-          </h2>
+          <div className="max-w-4xl mb-16">
+            <h2 className="text-5xl mb-4 text-gray-800">
+              <span className="text-6xl font-bold">Cursussen</span>
+            </h2>
+            <p className="text-xl text-gray-500">
+              We bieden verschillende cursussen aan voor iedereen.
+            </p>
+          </div>
           <CourseSection />
         </div>
       </section>
 
       {/* Volunteer Section */}
-      <section id="volunteer" className="py-16 bg-gradient-to-b from-[#e8f4fb] to-white">
+      {/* <section id="volunteer" className="py-24 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
-            Vrijwilligerskansen
-          </h2>
+          <div className="max-w-4xl mb-16">
+            <h2 className="text-5xl mb-4 text-gray-800">
+              <span className="text-6xl font-bold">Vrijwilligers</span>
+            </h2>
+            <p className="text-xl text-gray-500">
+              Word onderdeel van onze gemeenschap en help mee als vrijwilliger.
+            </p>
+          </div>
           <VolunteerSection />
         </div>
-      </section>
+      </section> */}
 
       {/* CTA Section */}
       <CTASection />
 
       {/* Live Section */}
-      <section id="live" className="py-16 bg-gradient-to-b from-[#e8f4fb] to-white">
+      <section id="live" className="py-24 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
-            Live Streaming
-          </h2>
+          <div className="max-w-4xl mb-16">
+            <h2 className="text-5xl mb-4 text-gray-800">
+              <span className="text-6xl font-bold">Live</span>
+            </h2>
+            <p className="text-xl text-gray-500">
+              Volg onze diensten en lezingen live via de stream
+            </p>
+          </div>
           <LiveSection />
         </div>
       </section>

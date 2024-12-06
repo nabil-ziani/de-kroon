@@ -15,32 +15,32 @@ export default function CourseSection() {
             id: 1,
             title: 'Arabische Taal voor Beginners',
             description: 'Leer de basis van de Arabische taal in een ontspannen omgeving.',
-            image: '/images/arabic-course.jpg',
-            category: 'Taal',
+            image: '/images/arabisch.png',
+            category: 'Arabisch',
         },
         {
             id: 2,
             title: 'Koran Recitatie',
             description: 'Verbeter je Koran recitatie met professionele begeleiding.',
-            image: '/images/quran-course.jpg',
-            category: 'Religie',
+            image: '/images/koran.png',
+            category: 'Koran',
         },
         {
             id: 3,
-            title: 'Weekend School',
+            title: 'Weekend Lessen',
             description: 'Islamitisch onderwijs voor kinderen in het weekend.',
-            image: '/images/weekend-school.jpg',
-            category: 'Educatie',
+            image: '/images/weekend.png',
+            category: 'Kids',
         },
     ];
 
     return (
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {courses.map((course) => (
                     <div
                         key={course.id}
-                        className="bg-white/95 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+                        className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
                     >
                         <div className="relative h-48">
                             <Image
@@ -50,17 +50,17 @@ export default function CourseSection() {
                                 className="object-cover"
                             />
                         </div>
-                        <div className="p-6">
-                            <span className="text-sm text-boy font-semibold">
+                        <div className="p-8">
+                            <span className="text-sm text-crown font-semibold uppercase tracking-wide">
                                 {course.category}
                             </span>
-                            <h3 className="text-xl font-bold text-gray-800 mt-2">
+                            <h3 className="text-2xl font-bold text-gray-800 mt-3 mb-4">
                                 {course.title}
                             </h3>
                             <p className="text-gray-700 mt-2">{course.description}</p>
                             <Link
                                 href={`/courses/${course.id}`}
-                                className="mt-4 inline-block bg-accent text-white px-4 py-2 rounded-lg hover:opacity-90 transition-colors"
+                                className="mt-6 inline-block bg-crown text-white px-6 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors uppercase tracking-wide text-sm"
                             >
                                 Meer informatie
                             </Link>
@@ -72,7 +72,7 @@ export default function CourseSection() {
             <div className="text-center mt-12">
                 <Link
                     href="/courses"
-                    className="inline-flex items-center justify-center bg-crown text-boy px-8 py-3 rounded-lg font-semibold hover:opacity-90 transition-colors"
+                    className="inline-flex items-center justify-center bg-crown/90 hover:bg-crown text-white px-8 py-3 rounded-lg font-semibold transition-colors uppercase tracking-wide text-sm"
                 >
                     Bekijk alle cursussen
                     <svg

@@ -34,7 +34,7 @@ export default function Hero() {
                             <span className="text-8xl font-bold">De Kroon</span>
                         </h1>
                         <p className="text-xl mb-12 text-white/90">
-                            Een plek voor educatie, ...
+                            Educatief jeugdcentrum waar we samen bouwen aan de toekomst
                         </p>
                         <div className="flex flex-wrap gap-4">
                             <Link

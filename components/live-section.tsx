@@ -1,14 +1,29 @@
+import { FaPlay, FaCalendarAlt, FaClock } from 'react-icons/fa';
+import Link from 'next/link';
+
 export default function LiveSection() {
     return (
         <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="grid md:grid-cols-2 gap-12 items-start">
                 {/* Live Stream Preview */}
-                <div className="bg-gray-900 rounded-xl overflow-hidden aspect-video relative">
+                <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl overflow-hidden aspect-video relative shadow-lg">
                     <div className="absolute inset-0 flex items-center justify-center">
                         <div className="text-center">
-                            <div className="bg-boy/90 text-white px-6 py-3 rounded-lg inline-block">
-                                <p className="font-semibold">Volgende uitzending</p>
-                                <p className="text-sm mt-1">Vrijdag 19:30 - Vrijdagpreek</p>
+                            <div className="bg-crown/90 backdrop-blur-sm text-white px-8 py-6 rounded-xl">
+                                <div className="flex items-center justify-center mb-4">
+                                    <FaPlay className="w-8 h-8 text-white" />
+                                </div>
+                                <h3 className="font-bold text-xl mb-2">Volgende uitzending</h3>
+                                <div className="flex items-center justify-center gap-4 text-white/90">
+                                    <div className="flex items-center gap-2">
+                                        <FaCalendarAlt className="w-4 h-4" />
+                                        <span>Vrijdag</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <FaClock className="w-4 h-4" />
+                                        <span>19:30</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -16,61 +31,69 @@ export default function LiveSection() {
 
                 {/* Schedule & Info */}
                 <div>
-                    <h3 className="text-2xl font-bold text-boy mb-4">
-                        Live Uitzendingen
-                    </h3>
-                    <p className="text-gray-600 mb-6">
-                        Volg onze diensten en lezingen live via de stream. Ideaal voor als u niet
-                        naar de moskee kunt komen.
-                    </p>
-
-                    {/* Upcoming Streams */}
-                    <div className="space-y-4">
-                        <div className="bg-white rounded-lg p-4 shadow-md">
-                            <div className="flex justify-between items-center">
-                                <div>
-                                    <h4 className="font-semibold text-boy">Vrijdagpreek</h4>
-                                    <p className="text-sm text-gray-600">Vrijdag 19:30</p>
+                    <div className="space-y-6">
+                        {/* Upcoming Streams */}
+                        <div className="space-y-4">
+                            <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300">
+                                <div className="flex justify-between items-start">
+                                    <div>
+                                        <h4 className="text-xl font-bold text-gray-800 mb-1">
+                                            Vrijdagpreek
+                                        </h4>
+                                        <div className="flex items-center gap-4 text-gray-500">
+                                            <div className="flex items-center gap-2">
+                                                <FaCalendarAlt className="w-4 h-4" />
+                                                <span>Vrijdag 19:30</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span className="bg-crown/10 text-crown text-xs px-3 py-1 rounded-full font-medium">
+                                        Wekelijks
+                                    </span>
                                 </div>
-                                <span className="bg-accent/20 text-accent text-xs px-3 py-1 rounded-full">
-                                    Wekelijks
-                                </span>
+                            </div>
+
+                            <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300">
+                                <div className="flex justify-between items-start">
+                                    <div>
+                                        <h4 className="text-xl font-bold text-gray-800 mb-1">
+                                            Ramadan Lezing
+                                        </h4>
+                                        <div className="flex items-center gap-4 text-gray-500">
+                                            <div className="flex items-center gap-2">
+                                                <FaCalendarAlt className="w-4 h-4" />
+                                                <span>Zaterdag 21:00</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span className="bg-boy/10 text-boy text-xs px-3 py-1 rounded-full font-medium">
+                                        Speciaal
+                                    </span>
+                                </div>
                             </div>
                         </div>
 
-                        <div className="bg-white rounded-lg p-4 shadow-md">
-                            <div className="flex justify-between items-center">
-                                <div>
-                                    <h4 className="font-semibold text-boy">Ramadan Lezing</h4>
-                                    <p className="text-sm text-gray-600">Zaterdag 21:00</p>
-                                </div>
-                                <span className="bg-boy/20 text-boy text-xs px-3 py-1 rounded-full">
-                                    Speciaal
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Archive Link */}
-                    <a
-                        href="/archief"
-                        className="inline-flex items-center text-boy hover:opacity-80 mt-6"
-                    >
-                        Bekijk eerdere uitzendingen
-                        <svg
-                            className="w-4 h-4 ml-2"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
+                        {/* Archive Link */}
+                        <Link
+                            href="/archief"
+                            className="inline-flex items-center justify-center bg-crown/90 hover:bg-crown text-white px-6 py-3 rounded-lg font-semibold transition-colors uppercase tracking-wide text-sm w-full"
                         >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M9 5l7 7-7 7"
-                            />
-                        </svg>
-                    </a>
+                            Bekijk eerdere uitzendingen
+                            <svg
+                                className="w-5 h-5 ml-2"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M9 5l7 7-7 7"
+                                />
+                            </svg>
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div>
