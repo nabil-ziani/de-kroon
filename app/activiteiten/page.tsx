@@ -1,40 +1,46 @@
+'use client';
+
+import React from 'react';
 import Image from 'next/image';
-import { FaCalendarAlt, FaMapMarkerAlt, FaClock, FaUsers } from 'react-icons/fa';
+import { FaCalendarAlt, FaMapMarkerAlt, FaClock, FaUsers, FaChalkboardTeacher, FaRunning, FaMosque } from 'react-icons/fa';
 
 // Dit zou later uit een database of CMS komen
 const activities = [
     {
-        title: 'Iftar Bijeenkomst',
-        date: '23 Maart 2024',
-        time: '18:30 - 21:00',
-        location: 'De Kroon',
-        image: '/images/placeholder.png',
-        description: 'Gezamenlijke iftar tijdens de Ramadan met de hele gemeenschap.',
-        category: 'Sociaal',
+        title: 'Iftar',
+        date: 'Elke dag gedurende de Ramadan',
+        time: '21:00 - 22:00',
+        location: 'Kroonstraat 72',
+        description: 'Gezamenlijke iftar voor de hele gemeenschap.',
+        category: 'Sadaqah',
         maxParticipants: 100,
-        status: 'Binnenkort'
+        status: 'Binnenkort',
+        icon: FaMosque,
+        color: 'bg-gradient-to-br from-girl to-girl/70'
     },
     {
         title: 'Jeugd Sportdag',
         date: '15 April 2024',
         time: '10:00 - 16:00',
         location: 'Sporthal Borgerhout',
-        image: '/images/placeholder.png',
         description: 'Sportieve activiteiten voor jongeren met verschillende workshops.',
         category: 'Sport',
         maxParticipants: 50,
-        status: 'Inschrijving Open'
+        status: 'Inschrijving Open',
+        icon: FaRunning,
+        color: 'bg-gradient-to-br from-boy to-boy/70'
     },
     {
         title: 'Islamitische Lezing',
         date: 'Elke Zondag',
         time: '14:00 - 15:30',
         location: 'De Kroon',
-        image: '/images/placeholder.png',
         description: 'Wekelijkse lezingen over verschillende islamitische onderwerpen.',
         category: 'Educatief',
         maxParticipants: 30,
-        status: 'Doorlopend'
+        status: 'Doorlopend',
+        icon: FaChalkboardTeacher,
+        color: 'bg-gradient-to-br from-crown to-crown/70'
     }
 ];
 
@@ -55,58 +61,101 @@ export default function ActivitiesPage() {
                         <h1 className="text-6xl font-bold text-white mb-6">
                             Onze Activiteiten
                         </h1>
+                        <p className="text-xl text-white/90">
+                            Ontdek wat er allemaal te doen is bij De Kroon
+                        </p>
                     </div>
                 </div>
             </section>
 
-            {/* Activities Grid */}
+            {/* Bento Grid Layout */}
             <section className="py-20">
                 <div className="container mx-auto px-4">
-                    <div className="max-w-6xl mx-auto">
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {activities.map((activity, index) => (
-                                <div
-                                    key={activity.title}
-                                    className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
-                                >
-                                    <div className="relative h-48">
-                                        <Image
-                                            src={activity.image}
-                                            alt={activity.title}
-                                            fill
-                                            className="object-cover"
-                                        />
-                                    </div>
-                                    <div className="p-6">
-                                        <div className="mb-4">
-                                            <h3 className="text-xl font-bold mb-2 text-gray-800">
-                                                {activity.title}
+                    <div className="max-w-7xl mx-auto">
+                        {/* Title Section */}
+                        <div className="mb-12">
+                            <h2 className="text-4xl font-bold text-gray-800 mb-4">Aankomende Activiteiten</h2>
+                            {/*<p className="text-xl text-gray-600">Bekijk en schrijf je in voor onze geplande activiteiten</p>*/}
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {/* Featured Activity - Large Card */}
+                            <div className="md:col-span-2 md:row-span-2">
+                                <div className={`${activities[0].color} rounded-3xl p-8 h-full relative overflow-hidden group transition-all duration-300 hover:scale-[1.02] cursor-pointer`}>
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent z-10" />
+                                    <div className="relative z-20 h-full flex flex-col">
+                                        <div className="flex-1">
+                                            <span className="inline-block px-4 py-2 rounded-full bg-white/20 text-white text-sm font-medium mb-4">
+                                                {activities[0].category}
+                                            </span>
+                                            <h3 className="text-3xl font-bold text-white mb-4">
+                                                {activities[0].title}
                                             </h3>
-                                            <p className="text-gray-600">
-                                                {activity.description}
+                                            <p className="text-white/90 text-lg mb-6">
+                                                {activities[0].description}
                                             </p>
                                         </div>
-                                        <div className="space-y-2 text-sm text-gray-500 mb-6">
-                                            <div className="flex items-center gap-2">
-                                                <FaCalendarAlt className="text-crown" />
-                                                <span>{activity.date}</span>
+                                        <div className="space-y-3 text-white/80">
+                                            <div className="flex items-center gap-3">
+                                                <FaCalendarAlt />
+                                                <span>{activities[0].date}</span>
                                             </div>
-                                            <div className="flex items-center gap-2">
-                                                <FaClock className="text-crown" />
-                                                <span>{activity.time}</span>
+                                            <div className="flex items-center gap-3">
+                                                <FaClock />
+                                                <span>{activities[0].time}</span>
                                             </div>
-                                            <div className="flex items-center gap-2">
-                                                <FaMapMarkerAlt className="text-crown" />
-                                                <span>{activity.location}</span>
+                                            <div className="flex items-center gap-3">
+                                                <FaMapMarkerAlt />
+                                                <span>{activities[0].location}</span>
                                             </div>
-                                            <div className="flex items-center gap-2">
-                                                <FaUsers className="text-crown" />
-                                                <span>Max {activity.maxParticipants} deelnemers</span>
+                                            <div className="flex items-center gap-3">
+                                                <FaUsers />
+                                                <span>Max {activities[0].maxParticipants} deelnemers</span>
                                             </div>
                                         </div>
-                                        <button className="w-full bg-crown text-white px-6 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors text-sm uppercase tracking-wide">
-                                            Inschrijven
-                                        </button>
+                                    </div>
+                                    <div className="absolute right-8 top-8 text-white/20 transform scale-150 transition-transform duration-300 group-hover:scale-[2]">
+                                        {React.createElement(activities[0].icon, { size: 80 })}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Regular Activity Cards */}
+                            {activities.slice(1).map((activity) => (
+                                <div key={activity.title} className="md:col-span-1">
+                                    <div className={`${activity.color} rounded-3xl p-6 h-full relative overflow-hidden group transition-all duration-300 hover:scale-105 cursor-pointer`}>
+                                        <div className="relative z-20">
+                                            <span className="inline-block px-3 py-1 rounded-full bg-white/20 text-white text-sm font-medium mb-3">
+                                                {activity.category}
+                                            </span>
+                                            <h3 className="text-xl font-bold text-white mb-3">
+                                                {activity.title}
+                                            </h3>
+                                            <p className="text-white/90 text-sm mb-4">
+                                                {activity.description}
+                                            </p>
+                                            <div className="space-y-2 text-white/80 text-sm">
+                                                <div className="flex items-center gap-2">
+                                                    <FaCalendarAlt className="w-4 h-4" />
+                                                    <span>{activity.date}</span>
+                                                </div>
+                                                <div className="flex items-center gap-2">
+                                                    <FaClock className="w-4 h-4" />
+                                                    <span>{activity.time}</span>
+                                                </div>
+                                                <div className="flex items-center gap-2">
+                                                    <FaMapMarkerAlt className="w-4 h-4" />
+                                                    <span>{activity.location}</span>
+                                                </div>
+                                                <div className="flex items-center gap-2">
+                                                    <FaUsers className="w-4 h-4" />
+                                                    <span>Max {activity.maxParticipants} deelnemers</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="absolute right-4 top-4 text-white/20 transform scale-150 transition-transform duration-300 group-hover:scale-[2]">
+                                            {React.createElement(activity.icon, { size: 40 })}
+                                        </div>
                                     </div>
                                 </div>
                             ))}
