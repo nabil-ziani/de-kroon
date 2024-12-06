@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function Footer() {
     return (
-        <footer className="bg-blue text-white">
+        <footer className="bg-boy text-white">
             <div className="container mx-auto px-4 py-16">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     {/* Contact Info */}
@@ -12,12 +12,12 @@ export default function Footer() {
                             <li>Kroonstraat 72</li>
                             <li>2140 Borgerhout</li>
                             <li className="pt-2">
-                                <a href="#" className="hover:text-green">
+                                <a href="#" className="hover:text-accent">
                                     +32 XXX XX XX XX
                                 </a>
                             </li>
                             <li>
-                                <a href="mailto:info@centrum-dekroon.be" className="hover:text-green">
+                                <a href="mailto:info@centrum-dekroon.be" className="hover:text-accent">
                                     info@centrum-dekroon.be
                                 </a>
                             </li>
@@ -29,22 +29,22 @@ export default function Footer() {
                         <h3 className="text-xl font-bold mb-4">Snelle Links</h3>
                         <ul className="space-y-2">
                             <li>
-                                <Link href="/gebedstijden" className="hover:text-green">
+                                <Link href="/gebedstijden" className="hover:text-accent">
                                     Gebedstijden
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/onderwijs" className="hover:text-green">
+                                <Link href="/onderwijs" className="hover:text-accent">
                                     Onderwijs
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/activiteiten" className="hover:text-green">
+                                <Link href="/activiteiten" className="hover:text-accent">
                                     Activiteiten
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/donatie" className="hover:text-green">
+                                <Link href="/donatie" className="hover:text-accent">
                                     Doneren
                                 </Link>
                             </li>
@@ -67,8 +67,8 @@ export default function Footer() {
                         <h3 className="text-xl font-bold mb-4">Volg Ons</h3>
                         <div className="flex space-x-4 mb-6">
                             <a
-                                href="https://www.facebook.com/p/Moskee-Ennassr-Borgerhout-100066575117579"
-                                className="hover:text-green"
+                                href="#"
+                                className="hover:text-accent"
                                 aria-label="Facebook"
                             >
                                 <svg
@@ -86,7 +86,7 @@ export default function Footer() {
                             </a>
                             <a
                                 href="https://mawaqit.net/en/moskee-ennassr-borgerhout-2140-belgium"
-                                className="hover:text-green"
+                                className="hover:text-accent"
                                 aria-label="Mawaqit"
                             >
                                 <svg
@@ -113,7 +113,7 @@ export default function Footer() {
                                 />
                                 <button
                                     type="submit"
-                                    className="bg-green text-white px-4 py-2 rounded-r-lg font-semibold hover:opacity-90 transition-colors"
+                                    className="bg-accent text-white px-4 py-2 rounded-r-lg font-semibold hover:opacity-90 transition-colors"
                                 >
                                     Aanmelden
                                 </button>
@@ -123,7 +123,7 @@ export default function Footer() {
                 </div>
 
                 {/* Copyright */}
-                <div className="mt-12 pt-8 border-t border-blue-800 text-center text-sm">
+                <div className="mt-12 pt-8 border-t border-boy-800 text-center text-sm">
                     <p>© {new Date().getFullYear()} De Kroon. Alle rechten voorbehouden.</p>
                 </div>
             </div>

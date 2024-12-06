@@ -6,7 +6,7 @@ export default function LiveSection() {
                 <div className="bg-gray-900 rounded-xl overflow-hidden aspect-video relative">
                     <div className="absolute inset-0 flex items-center justify-center">
                         <div className="text-center">
-                            <div className="bg-blue-600/90 text-white px-6 py-3 rounded-lg inline-block">
+                            <div className="bg-boy/90 text-white px-6 py-3 rounded-lg inline-block">
                                 <p className="font-semibold">Volgende uitzending</p>
                                 <p className="text-sm mt-1">Vrijdag 19:30 - Vrijdagpreek</p>
                             </div>
@@ -16,7 +16,7 @@ export default function LiveSection() {
 
                 {/* Schedule & Info */}
                 <div>
-                    <h3 className="text-2xl font-bold text-blue mb-4">
+                    <h3 className="text-2xl font-bold text-boy mb-4">
                         Live Uitzendingen
                     </h3>
                     <p className="text-gray-600 mb-6">
@@ -29,10 +29,10 @@ export default function LiveSection() {
                         <div className="bg-white rounded-lg p-4 shadow-md">
                             <div className="flex justify-between items-center">
                                 <div>
-                                    <h4 className="font-semibold text-blue">Vrijdagpreek</h4>
+                                    <h4 className="font-semibold text-boy">Vrijdagpreek</h4>
                                     <p className="text-sm text-gray-600">Vrijdag 19:30</p>
                                 </div>
-                                <span className="bg-green/20 text-green text-xs px-3 py-1 rounded-full">
+                                <span className="bg-accent/20 text-accent text-xs px-3 py-1 rounded-full">
                                     Wekelijks
                                 </span>
                             </div>
@@ -41,10 +41,10 @@ export default function LiveSection() {
                         <div className="bg-white rounded-lg p-4 shadow-md">
                             <div className="flex justify-between items-center">
                                 <div>
-                                    <h4 className="font-semibold text-blue-900">Ramadan Lezing</h4>
+                                    <h4 className="font-semibold text-boy">Ramadan Lezing</h4>
                                     <p className="text-sm text-gray-600">Zaterdag 21:00</p>
                                 </div>
-                                <span className="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">
+                                <span className="bg-boy/20 text-boy text-xs px-3 py-1 rounded-full">
                                     Speciaal
                                 </span>
                             </div>
@@ -54,7 +54,7 @@ export default function LiveSection() {
                     {/* Archive Link */}
                     <a
                         href="/archief"
-                        className="inline-flex items-center text-blue hover:opacity-80 mt-6"
+                        className="inline-flex items-center text-boy hover:opacity-80 mt-6"
                     >
                         Bekijk eerdere uitzendingen
                         <svg

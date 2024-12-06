@@ -30,7 +30,7 @@ export default function PrayerTimes() {
         <div className="max-w-4xl mx-auto">
             {/* Datum weergave */}
             <div className="text-center mb-8">
-                <p className="text-lg text-blue">
+                <p className="text-lg text-boy">
                     {format(currentDate, 'EEEE d MMMM yyyy', { locale: nl })}
                 </p>
             </div>
@@ -44,10 +44,10 @@ export default function PrayerTimes() {
                     >
                         <div className="text-center">
                             <span className="text-2xl mb-2 block">{prayer.icon}</span>
-                            <h3 className="text-lg font-semibold text-blue mb-1">
+                            <h3 className="text-lg font-semibold text-boy mb-1">
                                 {prayer.name}
                             </h3>
-                            <p className="text-xl font-bold text-green">{prayer.time}</p>
+                            <p className="text-xl font-bold text-accent">{prayer.time}</p>
                         </div>
                     </div>
                 ))}
@@ -55,7 +55,7 @@ export default function PrayerTimes() {
 
             {/* Volgende gebed indicator */}
             <div className="mt-8 text-center">
-                <p className="text-blue">
+                <p className="text-boy">
                     Volgende gebed: <span className="font-bold">Asr</span> over{' '}
                     <span className="font-bold">2 uur en 15 minuten</span>
                 </p>

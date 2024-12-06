@@ -51,7 +51,7 @@ export default function CourseSection() {
                             />
                         </div>
                         <div className="p-6">
-                            <span className="text-sm text-blue font-semibold">
+                            <span className="text-sm text-boy font-semibold">
                                 {course.category}
                             </span>
                             <h3 className="text-xl font-bold text-gray-800 mt-2">
@@ -60,7 +60,7 @@ export default function CourseSection() {
                             <p className="text-gray-700 mt-2">{course.description}</p>
                             <Link
                                 href={`/courses/${course.id}`}
-                                className="mt-4 inline-block bg-green text-white px-4 py-2 rounded-lg hover:opacity-90 transition-colors"
+                                className="mt-4 inline-block bg-accent text-white px-4 py-2 rounded-lg hover:opacity-90 transition-colors"
                             >
                                 Meer informatie
                             </Link>
@@ -72,7 +72,7 @@ export default function CourseSection() {
             <div className="text-center mt-12">
                 <Link
                     href="/courses"
-                    className="inline-flex items-center justify-center bg-yellow text-blue px-8 py-3 rounded-lg font-semibold hover:opacity-90 transition-colors"
+                    className="inline-flex items-center justify-center bg-crown text-boy px-8 py-3 rounded-lg font-semibold hover:opacity-90 transition-colors"
                 >
                     Bekijk alle cursussen
                     <svg

@@ -37,14 +37,15 @@ export default function Navbar() {
                             <Link
                                 key={item.name}
                                 href={item.href}
-                                className="text-gray-600 hover:text-blue transition-colors"
+                                className="relative text-gray-600 group"
                             >
                                 {item.name}
+                                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-crown transition-all duration-300 group-hover:w-full" />
                             </Link>
                         ))}
                         <Link
                             href="/donatie"
-                            className="bg-green text-white px-4 py-2 rounded-lg font-semibold hover:opacity-90 transition-colors"
+                            className="bg-crown text-white px-5 py-2 rounded-lg font-semibold hover:opacity-90 transition-colors"
                         >
                             Doneer
                         </Link>
@@ -82,15 +83,16 @@ export default function Navbar() {
                                 <Link
                                     key={item.name}
                                     href={item.href}
-                                    className="text-gray-600 hover:text-blue transition-colors"
+                                    className="relative text-gray-600 group inline-block"
                                     onClick={() => setIsOpen(false)}
                                 >
                                     {item.name}
+                                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-crown transition-all duration-300 group-hover:w-full" />
                                 </Link>
                             ))}
                             <Link
                                 href="/donatie"
-                                className="bg-green text-white px-4 py-2 rounded-lg font-semibold hover:opacity-90 transition-colors inline-block text-center"
+                                className="bg-accent text-white px-4 py-2 rounded-lg font-semibold hover:opacity-90 transition-colors inline-block text-center"
                                 onClick={() => setIsOpen(false)}
                             >
                                 Doneer

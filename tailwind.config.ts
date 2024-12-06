@@ -9,14 +9,33 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        blue: "#50aae3",    // Lichter, vrolijker blauw
-        green: "#7ac991",   // Fris groen
-        yellow: "#fdcf71",  // Warm geel
-        red: "#e57373"      // Zacht rood
-      },
-      fontFamily: {
-        nunito: ['Nunito', 'sans-serif'],
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        // Primaire kleuren van het logo
+        girl: "#fa5776",    // Roze voor meisje
+        boy: "#1dbdfe",     // Lichtblauw voor jongen
+        crown: "#f6c028",   // Geel voor de kroon
+        accent: "#2fae55",  // Groen voor subtext/accenten
+        
+        // Afgeleide kleuren voor moderne UI
+        pink: {
+          light: "#ffd9e3",
+          DEFAULT: "#fa5776",
+          dark: "#d94563",
+        },
+        azure: {
+          light: "#e8f7ff",
+          DEFAULT: "#1dbdfe",
+          dark: "#199ad4",
+        },
+        yellow: {
+          light: "#fff3d6",
+          DEFAULT: "#f6c028",
+          dark: "#d9a820",
+        },
+        green: {
+          light: "#e8f5eb",
+          DEFAULT: "#2fae55",
+          dark: "#278f46",
+        },
       },
     },
   },

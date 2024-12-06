@@ -16,14 +16,14 @@ export default function Hero() {
             </div>
 
             {/* Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-r from-blue/90 to-green/90" />
+            <div className="absolute inset-0 bg-black/50" />
 
             {/* Content */}
             <div className="relative z-10 container mx-auto px-4 h-full">
                 <div className="flex items-center justify-center min-h-[80vh]">
                     <div className="text-center text-white max-w-3xl">
-                        <h1 className="text-5xl font-bold mb-6">
-                            Welkom bij Moskee De Kroon
+                        <h1 className="text-5xl font-bold mb-6 font-nunito">
+                            Welkom bij <b>De Kroon</b>
                         </h1>
                         <p className="text-xl mb-8 text-white/90">
                             Een plek voor educatie, spiritualiteit en gemeenschap
@@ -31,15 +31,15 @@ export default function Hero() {
                         <div className="flex flex-wrap gap-4 justify-center">
                             <Link
                                 href="/courses"
-                                className="bg-yellow text-blue px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition-colors"
+                                className="bg-crown text-white px-6 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors"
                             >
-                                Bekijk onze cursussen
+                                Bekijk Onze Cursussen
                             </Link>
                             <Link
                                 href="/about"
                                 className="bg-white/10 text-white px-6 py-3 rounded-lg font-semibold hover:bg-white/20 transition-colors"
                             >
-                                Meer over ons
+                                Meer Over Ons
                             </Link>
                         </div>
                     </div>
