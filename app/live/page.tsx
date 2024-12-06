@@ -70,9 +70,6 @@ export default function LivePage() {
                         <h1 className="text-6xl font-bold text-white mb-6">
                             Live Uitzendingen
                         </h1>
-                        <p className="text-xl text-white/90">
-                            Volg onze diensten en lezingen live via de stream
-                        </p>
                     </div>
                 </div>
             </section>
@@ -92,7 +89,7 @@ export default function LivePage() {
                             <div className={`${isFullscreen ? 'col-span-full' : 'md:col-span-2 md:row-span-2'} transition-all duration-300`}>
                                 <div className="bg-gradient-to-br from-boy to-boy/70 rounded-3xl overflow-hidden shadow-lg">
                                     {/* Video container with ref */}
-                                    <div 
+                                    <div
                                         ref={videoContainerRef}
                                         className="aspect-video bg-gray-900/50 flex items-center justify-center relative group"
                                     >
@@ -103,14 +100,14 @@ export default function LivePage() {
                                             <p className="text-lg">Vrijdag 13:30 - Vrijdaggebed</p>
                                         </div>
                                         {/* Fullscreen toggle button */}
-                                        <button 
+                                        <button
                                             onClick={toggleFullscreen}
                                             className="absolute top-4 right-4 bg-black/30 hover:bg-black/50 p-3 rounded-lg transition-all duration-300 text-white/80 hover:text-white z-30"
                                         >
                                             {isFullscreen ? <FaCompress size={20} /> : <FaExpand size={20} />}
                                         </button>
                                     </div>
-                                    
+
                                     {/* Stream informatie - alleen zichtbaar als niet in fullscreen */}
                                     {!isFullscreen && (
                                         <div className="p-8">

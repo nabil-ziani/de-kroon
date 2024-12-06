@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import { FaCalendarAlt, FaMapMarkerAlt, FaClock, FaUsers, FaChalkboardTeacher, FaRunning, FaMosque } from 'react-icons/fa';
 
 // Dit zou later uit een database of CMS komen
@@ -61,9 +60,6 @@ export default function ActivitiesPage() {
                         <h1 className="text-6xl font-bold text-white mb-6">
                             Onze Activiteiten
                         </h1>
-                        <p className="text-xl text-white/90">
-                            Ontdek wat er allemaal te doen is bij De Kroon
-                        </p>
                     </div>
                 </div>
             </section>

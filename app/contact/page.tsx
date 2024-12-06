@@ -1,109 +1,180 @@
+'use client';
+
+import React, { useState } from 'react';
+import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaArrowRight } from 'react-icons/fa';
+
 export default function ContactPage() {
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+    });
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        // Hier komt later de logica voor het versturen van het formulier
+        console.log('Form submitted:', formData);
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setFormData(prev => ({
+            ...prev,
+            [e.target.id]: e.target.value
+        }));
+    };
+
     return (
-        <main className="min-h-screen pt-12 pb-16 bg-gradient-to-b from-[#e8f4fb] to-white">
-            <div className="container mx-auto px-4">
-                <h1 className="text-4xl font-bold text-gray-800 mb-8">Contact</h1>
-
-                {/* Intro tekst */}
-                <div className="max-w-5xl mb-12">
-                    <p className="text-lg text-gray-700">
-                        Heeft u vragen of wilt u meer informatie? Neem gerust contact met ons op.
-                        We staan u graag te woord.
-                    </p>
+        <main className="min-h-screen bg-white">
+            {/* Hero Section */}
+            <section className="relative py-24">
+                <div className="absolute inset-0 bg-gradient-to-r from-gray-900 to-boy">
+                    <div className="absolute inset-0 opacity-30 mix-blend-soft-light bg-[radial-gradient(at_top_right,_#1dbffe_0%,_transparent_50%)]" />
                 </div>
-
-                <div className="grid md:grid-cols-2 gap-8 mb-12">
-                    {/* Contact Formulier */}
-                    <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-                        <h2 className="text-2xl font-bold text-blue mb-6">Stuur ons een bericht</h2>
-                        <form className="space-y-4">
-                            <div>
-                                <label htmlFor="name" className="block text-gray-700 mb-2">Naam</label>
-                                <input
-                                    type="text"
-                                    id="name"
-                                    className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue text-gray-900"
-                                    placeholder="Uw naam"
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="email" className="block text-gray-700 mb-2">E-mailadres</label>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue text-gray-900"
-                                    placeholder="uw@email.com"
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="subject" className="block text-gray-700 mb-2">Onderwerp</label>
-                                <input
-                                    type="text"
-                                    id="subject"
-                                    className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue text-gray-900"
-                                    placeholder="Onderwerp van uw bericht"
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="message" className="block text-gray-700 mb-2">Bericht</label>
-                                <textarea
-                                    id="message"
-                                    rows={4}
-                                    className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue text-gray-900"
-                                    placeholder="Uw bericht..."
-                                ></textarea>
-                            </div>
-                            <button
-                                type="submit"
-                                className="w-full bg-blue text-white px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition-colors"
-                            >
-                                Verstuur bericht
-                            </button>
-                        </form>
-                    </div>
-
-                    {/* Contact Informatie */}
-                    <div className="space-y-6">
-                        <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-                            <h2 className="text-2xl font-bold text-blue mb-4">Contactgegevens</h2>
-                            <div className="space-y-4">
-                                <div>
-                                    <h3 className="font-semibold text-gray-800">Adres</h3>
-                                    <p className="text-gray-600">Kroonstraat 72</p>
-                                    <p className="text-gray-600">2140 Borgerhout</p>
-                                </div>
-                                <div>
-                                    <h3 className="font-semibold text-gray-800">Telefoon</h3>
-                                    <p className="text-gray-600">+32 XXX XX XX XX</p>
-                                </div>
-                                <div>
-                                    <h3 className="font-semibold text-gray-800">E-mail</h3>
-                                    <p className="text-gray-600">info@centrum-dekroon.be</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-                            <h2 className="text-2xl font-bold text-blue mb-4">Openingstijden</h2>
-                            <div className="space-y-2">
-                                <div className="flex justify-between">
-                                    <span className="text-gray-600">Maandag - Vrijdag</span>
-                                    <span className="text-gray-600">05:00 - 22:00</span>
-                                </div>
-                                <div className="flex justify-between">
-                                    <span className="text-gray-600">Zaterdag - Zondag</span>
-                                    <span className="text-gray-600">06:00 - 22:00</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Placeholder voor Google Maps */}
-                        <div className="bg-gray-100 rounded-xl aspect-video flex items-center justify-center">
-                            <p className="text-gray-500">Google Maps kaart komt hier</p>
-                        </div>
+                <div className="absolute -bottom-1 left-0 right-0">
+                    <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill="white" d="M0 48.5129L60 54.0129C120 59.5129 240 70.5129 360 75.5129C480 80.5129 600 80.0129 720 70.0129C840 59.5129 960 37.5129 1080 32.0129C1200 27.0129 1320 37.5129 1380 43.0129L1440 48.5129V100H1380C1320 100 1200 100 1080 100C960 100 840 100 720 100C600 100 480 100 360 100C240 100 120 100 60 100H0V48.5129Z" />
+                    </svg>
+                </div>
+                <div className="relative z-10 container mx-auto px-4 pt-24">
+                    <div className="max-w-4xl">
+                        <h1 className="text-6xl font-bold text-white mb-6">
+                            Contact
+                        </h1>
+                        <p className="text-xl text-white/90">
+                            Heeft u vragen of wilt u meer informatie? Neem gerust contact met ons op.
+                        </p>
                     </div>
                 </div>
-            </div>
+            </section>
+
+            {/* Contact Section */}
+            <section className="py-20">
+                <div className="container mx-auto px-4">
+                    <div className="max-w-7xl mx-auto space-y-6">
+                        {/* Contact Form - Full width */}
+                        <div className="bg-white rounded-3xl shadow-xl p-8 border border-gray-100">
+                            <h2 className="text-3xl font-bold text-gray-800 mb-8">
+                                Stuur ons een bericht
+                            </h2>
+                            <form onSubmit={handleSubmit} className="space-y-6">
+                                <div className="grid md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label htmlFor="name" className="block text-gray-700 font-medium mb-2">Naam</label>
+                                        <input
+                                            type="text"
+                                            id="name"
+                                            value={formData.name}
+                                            onChange={handleChange}
+                                            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-boy focus:border-transparent transition-all duration-300"
+                                            placeholder="Uw naam"
+                                            required
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="email" className="block text-gray-700 font-medium mb-2">E-mailadres</label>
+                                        <input
+                                            type="email"
+                                            id="email"
+                                            value={formData.email}
+                                            onChange={handleChange}
+                                            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-boy focus:border-transparent transition-all duration-300"
+                                            placeholder="uw@email.com"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                                <div>
+                                    <label htmlFor="subject" className="block text-gray-700 font-medium mb-2">Onderwerp</label>
+                                    <input
+                                        type="text"
+                                        id="subject"
+                                        value={formData.subject}
+                                        onChange={handleChange}
+                                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-boy focus:border-transparent transition-all duration-300"
+                                        placeholder="Onderwerp van uw bericht"
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="message" className="block text-gray-700 font-medium mb-2">Bericht</label>
+                                    <textarea
+                                        id="message"
+                                        value={formData.message}
+                                        onChange={handleChange}
+                                        rows={6}
+                                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-boy focus:border-transparent transition-all duration-300"
+                                        placeholder="Uw bericht..."
+                                        required
+                                    ></textarea>
+                                </div>
+                                <button
+                                    type="submit"
+                                    className="w-full bg-gradient-to-r from-boy to-boy/80 text-white px-6 py-4 rounded-xl font-semibold hover:opacity-90 transition-all duration-300 flex items-center justify-center group"
+                                >
+                                    Verstuur bericht
+                                    <FaArrowRight className="ml-2 transform transition-transform duration-300 group-hover:translate-x-1" />
+                                </button>
+                            </form>
+                        </div>
+
+                        {/* Contact Info and Map - Side by side */}
+                        <div className="grid md:grid-cols-2 gap-6">
+                            {/* Contact Details */}
+                            <div className="bg-gradient-to-br from-boy to-boy/70 rounded-3xl p-8 relative overflow-hidden shadow-xl h-[400px]">
+                                <div className="relative z-20">
+                                    <span className="inline-block px-4 py-2 rounded-full bg-white/20 text-white text-sm font-medium mb-4">
+                                        Contact
+                                    </span>
+                                    <h2 className="text-2xl font-bold text-white mb-6">Contactgegevens</h2>
+                                    <div className="space-y-6">
+                                        <div className="flex items-center gap-4">
+                                            <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                                                <FaMapMarkerAlt className="w-5 h-5 text-white" />
+                                            </div>
+                                            <div>
+                                                <h3 className="font-medium text-white/90">Kroonstraat 72</h3>
+                                                <p className="text-white/80">2140 Borgerhout</p>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-center gap-4">
+                                            <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                                                <FaPhone className="w-5 h-5 text-white" />
+                                            </div>
+                                            <p className="text-white/90">+32 XXX XX XX XX</p>
+                                        </div>
+                                        <div className="flex items-center gap-4">
+                                            <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                                                <FaEnvelope className="w-5 h-5 text-white" />
+                                            </div>
+                                            <p className="text-white/90">info@centrum-dekroon.be</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="absolute right-4 top-4 text-white/20">
+                                    <FaEnvelope size={40} />
+                                </div>
+                            </div>
+
+                            {/* Google Maps */}
+                            <div className="bg-white rounded-3xl shadow-xl overflow-hidden h-[400px]">
+                                <iframe
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2498.614824243935!2d4.443359776926787!3d51.21770883948415!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c3f7c5ac3fdb33%3A0x7f5ef33737d8f2dd!2sKroonstraat%2072%2C%202140%20Antwerpen!5e0!3m2!1snl!2sbe!4v1708536144707!5m2!1snl!2sbe"
+                                    width="100%"
+                                    height="400"
+                                    style={{ 
+                                        border: 0,
+                                        filter: 'contrast(1.1) saturate(1.2)'
+                                    }}
+                                    allowFullScreen
+                                    loading="lazy"
+                                    referrerPolicy="no-referrer-when-downgrade"
+                                ></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </main>
     );
 } 
