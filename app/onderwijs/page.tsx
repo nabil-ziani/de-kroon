@@ -1,6 +1,6 @@
 'use client';
 
-import { FaGraduationCap, FaBook, FaChalkboardTeacher, FaUsers } from 'react-icons/fa';
+import { FaGraduationCap, FaBook, FaChalkboardTeacher, FaUsers, FaArrowRight } from 'react-icons/fa';
 import Image from 'next/image';
 import { useState } from 'react';
 import EnrollmentModal from '@/components/enrollment-modal';
@@ -31,39 +31,41 @@ export default function OnderwijsPage() {
             </section>
 
             {/* Intro Section */}
-            <section className="py-20">
+            <section className="py-24">
                 <div className="container mx-auto px-4">
-                    <div className="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
-                        <div>
-                            <h2 className="text-4xl font-bold text-gray-800 mb-6">
-                                Islamitisch Onderwijs
-                            </h2>
-                            <p className="text-lg text-gray-600 mb-8">
-                                Bij De Kroon bieden we kwalitatief islamitisch onderwijs aan voor alle leeftijden.
-                                Onze lessen worden gegeven door gekwalificeerde docenten die de kennis op een
-                                moderne en toegankelijke manier overbrengen.
-                            </p>
-                            <div className="space-y-4">
-                                {[
-                                    'Arabische taal',
-                                    'Koran recitatie',
-                                    'Islamitische studies',
-                                    'Weekend lessen'
-                                ].map((item) => (
-                                    <div key={item} className="flex items-center gap-3">
-                                        <div className="w-2 h-2 rounded-full bg-crown" />
-                                        <p className="text-gray-700">{item}</p>
-                                    </div>
-                                ))}
+                    <div className="max-w-7xl mx-auto">
+                        <div className="grid md:grid-cols-2 gap-16 items-center">
+                            <div>
+                                <h2 className="text-5xl font-bold text-gray-800 mb-8">
+                                    Islamitisch Onderwijs
+                                </h2>
+                                <p className="text-lg text-gray-600 mb-10">
+                                    Bij De Kroon bieden we kwalitatief islamitisch onderwijs aan voor alle leeftijden.
+                                    Onze lessen worden gegeven door gekwalificeerde docenten die de kennis op een
+                                    moderne en toegankelijke manier overbrengen.
+                                </p>
+                                <div className="space-y-4">
+                                    {[
+                                        'Arabische taal',
+                                        'Koran recitatie',
+                                        'Islamitische studies',
+                                        'Weekend lessen'
+                                    ].map((item) => (
+                                        <div key={item} className="flex items-center gap-3">
+                                            <div className="w-2 h-2 rounded-full bg-crown" />
+                                            <p className="text-gray-700">{item}</p>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
-                        </div>
-                        <div className="relative h-[400px] rounded-2xl overflow-hidden shadow-xl text-gray-500">
-                            <Image
-                                src="/images/education.jpg"
-                                alt="Islamitisch onderwijs"
-                                fill
-                                className="object-cover"
-                            />
+                            <div className="relative h-[500px] rounded-3xl overflow-hidden shadow-xl">
+                                <Image
+                                    src="/images/placeholder.png"
+                                    alt="Islamitisch onderwijs"
+                                    fill
+                                    className="object-cover"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -72,65 +74,72 @@ export default function OnderwijsPage() {
             {/* Courses Grid */}
             <section className="py-24 bg-gradient-to-b from-white to-gray-50/30">
                 <div className="container mx-auto px-4">
-                    <div className="max-w-6xl mx-auto">
-                        <h2 className="text-4xl font-bold text-gray-800 mb-12 text-center">
+                    <div className="max-w-7xl mx-auto">
+                        <h2 className="text-5xl font-bold text-gray-800 mb-16">
                             Onze Lessen
                         </h2>
-                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div className="grid md:grid-cols-2 gap-16">
                             {[
                                 {
                                     title: 'Arabische Taal',
                                     level: 'Beginners tot Gevorderd',
                                     description: 'Leer de Arabische taal van ervaren docenten.',
                                     image: '/images/arabisch.png',
-                                    slug: 'arabische-taal'
+                                    slug: 'arabische-taal',
+                                    gradient: 'from-boy/80 to-boy/20'
                                 },
                                 {
                                     title: 'Koran Recitatie',
                                     level: 'Alle Niveaus',
                                     description: 'Verbeter je Koran recitatie met professionele begeleiding.',
                                     image: '/images/koran.png',
-                                    slug: 'koran-recitatie'
+                                    slug: 'koran-recitatie',
+                                    gradient: 'from-crown/80 to-crown/20'
                                 },
                                 {
                                     title: 'Weekend School',
                                     level: 'Kinderen',
                                     description: 'Islamitisch onderwijs voor kinderen in het weekend.',
                                     image: '/images/weekend.png',
-                                    slug: 'weekend-school'
+                                    slug: 'weekend-school',
+                                    gradient: 'from-girl/80 to-girl/20'
                                 }
                             ].map((course) => (
-                                <div key={course.title} className="group relative bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
+                                <div key={course.title} className="group relative bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
                                     <Link
                                         href={`/onderwijs/${course.slug}`}
                                         className="absolute inset-0 z-10"
                                         aria-label={`Meer informatie over ${course.title}`}
                                     />
-                                    <div className="relative h-48">
-                                        <Image
-                                            src={course.image}
-                                            alt={course.title}
-                                            fill
-                                            className="object-cover"
-                                        />
-                                    </div>
-                                    <div className="p-8">
-                                        <h3 className="text-xl font-bold text-gray-800 mb-2">
-                                            {course.title}
-                                        </h3>
-                                        <p className="text-sm text-crown font-medium mb-4">
-                                            {course.level}
-                                        </p>
-                                        <p className="text-gray-600 mb-6">
-                                            {course.description}
-                                        </p>
-                                        <div className="space-y-3">
-                                            <button
-                                                onClick={() => setSelectedCourse(course.title)}
-                                                className="relative z-20 w-full bg-crown text-white px-6 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors text-sm uppercase tracking-wide flex items-center justify-center"
-                                            >
-                                                <span>Inschrijven</span>
-                                            </button>
+                                    <div className="flex flex-col md:flex-row h-full">
+                                        <div className="relative w-full md:w-2/5 h-64 md:h-auto">
+                                            <div className="absolute inset-0 bg-gradient-to-br from-black/60 to-black/20 group-hover:opacity-70 transition-opacity duration-300" />
+                                            <Image
+                                                src={course.image}
+                                                alt={course.title}
+                                                fill
+                                                className="object-cover"
+                                            />
+                                        </div>
+                                        <div className="w-full md:w-3/5 p-8 md:p-10">
+                                            <div className="inline-block px-3 py-1 rounded-full bg-crown/10 text-crown text-sm font-medium mb-6">
+                                                {course.level}
+                                            </div>
+                                            <h3 className="text-2xl font-bold text-gray-800 mb-4">
+                                                {course.title}
+                                            </h3>
+                                            <p className="text-gray-600 mb-8 text-lg">
+                                                {course.description}
+                                            </p>
+                                            <div className="mt-auto">
+                                                <button
+                                                    onClick={() => setSelectedCourse(course.title)}
+                                                    className="relative z-20 w-full bg-crown text-white px-6 py-4 rounded-xl font-semibold hover:bg-opacity-90 transition-colors text-sm uppercase tracking-wide flex items-center justify-center group"
+                                                >
+                                                    <span>Inschrijven</span>
+                                                    <FaArrowRight className="ml-2 transform transition-transform duration-300 group-hover:translate-x-1" />
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
