@@ -4,7 +4,6 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Logo from './logo';
-import LogoAlt from './logo-alt';
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -23,8 +22,8 @@ export default function Navbar() {
                 <div className="flex justify-between items-center h-20">
                     {/* Logo */}
                     <Link href="/" className="flex items-center space-x-3">
-                        <LogoAlt />
-                        <span className="font-bold text-xl text-blue">De Kroon</span>
+                        <Logo />
+                        <span className="font-bold text-2xl text-blue">De Kroon</span>
                     </Link>
 
                     {/* Desktop Menu */}
