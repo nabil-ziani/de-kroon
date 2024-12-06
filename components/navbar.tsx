@@ -1,11 +1,21 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
 export default function Navbar() {
+    const [isScrolled, setIsScrolled] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 50);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     const menuItems = [
         { name: 'Over ons', href: '/over-ons' },
@@ -16,9 +26,10 @@ export default function Navbar() {
     ];
 
     return (
-        <nav className="bg-white shadow-sm fixed w-full z-50">
-            <div className="container mx-auto px-4">
-                <div className="flex justify-between items-center h-24">
+        <nav className={`fixed w-full z-50 transition-all duration-300 
+            ${isScrolled ? 'bg-white/70 backdrop-blur-md shadow-sm' : ''}`}>
+            <div className="max-w-[1800px] mx-auto px-2">
+                <div className="flex justify-between items-center h-20">
                     {/* Logo */}
                     <Link href="/" className="flex items-center space-x-3">
                         <Image
@@ -26,18 +37,19 @@ export default function Navbar() {
                             alt="Logo"
                             width={200}
                             height={80}
-                            className="w-auto h-24"
+                            className="w-auto h-16"
                             priority
                         />
                     </Link>
 
                     {/* Desktop Menu */}
-                    <div className="hidden md:flex items-center space-x-8">
+                    <div className="hidden md:flex items-center space-x-10">
                         {menuItems.map((item) => (
                             <Link
                                 key={item.name}
                                 href={item.href}
-                                className="relative text-gray-600 group"
+                                className={`relative group text-base tracking-wide
+                                    ${isScrolled ? 'text-gray-600 hover:text-gray-900' : 'text-white/90 hover:text-white'}`}
                             >
                                 {item.name}
                                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-crown transition-all duration-300 group-hover:w-full" />
@@ -45,7 +57,7 @@ export default function Navbar() {
                         ))}
                         <Link
                             href="/donatie"
-                            className="bg-crown text-white px-5 py-2 rounded-lg font-semibold hover:opacity-90 transition-colors"
+                            className="bg-crown/90 hover:bg-crown text-white px-6 py-2.5 rounded-lg font-semibold transition-colors uppercase tracking-wide text-base"
                         >
                             Doneer
                         </Link>

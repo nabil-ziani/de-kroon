@@ -1,63 +1,76 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { format } from 'date-fns';
-import { nl } from 'date-fns/locale';
 
 type PrayerTime = {
     name: string;
+    arabicName: string;
     time: string;
-    icon: string;
+    isNext?: boolean;
 };
 
 export default function PrayerTimes() {
     const [prayerTimes, setPrayerTimes] = useState<PrayerTime[]>([]);
-    const [currentDate, setCurrentDate] = useState(new Date());
 
     useEffect(() => {
-        // Voorbeeld data - later te vervangen door echte API call
+        // Voorbeeld data - later te vervangen door Mawaaqit API
         const mockPrayerTimes: PrayerTime[] = [
-            { name: 'Fajr', time: '05:23', icon: '🌅' },
-            { name: 'Dhuhr', time: '13:15', icon: '☀️' },
-            { name: 'Asr', time: '16:45', icon: '🌤️' },
-            { name: 'Maghrib', time: '20:15', icon: '🌅' },
-            { name: 'Isha', time: '22:00', icon: '🌙' },
+            { name: 'Fajr', arabicName: 'الفجر', time: '05:23' },
+            { name: 'Dhuhr', arabicName: 'الظهر', time: '13:15' },
+            { name: 'Asr', arabicName: 'العصر', time: '16:45', isNext: true },
+            { name: 'Maghrib', arabicName: 'المغرب', time: '20:15' },
+            { name: 'Isha', arabicName: 'العشاء', time: '22:00' },
         ];
         setPrayerTimes(mockPrayerTimes);
     }, []);
 
+    const PrayerIcon = () => (
+        <svg className="w-8 h-8 mx-auto mb-3" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.5}
+                d="M4 5h16M4 12h16M4 19h16"
+            />
+        </svg>
+    );
+
     return (
         <div className="max-w-4xl mx-auto">
-            {/* Datum weergave */}
-            <div className="text-center mb-8">
-                <p className="text-lg text-boy">
-                    {format(currentDate, 'EEEE d MMMM yyyy', { locale: nl })}
-                </p>
-            </div>
-
             {/* Gebedstijden Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
                 {prayerTimes.map((prayer) => (
                     <div
                         key={prayer.name}
-                        className="bg-white rounded-xl shadow-lg p-6 transform hover:scale-105 transition-transform duration-300"
+                        className={`bg-white rounded-xl p-6 transition-all duration-300 
+                            ${prayer.isNext ? 'shadow-lg ring-1 ring-crown/50 transform hover:scale-105' : 'hover:shadow-lg'}`}
                     >
                         <div className="text-center">
-                            <span className="text-2xl mb-2 block">{prayer.icon}</span>
-                            <h3 className="text-lg font-semibold text-boy mb-1">
-                                {prayer.name}
-                            </h3>
-                            <p className="text-xl font-bold text-accent">{prayer.time}</p>
+                            <div className={`${prayer.isNext ? 'text-crown' : 'text-gray-400'}`}>
+                                <PrayerIcon />
+                            </div>
+                            <div className="space-y-1">
+                                <h3 className="text-lg font-bold text-gray-800">
+                                    {prayer.name}
+                                </h3>
+                                <p className="text-sm text-gray-500 font-medium">
+                                    {prayer.arabicName}
+                                </p>
+                                <p className={`text-2xl font-bold ${prayer.isNext ? 'text-crown' : 'text-gray-800'}`}>
+                                    {prayer.time}
+                                </p>
+                            </div>
                         </div>
                     </div>
                 ))}
             </div>
 
             {/* Volgende gebed indicator */}
-            <div className="mt-8 text-center">
-                <p className="text-boy">
-                    Volgende gebed: <span className="font-bold">Asr</span> over{' '}
-                    <span className="font-bold">2 uur en 15 minuten</span>
+            <div className="mt-12 bg-white/50 backdrop-blur-sm rounded-lg p-6 border border-crown/10">
+                <p className="text-gray-600">
+                    Volgende gebed is{' '}
+                    <span className="font-bold text-crown">Asr</span>{' '}
+                    <span className="text-gray-500">over 2 uur en 15 minuten</span>
                 </p>
             </div>
         </div>

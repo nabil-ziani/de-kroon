@@ -37,6 +37,9 @@ const config: Config = {
           dark: "#278f46",
         },
       },
+      fontFamily: {
+        sans: ['Poppins', 'system-ui', 'sans-serif'],
+      },
     },
   },
   plugins: [],
