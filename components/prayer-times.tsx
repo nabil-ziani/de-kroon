@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { WiSunrise, WiDaySunny, WiSunset, WiMoonrise, WiNightAltCloudy } from 'react-icons/wi';
 
 type PrayerTime = {
     name: string;
@@ -13,7 +14,6 @@ export default function PrayerTimes() {
     const [prayerTimes, setPrayerTimes] = useState<PrayerTime[]>([]);
 
     useEffect(() => {
-        // Voorbeeld data - later te vervangen door Mawaaqit API
         const mockPrayerTimes: PrayerTime[] = [
             { name: 'Fajr', arabicName: 'الفجر', time: '05:23' },
             { name: 'Dhuhr', arabicName: 'الظهر', time: '13:15' },
@@ -24,39 +24,45 @@ export default function PrayerTimes() {
         setPrayerTimes(mockPrayerTimes);
     }, []);
 
-    const PrayerIcon = () => (
-        <svg className="w-8 h-8 mx-auto mb-3" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.5}
-                d="M4 5h16M4 12h16M4 19h16"
-            />
-        </svg>
-    );
+    const PrayerIcon = ({ name }: { name: string }) => {
+        const iconClass = "w-16 h-16 mx-auto";
+
+        switch (name) {
+            case 'Fajr':
+                return <WiSunrise className={iconClass} />;
+            case 'Dhuhr':
+                return <WiDaySunny className={iconClass} />;
+            case 'Asr':
+                return <WiSunset className={iconClass} />;
+            case 'Maghrib':
+                return <WiMoonrise className={iconClass} />;
+            case 'Isha':
+                return <WiNightAltCloudy className={iconClass} />;
+        }
+    };
 
     return (
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-6xl mx-auto">
             {/* Gebedstijden Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
                 {prayerTimes.map((prayer) => (
                     <div
                         key={prayer.name}
-                        className={`bg-white rounded-xl p-6 transition-all duration-300 
-                            ${prayer.isNext ? 'shadow-lg ring-1 ring-crown/50 transform hover:scale-105' : 'hover:shadow-lg'}`}
+                        className={`bg-white rounded-xl p-8 transition-all duration-300 
+                            ${prayer.isNext ? 'shadow-lg ring-2 ring-crown transform hover:scale-105' : 'hover:shadow-xl'}`}
                     >
                         <div className="text-center">
-                            <div className={`${prayer.isNext ? 'text-crown' : 'text-gray-400'}`}>
-                                <PrayerIcon />
+                            <div className={`mb-6 ${prayer.isNext ? 'text-crown' : 'text-gray-400'}`}>
+                                <PrayerIcon name={prayer.name} />
                             </div>
-                            <div className="space-y-1">
-                                <h3 className="text-lg font-bold text-gray-800">
+                            <div className="space-y-2">
+                                <h3 className="text-xl font-bold text-gray-800">
                                     {prayer.name}
                                 </h3>
-                                <p className="text-sm text-gray-500 font-medium">
+                                <p className="text-base text-gray-500 font-medium">
                                     {prayer.arabicName}
                                 </p>
-                                <p className={`text-2xl font-bold ${prayer.isNext ? 'text-crown' : 'text-gray-800'}`}>
+                                <p className={`text-3xl font-bold mt-4 ${prayer.isNext ? 'text-crown' : 'text-gray-800'}`}>
                                     {prayer.time}
                                 </p>
                             </div>
@@ -66,8 +72,8 @@ export default function PrayerTimes() {
             </div>
 
             {/* Volgende gebed indicator */}
-            <div className="mt-12 bg-white/50 backdrop-blur-sm rounded-lg p-6 border border-crown/10">
-                <p className="text-gray-600">
+            <div className="mt-12 bg-white/50 backdrop-blur-sm rounded-xl p-8 border border-crown/10">
+                <p className="text-gray-600 text-lg">
                     Volgende gebed is{' '}
                     <span className="font-bold text-crown">Asr</span>{' '}
                     <span className="text-gray-500">over 2 uur en 15 minuten</span>
