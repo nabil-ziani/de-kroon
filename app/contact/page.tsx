@@ -53,75 +53,80 @@ export default function ContactPage() {
                 <div className="container mx-auto px-4">
                     <div className="max-w-7xl mx-auto space-y-6">
                         {/* Contact Form - Full width */}
-                        <div className="bg-white rounded-3xl shadow-xl p-8 border border-gray-100">
-                            <h2 className="text-3xl font-bold text-gray-800 mb-8">
-                                Stuur ons een bericht
-                            </h2>
-                            <form onSubmit={handleSubmit} className="space-y-6">
-                                <div className="grid md:grid-cols-2 gap-6">
+                        <div className="bg-white rounded-3xl p-8 relative overflow-hidden shadow-xl">
+                            <div className="relative z-20">
+                                <span className="inline-block px-4 py-2 rounded-full bg-crown/10 text-crown text-sm font-medium mb-4">
+                                    Bericht
+                                </span>
+                                <h2 className="text-3xl font-bold text-gray-800 mb-8">
+                                    Stuur ons een bericht
+                                </h2>
+                                <form onSubmit={handleSubmit} className="space-y-6">
+                                    <div className="grid md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label htmlFor="name" className="block text-gray-700 font-medium mb-2">Naam</label>
+                                            <input
+                                                type="text"
+                                                id="name"
+                                                value={formData.name}
+                                                onChange={handleChange}
+                                                className="w-full px-4 py-3 rounded-xl bg-gray-50 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-crown/50 transition-all duration-300"
+                                                placeholder="Uw naam"
+                                                required
+                                            />
+                                        </div>
+                                        <div>
+                                            <label htmlFor="email" className="block text-gray-700 font-medium mb-2">E-mailadres</label>
+                                            <input
+                                                type="email"
+                                                id="email"
+                                                value={formData.email}
+                                                onChange={handleChange}
+                                                className="w-full px-4 py-3 rounded-xl bg-gray-50 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-crown/50 transition-all duration-300"
+                                                placeholder="uw@email.com"
+                                                required
+                                            />
+                                        </div>
+                                    </div>
                                     <div>
-                                        <label htmlFor="name" className="block text-gray-700 font-medium mb-2">Naam</label>
+                                        <label htmlFor="subject" className="block text-gray-700 font-medium mb-2">Onderwerp</label>
                                         <input
                                             type="text"
-                                            id="name"
-                                            value={formData.name}
+                                            id="subject"
+                                            value={formData.subject}
                                             onChange={handleChange}
-                                            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-boy focus:border-transparent transition-all duration-300"
-                                            placeholder="Uw naam"
+                                            className="w-full px-4 py-3 rounded-xl bg-gray-50 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-crown/50 transition-all duration-300"
+                                            placeholder="Onderwerp van uw bericht"
                                             required
                                         />
                                     </div>
                                     <div>
-                                        <label htmlFor="email" className="block text-gray-700 font-medium mb-2">E-mailadres</label>
-                                        <input
-                                            type="email"
-                                            id="email"
-                                            value={formData.email}
+                                        <label htmlFor="message" className="block text-gray-700 font-medium mb-2">Bericht</label>
+                                        <textarea
+                                            id="message"
+                                            value={formData.message}
                                             onChange={handleChange}
-                                            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-boy focus:border-transparent transition-all duration-300"
-                                            placeholder="uw@email.com"
+                                            rows={6}
+                                            className="w-full px-4 py-3 rounded-xl bg-gray-50 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-crown/50 transition-all duration-300 resize-none"
+                                            placeholder="Uw bericht..."
                                             required
-                                        />
+                                        ></textarea>
                                     </div>
-                                </div>
-                                <div>
-                                    <label htmlFor="subject" className="block text-gray-700 font-medium mb-2">Onderwerp</label>
-                                    <input
-                                        type="text"
-                                        id="subject"
-                                        value={formData.subject}
-                                        onChange={handleChange}
-                                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-boy focus:border-transparent transition-all duration-300"
-                                        placeholder="Onderwerp van uw bericht"
-                                        required
-                                    />
-                                </div>
-                                <div>
-                                    <label htmlFor="message" className="block text-gray-700 font-medium mb-2">Bericht</label>
-                                    <textarea
-                                        id="message"
-                                        value={formData.message}
-                                        onChange={handleChange}
-                                        rows={6}
-                                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-boy focus:border-transparent transition-all duration-300"
-                                        placeholder="Uw bericht..."
-                                        required
-                                    ></textarea>
-                                </div>
-                                <button
-                                    type="submit"
-                                    className="w-full bg-gradient-to-r from-boy to-boy/80 text-white px-6 py-4 rounded-xl font-semibold hover:opacity-90 transition-all duration-300 flex items-center justify-center group"
-                                >
-                                    Verstuur bericht
-                                    <FaArrowRight className="ml-2 transform transition-transform duration-300 group-hover:translate-x-1" />
-                                </button>
-                            </form>
+                                    <button
+                                        type="submit"
+                                        className="w-full bg-gradient-to-r from-crown to-crown/90 text-white px-6 py-4 rounded-xl font-semibold hover:opacity-90 transition-all duration-300 flex items-center justify-center group"
+                                    >
+                                        Verstuur bericht
+                                        <FaArrowRight className="ml-2 transform transition-transform duration-300 group-hover:translate-x-1" />
+                                    </button>
+                                </form>
+                            </div>
                         </div>
 
                         {/* Contact Info and Map - Side by side */}
                         <div className="grid md:grid-cols-2 gap-6">
                             {/* Contact Details */}
-                            <div className="bg-gradient-to-br from-boy to-boy/70 rounded-3xl p-8 relative overflow-hidden shadow-xl h-[400px]">
+                            <div className="bg-gradient-to-br from-boy to-boy/70 rounded-3xl p-8 relative overflow-hidden shadow-xl h-[400px] transition-all duration-300 hover:scale-[1.02] group">
                                 <div className="relative z-20">
                                     <span className="inline-block px-4 py-2 rounded-full bg-white/20 text-white text-sm font-medium mb-4">
                                         Contact
@@ -157,12 +162,12 @@ export default function ContactPage() {
                             </div>
 
                             {/* Google Maps */}
-                            <div className="bg-white rounded-3xl shadow-xl overflow-hidden h-[400px]">
+                            <div className="bg-white rounded-3xl shadow-xl overflow-hidden h-[400px] transition-all duration-300 hover:scale-[1.02]">
                                 <iframe
                                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2498.614824243935!2d4.443359776926787!3d51.21770883948415!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c3f7c5ac3fdb33%3A0x7f5ef33737d8f2dd!2sKroonstraat%2072%2C%202140%20Antwerpen!5e0!3m2!1snl!2sbe!4v1708536144707!5m2!1snl!2sbe"
                                     width="100%"
                                     height="400"
-                                    style={{ 
+                                    style={{
                                         border: 0,
                                         filter: 'contrast(1.1) saturate(1.2)'
                                     }}
