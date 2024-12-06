@@ -15,6 +15,7 @@ const config: Config = {
         red: "#e57373"      // Zacht rood
       },
       fontFamily: {
+        nunito: ['Nunito', 'sans-serif'],
         sans: ['Inter', 'system-ui', 'sans-serif'],
       },
     },

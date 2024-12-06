@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import Logo from './logo';
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -19,11 +18,17 @@ export default function Navbar() {
     return (
         <nav className="bg-white shadow-sm fixed w-full z-50">
             <div className="container mx-auto px-4">
-                <div className="flex justify-between items-center h-20">
+                <div className="flex justify-between items-center h-24">
                     {/* Logo */}
                     <Link href="/" className="flex items-center space-x-3">
-                        <Logo />
-                        <span className="font-bold text-2xl text-blue">De Kroon</span>
+                        <Image
+                            src="/logo-2.png"
+                            alt="Logo"
+                            width={200}
+                            height={80}
+                            className="w-auto h-24"
+                            priority
+                        />
                     </Link>
 
                     {/* Desktop Menu */}
