@@ -36,13 +36,13 @@ export default function Hero() {
                         </p>
                         <div className="flex flex-wrap gap-4">
                             <Link
-                                href="/courses"
+                                href="/onderwijs"
                                 className="bg-crown text-white px-6 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors uppercase tracking-wide text-sm"
                             >
                                 Bekijk onze cursussen
                             </Link>
                             <Link
-                                href="/about"
+                                href="/over-ons"
                                 className="bg-white/10 text-white px-6 py-3 rounded-lg font-semibold hover:bg-white/20 transition-colors uppercase tracking-wide text-sm"
                             >
                                 Meer over ons
