@@ -1,10 +1,10 @@
 import { Resend } from 'resend';
 import { ContactFormData, EnrollmentFormData } from '@/utils/validation';
+
 import ContactEmail from '@/emails/contact-email';
 import EnrollmentEmail from '@/emails/enrollment-email';
 import ContactConfirmationEmail from '@/emails/contact-confirmation-email';
 import EnrollmentConfirmationEmail from '@/emails/enrollment-confirmation-email';
-import { render } from '@react-email/render';
 
 if (!process.env.RESEND_API_KEY) {
     throw new Error('Missing RESEND_API_KEY environment variable');
@@ -17,22 +17,19 @@ const ADMIN_EMAIL = 'info@kidskroon.be';
 export async function sendContactEmail(data: ContactFormData) {
     try {
         // Email naar bestuur    
-        const adminHtml = await render(ContactEmail({ data }));
         await resend.emails.send({
             from: `De Kroon <${FROM_EMAIL}>`,
             to: ADMIN_EMAIL,
             subject: `Nieuw bericht: ${data.subject}`,
-            html: adminHtml,
+            react: ContactEmail({ data })
         });
 
-
         // Bevestigingsmail naar gebruiker
-        const userHtml = await render(ContactConfirmationEmail({ data }));
         await resend.emails.send({
             from: `De Kroon <${FROM_EMAIL}>`,
             to: data.email,
             subject: 'Bedankt voor uw bericht',
-            html: userHtml,
+            react: ContactConfirmationEmail({ data })
         });
     } catch (error) {
         console.error('Error sending contact email:', error);
@@ -43,24 +40,22 @@ export async function sendContactEmail(data: ContactFormData) {
 export async function sendEnrollmentEmail(data: EnrollmentFormData) {
     try {
         // Email naar bestuur
-        const adminHtml = await render(EnrollmentEmail({ data }));
         await resend.emails.send({
-            from: FROM_EMAIL,
+            from: `De Kroon <${FROM_EMAIL}>`,
             to: ADMIN_EMAIL,
             subject: `Nieuwe inschrijving voor ${data.courseName}`,
-            html: adminHtml,
+            react: EnrollmentEmail({ data })
         });
 
         // Bevestigingsmail naar gebruiker
-        const userHtml = await render(EnrollmentConfirmationEmail({ data }));
         await resend.emails.send({
-            from: FROM_EMAIL,
+            from: `De Kroon <${FROM_EMAIL}>`,
             to: data.email,
             subject: 'Bedankt voor uw inschrijving',
-            html: userHtml,
+            react: EnrollmentConfirmationEmail({ data })
         });
     } catch (error) {
         console.error('Error sending enrollment email:', error);
         throw new Error('Er is iets misgegaan bij het versturen van de email.');
     }
-} 
+}
