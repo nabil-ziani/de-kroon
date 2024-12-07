@@ -1,29 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
-import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaArrowRight } from 'react-icons/fa';
+import React from 'react';
+import { FaMapMarkerAlt, FaPhone, FaEnvelope } from 'react-icons/fa';
+import ContactForm from '@/components/contact-form';
 
 export default function ContactPage() {
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
-    });
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        // Hier komt later de logica voor het versturen van het formulier
-        console.log('Form submitted:', formData);
-    };
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setFormData(prev => ({
-            ...prev,
-            [e.target.id]: e.target.value
-        }));
-    };
-
     return (
         <main className="min-h-screen bg-white">
             {/* Hero Section */}
@@ -49,7 +30,7 @@ export default function ContactPage() {
             </section>
 
             {/* Contact Section */}
-            <section className="py-20">
+            <section className="py-12">
                 <div className="container mx-auto px-4">
                     <div className="max-w-7xl mx-auto space-y-6">
                         {/* Contact Form - Full width */}
@@ -61,65 +42,7 @@ export default function ContactPage() {
                                 <h2 className="text-3xl font-bold text-gray-800 mb-8">
                                     Stuur ons een bericht
                                 </h2>
-                                <form onSubmit={handleSubmit} className="space-y-6">
-                                    <div className="grid md:grid-cols-2 gap-6">
-                                        <div>
-                                            <label htmlFor="name" className="block text-gray-700 font-medium mb-2">Naam</label>
-                                            <input
-                                                type="text"
-                                                id="name"
-                                                value={formData.name}
-                                                onChange={handleChange}
-                                                className="w-full px-4 py-3 rounded-xl bg-gray-50 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-crown/50 transition-all duration-300"
-                                                placeholder="Uw naam"
-                                                required
-                                            />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="email" className="block text-gray-700 font-medium mb-2">E-mailadres</label>
-                                            <input
-                                                type="email"
-                                                id="email"
-                                                value={formData.email}
-                                                onChange={handleChange}
-                                                className="w-full px-4 py-3 rounded-xl bg-gray-50 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-crown/50 transition-all duration-300"
-                                                placeholder="uw@email.com"
-                                                required
-                                            />
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <label htmlFor="subject" className="block text-gray-700 font-medium mb-2">Onderwerp</label>
-                                        <input
-                                            type="text"
-                                            id="subject"
-                                            value={formData.subject}
-                                            onChange={handleChange}
-                                            className="w-full px-4 py-3 rounded-xl bg-gray-50 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-crown/50 transition-all duration-300"
-                                            placeholder="Onderwerp van uw bericht"
-                                            required
-                                        />
-                                    </div>
-                                    <div>
-                                        <label htmlFor="message" className="block text-gray-700 font-medium mb-2">Bericht</label>
-                                        <textarea
-                                            id="message"
-                                            value={formData.message}
-                                            onChange={handleChange}
-                                            rows={6}
-                                            className="w-full px-4 py-3 rounded-xl bg-gray-50 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-crown/50 transition-all duration-300 resize-none"
-                                            placeholder="Uw bericht..."
-                                            required
-                                        ></textarea>
-                                    </div>
-                                    <button
-                                        type="submit"
-                                        className="w-full bg-gradient-to-r from-crown to-crown/90 text-white px-6 py-4 rounded-xl font-semibold hover:opacity-90 transition-all duration-300 flex items-center justify-center group"
-                                    >
-                                        Verstuur bericht
-                                        <FaArrowRight className="ml-2 transform transition-transform duration-300 group-hover:translate-x-1" />
-                                    </button>
-                                </form>
+                                <ContactForm />
                             </div>
                         </div>
 
