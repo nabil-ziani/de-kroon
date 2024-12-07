@@ -2,41 +2,40 @@
 
 import { FaMosque } from 'react-icons/fa';
 import { WiSunrise, WiDaySunny, WiSunset, WiMoonrise, WiNightAltCloudy } from 'react-icons/wi';
+import { useState, useEffect } from 'react';
+import { getPrayerTimes } from '@/lib/prayer-times';
+import { format } from 'date-fns';
+import { nlBE } from 'date-fns/locale';
 
 export default function PrayerTimesPage() {
-    // Dit zou later uit een API of database komen
-    const prayerTimes = [
-        {
-            name: 'Fajr',
-            time: '06:15',
-            icon: WiSunrise,
-            arabicName: 'الفجر'
-        },
-        {
-            name: 'Dhuhr',
-            time: '13:04',
-            icon: WiDaySunny,
-            arabicName: 'الظهر'
-        },
-        {
-            name: 'Asr',
-            time: '15:21',
-            icon: WiSunset,
-            arabicName: 'العصر'
-        },
-        {
-            name: 'Maghrib',
-            time: '17:45',
-            icon: WiMoonrise,
-            arabicName: 'المغرب'
-        },
-        {
-            name: 'Isha',
-            time: '19:15',
-            icon: WiNightAltCloudy,
-            arabicName: 'العشاء'
+    const [prayerTimes, setPrayerTimes] = useState([
+        { name: 'Fajr', time: '--:--', icon: WiSunrise, arabicName: 'الفجر' },
+        { name: 'Dhuhr', time: '--:--', icon: WiDaySunny, arabicName: 'الظهر' },
+        { name: 'Asr', time: '--:--', icon: WiSunset, arabicName: 'العصر' },
+        { name: 'Maghrib', time: '--:--', icon: WiMoonrise, arabicName: 'المغرب' },
+        { name: 'Isha', time: '--:--', icon: WiNightAltCloudy, arabicName: 'العشاء' }
+    ]);
+
+    useEffect(() => {
+        async function fetchPrayerTimes() {
+            try {
+                const times = await getPrayerTimes();
+                setPrayerTimes([
+                    { name: 'Fajr', time: times.fajr, icon: WiSunrise, arabicName: 'الفجر' },
+                    { name: 'Dhuhr', time: times.dhuhr, icon: WiDaySunny, arabicName: 'الظهر' },
+                    { name: 'Asr', time: times.asr, icon: WiSunset, arabicName: 'العصر' },
+                    { name: 'Maghrib', time: times.maghrib, icon: WiMoonrise, arabicName: 'المغرب' },
+                    { name: 'Isha', time: times.isha, icon: WiNightAltCloudy, arabicName: 'العشاء' }
+                ]);
+            } catch (error) {
+                console.error('Error fetching prayer times:', error);
+            }
         }
-    ];
+
+        fetchPrayerTimes();
+        const interval = setInterval(fetchPrayerTimes, 60000);
+        return () => clearInterval(interval);
+    }, []);
 
     return (
         <main className="min-h-screen bg-white">
@@ -56,7 +55,7 @@ export default function PrayerTimesPage() {
                             Gebedstijden
                         </h1>
                         <p className="text-xl text-white/90">
-                            Bekijk de actuele gebedstijden voor Moskee Nasr in Groningen.
+                            Indicatieve gebedstijden voor Borgerhout
                         </p>
                     </div>
                 </div>
@@ -98,25 +97,28 @@ export default function PrayerTimesPage() {
                                         <FaMosque className="w-8 h-8 text-white" />
                                     </div>
                                     <h3 className="text-2xl font-bold text-white mb-4">
-                                        Aanvullende Informatie
+                                        Belangrijk
                                     </h3>
                                     <div className="space-y-4">
                                         <p className="text-lg text-white/90">
-                                            De gebedstijden worden dagelijks berekend volgens de methode van de Islamic Society of North America (ISNA).
-                                        </p>
-                                        <p className="text-lg text-white/90">
-                                            Kom 10-15 minuten voor aanvang van het gebed om rustig voor te bereiden.
+                                            Dit zijn berekende tijden voor de regio Borgerhout. Voor de exacte gebedstijden van Moskee Ennassr,
+                                            verwijzen we u graag door naar{' '}
+                                            <a
+                                                href="https://mawaqit.net/en/moskee-ennassr-borgerhout-2140-belgium"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-crown hover:underline"
+                                            >
+                                                mawaqit
+                                            </a>
                                         </p>
                                     </div>
                                 </div>
 
                                 <div className="bg-white/10 rounded-2xl p-8">
-                                    <h3 className="text-xl font-bold text-white mb-4">Belangrijk</h3>
-                                    <p className="text-lg text-white/90 mb-6">
-                                        Deze tijden zijn berekend voor Groningen. Tijden kunnen licht verschillen afhankelijk van uw locatie.
-                                    </p>
-                                    <p className="text-white/60 text-sm">
-                                        Laatste update: {new Date().toLocaleDateString()}
+                                    <h3 className="text-xl font-bold text-white mb-4">Opmerking</h3>
+                                    <p className="text-lg text-white/90">
+                                        Gebedstijden kunnen verschillen per moskee. Raadpleeg altijd de officiële tijden van uw lokale moskee.
                                     </p>
                                 </div>
                             </div>

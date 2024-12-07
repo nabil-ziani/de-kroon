@@ -24,7 +24,8 @@ export default function Home() {
               <span className="text-6xl font-bold">Gebedstijden</span>
             </h2>
             <p className="text-xl text-gray-500">
-              {format(currentDate, 'EEEE d MMMM yyyy', { locale: nlBE })}
+              {format(currentDate, 'EEEE d MMMM yyyy', { locale: nlBE }).charAt(0).toUpperCase() + format(currentDate, 'EEEE d MMMM yyyy', { locale: nlBE }).slice(1)}
+              ,{" "} <span className="font-bold">Borgerhout</span>
             </p>
           </div>
           <PrayerTimes />
