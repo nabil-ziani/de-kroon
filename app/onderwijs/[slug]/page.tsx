@@ -68,7 +68,7 @@ interface PageProps {
 }
 
 export default async function CourseDetailPage({ params }: PageProps) {
-    const { slug } = await params
+    const { slug } = await params;
     const course = courseDetails[slug as keyof typeof courseDetails];
 
     if (!course) {
