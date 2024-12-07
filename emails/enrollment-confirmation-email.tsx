@@ -74,10 +74,10 @@ export default function EnrollmentConfirmationEmail({ data }: EnrollmentConfirma
 
 // Styling
 const main = {
-    backgroundColor: '#f6f9fc',
-    fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif',
     margin: '0',
     padding: '40px 20px',
+    backgroundColor: '#f6f9fc',
+    fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif',
 };
 
 const logo = {
@@ -86,8 +86,8 @@ const logo = {
 };
 
 const container = {
-    backgroundColor: '#ffffff',
     margin: '0 auto',
+    backgroundColor: '#ffffff',
     maxWidth: '600px',
     padding: '20px 0 48px',
     borderRadius: '16px',

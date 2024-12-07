@@ -60,8 +60,8 @@ export default function ContactConfirmationEmail({ data }: ContactConfirmationEm
 
 // Styling
 const main = {
-    backgroundColor: '#242424',
-    fontFamily: 'Poppins, Arial, sans-serif',
+    backgroundColor: '#f6f9fc',
+    fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif',
     margin: '0',
     padding: '40px 20px',
 };
@@ -72,17 +72,18 @@ const logo = {
 };
 
 const container = {
+    backgroundColor: '#ffffff',
     margin: '0 auto',
     maxWidth: '600px',
+    padding: '20px 0 48px',
+    borderRadius: '16px',
+    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
 };
 
 const section = {
-    backgroundColor: '#f8fafc',
-    padding: '40px 30px',
-    borderRadius: '12px',
-    textAlign: 'center' as const,
-    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)'
+    padding: '24px 48px',
 };
+
 
 const greeting = {
     fontFamily: 'Poppins, Arial, sans-serif',
@@ -92,6 +93,7 @@ const greeting = {
     lineHeight: '24px',
     margin: '0 0 24px',
     fontStyle: 'italic',
+    textAlign: 'center' as const,
 };
 
 const messageText = {
