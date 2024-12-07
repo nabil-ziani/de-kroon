@@ -2,8 +2,9 @@ import { Resend } from 'resend';
 import { ContactFormData, EnrollmentFormData } from '@/utils/validation';
 
 import ContactEmail from '@/emails/contact-email';
-import EnrollmentEmail from '@/emails/enrollment-email';
 import ContactConfirmationEmail from '@/emails/contact-confirmation-email';
+
+import EnrollmentEmail from '@/emails/enrollment-email';
 import EnrollmentConfirmationEmail from '@/emails/enrollment-confirmation-email';
 
 if (!process.env.RESEND_API_KEY) {

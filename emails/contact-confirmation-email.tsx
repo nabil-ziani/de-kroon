@@ -45,8 +45,6 @@ export default function ContactConfirmationEmail({ data }: ContactConfirmationEm
                         <Hr style={hr} />
 
                         <Text style={contactInfo}>
-                            <span style={brandName}>De Kroon</span>
-                            <br />
                             Kroonstraat 72, 2140 Borgerhout
                             <br />
                             +32 XXX XX XX XX
@@ -60,66 +58,58 @@ export default function ContactConfirmationEmail({ data }: ContactConfirmationEm
 
 // Styling
 const main = {
-    backgroundColor: '#f6f9fc',
-    fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif',
+    backgroundColor: '#ffffff',
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif',
     margin: '0',
     padding: '40px 20px',
 };
 
 const logo = {
-    margin: '0 auto 32px',
+    margin: '0 auto 30px',
     display: 'block',
 };
 
 const container = {
-    backgroundColor: '#ffffff',
     margin: '0 auto',
     maxWidth: '600px',
-    padding: '20px 0 48px',
-    borderRadius: '16px',
-    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
 };
 
 const section = {
-    padding: '24px 48px',
+    backgroundColor: '#f8fafc',
+    padding: '40px 30px',
+    borderRadius: '12px',
+    textAlign: 'center' as const,
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)',
 };
 
-
 const greeting = {
-    fontFamily: 'Poppins, Arial, sans-serif',
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif',
     fontWeight: '600',
-    color: '#374151',
-    fontSize: '15px',
-    lineHeight: '24px',
+    color: '#1a2f33',
+    fontSize: '16px',
+    lineHeight: '32px',
     margin: '0 0 24px',
-    fontStyle: 'italic',
     textAlign: 'center' as const,
 };
 
 const messageText = {
-    color: '#111827',
+    color: '#1a2f33',
     fontSize: '16px',
     lineHeight: '26px',
     margin: '0 0 32px',
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif',
 };
 
 const hr = {
     borderColor: '#e5e7eb',
-    margin: '0 0 32px',
-};
-
-const brandName = {
-    color: '#efc01b',
-    fontWeight: '600',
-    fontSize: '18px',
-    display: 'inline-block',
-    margin: '8px 0 8px',
+    margin: '32px 0 16px 0',
 };
 
 const contactInfo = {
-    color: '#6b7280',
-    fontSize: '13px',
+    color: '#64748b',
+    fontSize: '14px',
     lineHeight: '20px',
     textAlign: 'center' as const,
-    margin: '0',
+    margin: '24px 0 0',
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif',
 }; 

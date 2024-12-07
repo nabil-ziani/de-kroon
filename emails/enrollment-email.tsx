@@ -80,90 +80,90 @@ export default function EnrollmentEmail({ data }: EnrollmentEmailProps) {
 
 // Styling
 const main = {
-    backgroundColor: '#f6f9fc',
-    fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif',
+    backgroundColor: '#ffffff',
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif',
     margin: '0',
     padding: '40px 20px',
 };
 
-const container = {
-    backgroundColor: '#ffffff',
-    margin: '0 auto',
-    maxWidth: '600px',
-    padding: '20px 0 48px',
-    borderRadius: '16px',
-    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-};
-
 const logo = {
-    margin: '0 auto 32px',
+    margin: '0 auto 30px',
     display: 'block',
 };
 
+const container = {
+    margin: '0 auto',
+    maxWidth: '600px',
+};
+
 const section = {
-    padding: '24px 48px',
+    backgroundColor: '#f8fafc',
+    padding: '40px 30px',
+    borderRadius: '12px',
+    textAlign: 'center' as const,
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)',
 };
 
 const greeting = {
-    fontFamily: 'Poppins, Arial, sans-serif',
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif',
     fontWeight: '600',
-    color: '#374151',
-    fontSize: '15px',
-    lineHeight: '24px',
-    margin: '0 0 24px',
-    fontStyle: 'italic',
-    textAlign: 'center' as const,
-};
-
-const messageText = {
-    color: '#111827',
+    color: '#1a2f33',
     fontSize: '16px',
-    lineHeight: '26px',
-    margin: '0 0 32px',
+    lineHeight: '32px',
+    margin: '0 0 24px',
 };
 
 const messageBox = {
-    backgroundColor: '#f8fafc',
+    backgroundColor: '#ffffff',
     padding: '24px',
     borderRadius: '8px',
     marginTop: '24px',
     marginBottom: '24px',
+    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)',
+    textAlign: 'left' as const,
 };
 
 const detailText = {
-    color: '#374151',
+    color: '#64748b',
     fontSize: '16px',
     lineHeight: '24px',
     margin: '12px 0',
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif',
     display: 'flex',
     gap: '8px',
     alignItems: 'center' as const,
-    justifyContent: 'flex-start' as const,
 };
 
 const labelStyle = {
-    fontFamily: 'Poppins, Arial, sans-serif',
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif',
     fontWeight: '600',
-    color: '#111827',
+    color: '#1a2f33',
     display: 'inline-block',
     textAlign: 'left' as const,
 };
 
-const messageContent = {
-    ...messageText,
-    backgroundColor: '#f9fafb',
-    padding: '16px',
-    borderRadius: '8px',
-    whiteSpace: 'pre-wrap' as const,
+const hr = {
+    borderTop: 'dotted 4px rgba(26, 47, 51, 0.2)',
+    margin: '32px 0 16px 0',
 };
 
-const hr = {
-    borderColor: '#e5e7eb',
-    margin: '32px 0',
+const messageContent = {
+    color: '#64748b',
+    fontSize: '16px',
+    lineHeight: '26px',
+    margin: '0 0 32px',
+    backgroundColor: '#ffffff',
+    padding: '24px',
+    borderRadius: '8px',
+    whiteSpace: 'pre-wrap' as const,
+    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)',
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif',
 };
 
 const footer = {
-    color: '#6b7280',
+    color: '#64748b',
     fontSize: '14px',
     textAlign: 'center' as const,
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif',
+    margin: '24px 0 0',
 }; 
