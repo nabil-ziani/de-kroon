@@ -49,7 +49,7 @@ export default function PrayerTimes() {
                     <div
                         key={prayer.name}
                         className={`bg-white rounded-xl p-8 transition-all duration-300 
-                            ${prayer.isNext ? 'shadow-lg ring-2 ring-crown transform hover:scale-105' : 'hover:shadow-xl'}`}
+                            ${prayer.isNext && 'shadow-lg ring-2 ring-crown transform hover:scale-105 hover:shadow-xl'}`}
                     >
                         <div className="text-center">
                             <div className={`mb-6 ${prayer.isNext ? 'text-crown' : 'text-gray-400'}`}>

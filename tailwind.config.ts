@@ -12,7 +12,7 @@ const config: Config = {
         // Primaire kleuren van het logo
         girl: "#fa5776",    // Roze voor meisje
         boy: "#1dbdfe",     // Lichtblauw voor jongen
-        crown: "#f6c028",   // Geel voor de kroon
+        crown: "#e4a500",   // Donkerder geel voor de kroon (was #f6c028)
         accent: "#2fae55",  // Groen voor subtext/accenten
         
         // Afgeleide kleuren voor moderne UI
@@ -28,7 +28,7 @@ const config: Config = {
         },
         yellow: {
           light: "#fff3d6",
-          DEFAULT: "#f6c028",
+          DEFAULT: "#e4a500",  // Aangepast om te matchen met crown
           dark: "#d9a820",
         },
         green: {

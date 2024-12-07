@@ -115,6 +115,8 @@ export default function Footer() {
                             <div className="flex space-x-4">
                                 <a
                                     href="https://www.facebook.com/p/Moskee-Ennassr-Borgerhout-100066575117579"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     className="text-gray-400 hover:text-crown transition-colors"
                                     aria-label="Facebook"
                                 >
