@@ -16,16 +16,15 @@ const ADMIN_EMAIL = 'info@kidskroon.be';
 
 export async function sendContactEmail(data: ContactFormData) {
     try {
-        // Email naar bestuur
-        /**
-         *  const adminHtml = await render(ContactEmail({ data }));
+        // Email naar bestuur    
+        const adminHtml = await render(ContactEmail({ data }));
         await resend.emails.send({
             from: FROM_EMAIL,
             to: ADMIN_EMAIL,
             subject: `Nieuw contactformulier bericht: ${data.subject}`,
             html: adminHtml,
         });
-         */
+
 
         // Bevestigingsemail naar gebruiker
         const userHtml = await render(ContactConfirmationEmail({ data }));

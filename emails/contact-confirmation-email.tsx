@@ -107,7 +107,7 @@ const hr = {
 };
 
 const brandName = {
-    color: '#e4a500',
+    color: '#efc01b',
     fontWeight: '600',
     fontSize: '18px',
     display: 'inline-block',
