@@ -58,7 +58,6 @@ export default function ContactConfirmationEmail({ data }: ContactConfirmationEm
 
 // Styling
 const main = {
-    backgroundColor: '#ffffff',
     fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif',
     margin: '0',
     padding: '40px 20px',
