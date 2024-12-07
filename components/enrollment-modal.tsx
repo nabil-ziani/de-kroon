@@ -1,7 +1,7 @@
 'use client';
 
 import { Fragment } from 'react';
-import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react';
+import { Dialog, Transition } from '@headlessui/react';
 import { FaTimes } from 'react-icons/fa';
 import EnrollmentForm from './enrollment-form';
 
@@ -16,7 +16,7 @@ export default function EnrollmentModal({ isOpen, onClose, courseName }: Props) 
         <Transition show={isOpen} as={Fragment}>
             <Dialog onClose={onClose} className="relative z-50">
                 {/* Backdrop */}
-                <TransitionChild
+                <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"
                     enterFrom="opacity-0"
@@ -26,12 +26,12 @@ export default function EnrollmentModal({ isOpen, onClose, courseName }: Props) 
                     leaveTo="opacity-0"
                 >
                     <div className="fixed inset-0 bg-black/30 backdrop-blur-sm" />
-                </TransitionChild>
+                </Transition.Child>
 
                 {/* Modal */}
                 <div className="fixed inset-0 overflow-y-auto">
                     <div className="min-h-full flex items-center justify-center p-4">
-                        <TransitionChild
+                        <Transition.Child
                             as={Fragment}
                             enter="ease-out duration-300"
                             enterFrom="opacity-0 scale-95"
@@ -40,7 +40,7 @@ export default function EnrollmentModal({ isOpen, onClose, courseName }: Props) 
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95"
                         >
-                            <DialogPanel className="bg-white rounded-2xl shadow-xl w-full max-w-5xl transform transition-all">
+                            <Dialog.Panel className="bg-white rounded-2xl shadow-xl w-full max-w-5xl transform transition-all">
                                 <div className="relative p-8 md:p-10">
                                     <button
                                         onClick={onClose}
@@ -50,9 +50,9 @@ export default function EnrollmentModal({ isOpen, onClose, courseName }: Props) 
                                     </button>
 
                                     <div className="mb-8">
-                                        <DialogTitle className="text-3xl font-bold text-gray-800 mb-2">
+                                        <Dialog.Title className="text-3xl font-bold text-gray-800 mb-2">
                                             Inschrijven voor {courseName}
-                                        </DialogTitle>
+                                        </Dialog.Title>
                                         <p className="text-gray-500">
                                             Vul het formulier in en we nemen zo snel mogelijk contact met u op.
                                         </p>
@@ -63,8 +63,8 @@ export default function EnrollmentModal({ isOpen, onClose, courseName }: Props) 
                                         defaultValues={{ courseName }}
                                     />
                                 </div>
-                            </DialogPanel>
-                        </TransitionChild>
+                            </Dialog.Panel>
+                        </Transition.Child>
                     </div>
                 </div>
             </Dialog>
