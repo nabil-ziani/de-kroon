@@ -5,11 +5,13 @@ import {
     Heading,
     Hr,
     Html,
+    Img,
     Preview,
     Section,
     Text,
 } from '@react-email/components';
 import { EnrollmentFormData } from '@/utils/validation';
+import { Font } from './custom-font';
 
 interface EnrollmentEmailProps {
     data: EnrollmentFormData;
@@ -18,24 +20,28 @@ interface EnrollmentEmailProps {
 export default function EnrollmentEmail({ data }: EnrollmentEmailProps) {
     return (
         <Html>
-            <Head />
+            <Head>
+                <Font />
+            </Head>
             <Preview>Nieuwe inschrijving voor {data.courseName} van {data.studentName}</Preview>
             <Body style={main}>
+                <Img
+                    src={`https://de-kroon.vercel.app/logo-2.png`}
+                    width="auto"
+                    height="100"
+                    alt="De Kroon"
+                    style={logo}
+                />
+
                 <Container style={container}>
                     <Section style={section}>
-                        <Heading style={h1}>Nieuwe Inschrijving</Heading>
-                        
                         <Text style={greeting}>
-                            Assalaamoe'alaikoem wa rahmatoellah wa barakaatoeh,
-                        </Text>
-
-                        <Text style={messageText}>
-                            Er is een nieuwe inschrijving ontvangen via het inschrijfformulier.
+                            Nieuwe inschrijving ontvangen via het inschrijfformulier:
                         </Text>
 
                         <Hr style={hr} />
 
-                        <div style={messageBox}>
+                        <Section style={messageBox}>
                             <Text style={detailText}>
                                 <strong style={labelStyle}>Student:</strong> {data.studentName}
                             </Text>
@@ -51,14 +57,10 @@ export default function EnrollmentEmail({ data }: EnrollmentEmailProps) {
                             <Text style={detailText}>
                                 <strong style={labelStyle}>Cursus:</strong> {data.courseName}
                             </Text>
-                        </div>
+                        </Section>
 
                         {data.message && (
                             <>
-                                <Hr style={hr} />
-                                <Text style={messageText}>
-                                    <strong>Extra informatie:</strong>
-                                </Text>
                                 <Text style={messageContent}>
                                     {data.message}
                                 </Text>
@@ -94,18 +96,13 @@ const container = {
     boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
 };
 
-const h1 = {
-    color: '#1f2937',
-    fontSize: '24px',
-    fontWeight: '600',
-    lineHeight: '1.25',
-    padding: '0 48px',
-    textAlign: 'center' as const,
+const logo = {
+    margin: '0 auto 32px',
+    display: 'block',
 };
 
 const section = {
     padding: '24px 48px',
-    textAlign: 'center' as const,
 };
 
 const greeting = {
@@ -116,6 +113,7 @@ const greeting = {
     lineHeight: '24px',
     margin: '0 0 24px',
     fontStyle: 'italic',
+    textAlign: 'center' as const,
 };
 
 const messageText = {
@@ -128,10 +126,9 @@ const messageText = {
 const messageBox = {
     backgroundColor: '#f8fafc',
     padding: '24px',
-    borderRadius: '12px',
+    borderRadius: '8px',
     marginTop: '24px',
     marginBottom: '24px',
-    borderLeft: '4px solid #e4a500',
 };
 
 const detailText = {
@@ -141,12 +138,16 @@ const detailText = {
     margin: '12px 0',
     display: 'flex',
     gap: '8px',
+    alignItems: 'center' as const,
+    justifyContent: 'flex-start' as const,
 };
 
 const labelStyle = {
-    color: '#e4a500',
-    minWidth: '120px',
+    fontFamily: 'Poppins, Arial, sans-serif',
+    fontWeight: '600',
+    color: '#111827',
     display: 'inline-block',
+    textAlign: 'left' as const,
 };
 
 const messageContent = {

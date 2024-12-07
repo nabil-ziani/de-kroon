@@ -35,18 +35,14 @@ export default function ContactEmail({ data }: ContactEmailProps) {
                 <Container style={container}>
                     <Section style={section}>
                         <Text style={greeting}>
-                            Assalaamoe'alaikoem wa rahmatoellah wa barakaatoeh,
-                        </Text>
-
-                        <Text style={messageText}>
-                            U heeft een nieuw bericht ontvangen via het contactformulier.
+                            Nieuw bericht ontvangen via het contactformulier:
                         </Text>
 
                         <Hr style={hr} />
 
                         <Section style={messageBox}>
                             <Text style={detailText}>
-                                <strong style={labelStyle}>Van:</strong> {data.name}
+                                <strong style={labelStyle}>Naam:</strong> {data.name}
                             </Text>
                             <Text style={detailText}>
                                 <strong style={labelStyle}>Email:</strong> {data.email}
@@ -56,9 +52,6 @@ export default function ContactEmail({ data }: ContactEmailProps) {
                             </Text>
                         </Section>
 
-                        <Text style={messageText}>
-                            <strong>Bericht:</strong>
-                        </Text>
                         <Text style={messageContent}>
                             {data.message}
                         </Text>
@@ -66,7 +59,7 @@ export default function ContactEmail({ data }: ContactEmailProps) {
                         <Hr style={hr} />
 
                         <Text style={footer}>
-                            Dit bericht is verzonden via het contactformulier op moskee-nasr.be
+                            Dit bericht is verzonden via het contactformulier op kidskroon.be
                         </Text>
                     </Section>
                 </Container>
@@ -98,7 +91,6 @@ const logo = {
 
 const section = {
     padding: '24px 48px',
-    textAlign: 'center' as const,
 };
 
 const greeting = {
@@ -109,6 +101,7 @@ const greeting = {
     lineHeight: '24px',
     margin: '0 0 24px',
     fontStyle: 'italic',
+    textAlign: 'center' as const,
 };
 
 const messageText = {
@@ -121,10 +114,9 @@ const messageText = {
 const messageBox = {
     backgroundColor: '#f8fafc',
     padding: '24px',
-    borderRadius: '12px',
+    borderRadius: '8px',
     marginTop: '24px',
     marginBottom: '24px',
-    borderLeft: '4px solid #efc01b',
 };
 
 const detailText = {
@@ -134,12 +126,16 @@ const detailText = {
     margin: '12px 0',
     display: 'flex',
     gap: '8px',
+    alignItems: 'center' as const,
+    justifyContent: 'flex-start' as const,
 };
 
 const labelStyle = {
-    color: '#efc01b',
-    minWidth: '120px',
+    fontFamily: 'Poppins, Arial, sans-serif',
+    fontWeight: '600',
+    color: '#111827',
     display: 'inline-block',
+    textAlign: 'left' as const,
 };
 
 const messageContent = {

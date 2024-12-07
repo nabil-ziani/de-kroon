@@ -21,7 +21,7 @@ export async function sendContactEmail(data: ContactFormData) {
         await resend.emails.send({
             from: FROM_EMAIL,
             to: ADMIN_EMAIL,
-            subject: `Nieuw contactformulier bericht: ${data.subject}`,
+            subject: `Nieuw bericht: ${data.subject}`,
             html: adminHtml,
         });
 

@@ -116,10 +116,9 @@ const messageText = {
 const messageBox = {
     backgroundColor: '#f8fafc',
     padding: '24px',
-    borderRadius: '12px',
+    borderRadius: '8px',
     marginTop: '24px',
     marginBottom: '24px',
-    borderLeft: '4px solid #efc01b',
 };
 
 const detailText = {
@@ -129,23 +128,21 @@ const detailText = {
     margin: '12px 0',
     display: 'flex',
     gap: '8px',
+    alignItems: 'center' as const,
+    justifyContent: 'flex-start' as const,
 };
 
 const labelStyle = {
-    color: '#efc01b',
-    minWidth: '120px',
+    fontFamily: 'Poppins, Arial, sans-serif',
+    fontWeight: '600',
+    color: '#111827',
     display: 'inline-block',
+    textAlign: 'left' as const,
 };
 
 const hr = {
     borderColor: '#e5e7eb',
     margin: '32px 0',
-};
-
-const footer = {
-    color: '#6b7280',
-    fontSize: '14px',
-    textAlign: 'center' as const,
 };
 
 const brandName = {
