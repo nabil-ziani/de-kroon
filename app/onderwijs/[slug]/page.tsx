@@ -61,7 +61,13 @@ const courseDetails = {
     }
 };
 
-export default function CourseDetailPage({ params }: { params: { slug: string } }) {
+interface PageProps {
+    params: {
+        slug: string;
+    };
+}
+
+export default function CourseDetailPage({ params }: PageProps) {
     const course = courseDetails[params.slug as keyof typeof courseDetails];
 
     if (!course) {
