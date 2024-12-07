@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import CourseDetail from './course-detail';
 
 // Dit zou later uit een database of CMS komen
@@ -78,4 +79,15 @@ export default async function CourseDetailPage({ params }: PageProps) {
     }
 
     return <CourseDetail course={course} />;
+}
+
+// Optioneel: Genereer metadata voor de pagina
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+    const { slug } = params;
+    const course = courseDetails[slug as keyof typeof courseDetails];
+
+    return {
+        title: course ? `${course.title}` : 'Cursus niet gevonden',
+        description: course?.description
+    };
 } 
