@@ -61,14 +61,16 @@ const courseDetails = {
     }
 };
 
-interface PageProps {
+// Bovenaan het bestand, voeg deze type definitie toe
+type PageProps = {
     params: {
         slug: string;
     };
-}
+    searchParams?: { [key: string]: string | string[] | undefined };
+};
 
 export default async function CourseDetailPage({ params }: PageProps) {
-    const { slug } = await params;
+    const { slug } = params;
     const course = courseDetails[slug as keyof typeof courseDetails];
 
     if (!course) {
