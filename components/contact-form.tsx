@@ -5,16 +5,18 @@ import toast from 'react-hot-toast';
 
 export default function ContactForm() {
     const handleSubmit = async (data: ContactFormData) => {
-        const promise = new Promise((resolve, reject) => {
-            // Simuleer een API call
-            setTimeout(() => {
-                // Hier komt later de echte API call
-                if (Math.random() > 0.1) { // 90% kans op succes voor test
-                    resolve(data);
-                } else {
-                    reject(new Error('Er is iets misgegaan bij het versturen van het bericht.'));
-                }
-            }, 1000);
+        const promise = fetch('/api/contact', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        }).then(async (res) => {
+            if (!res.ok) {
+                const error = await res.json();
+                throw new Error(error.message || 'Er is iets misgegaan bij het versturen van het bericht.');
+            }
+            return res.json();
         });
 
         await toast.promise(

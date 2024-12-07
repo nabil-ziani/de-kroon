@@ -10,17 +10,22 @@ type Props = {
 
 export default function EnrollmentForm({ onSuccess, defaultValues }: Props) {
     const handleSubmit = async (data: EnrollmentFormData) => {
-        const promise = new Promise((resolve, reject) => {
-            // Simuleer een API call
-            setTimeout(() => {
-                // Hier komt later de echte API call
-                if (Math.random() > 0.1) { // 90% kans op succes voor test
-                    resolve(data);
-                    onSuccess?.(); // Sluit de modal bij succes
-                } else {
-                    reject(new Error('Er is iets misgegaan bij het versturen van de inschrijving.'));
-                }
-            }, 1000);
+        const promise = fetch('/api/enrollment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        }).then(async (res) => {
+            if (!res.ok) {
+                const error = await res.json();
+                throw new Error(error.message || 'Er is iets misgegaan bij het versturen van de inschrijving.');
+            }
+            const result = await res.json();
+            if (result.success) {
+                onSuccess?.(); // Sluit de modal bij succes
+            }
+            return result;
         });
 
         await toast.promise(
