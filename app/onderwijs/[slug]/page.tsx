@@ -67,8 +67,9 @@ interface PageProps {
     };
 }
 
-export default function CourseDetailPage({ params }: PageProps) {
-    const course = courseDetails[params.slug as keyof typeof courseDetails];
+export default async function CourseDetailPage({ params }: PageProps) {
+    const { slug } = await params
+    const course = courseDetails[slug as keyof typeof courseDetails];
 
     if (!course) {
         return <div>Cursus niet gevonden</div>;
