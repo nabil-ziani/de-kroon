@@ -40,7 +40,7 @@ export default function CourseSection() {
                 {courses.map((course) => (
                     <div
                         key={course.id}
-                        className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                        className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col h-[500px]"
                     >
                         <div className="relative h-48">
                             <Image
@@ -50,17 +50,19 @@ export default function CourseSection() {
                                 className="object-cover"
                             />
                         </div>
-                        <div className="p-8">
-                            <span className="text-sm text-crown font-semibold uppercase tracking-wide">
-                                {course.category}
-                            </span>
-                            <h3 className="text-2xl font-bold text-gray-800 mt-3 mb-4">
-                                {course.title}
-                            </h3>
-                            <p className="text-gray-700 mt-2">{course.description}</p>
+                        <div className="p-8 flex flex-col flex-grow">
+                            <div className="flex-grow">
+                                <span className="text-sm text-crown font-semibold uppercase tracking-wide">
+                                    {course.category}
+                                </span>
+                                <h3 className="text-2xl font-bold text-gray-800 mt-3 mb-4">
+                                    {course.title}
+                                </h3>
+                                <p className="text-gray-700 line-clamp-3">{course.description}</p>
+                            </div>
                             <Link
                                 href={`/courses/${course.id}`}
-                                className="mt-6 inline-block bg-crown text-white px-6 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors uppercase tracking-wide text-sm"
+                                className="mt-6 inline-block bg-crown text-white px-6 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors uppercase tracking-wide text-sm text-center w-full"
                             >
                                 Meer informatie
                             </Link>
@@ -71,7 +73,7 @@ export default function CourseSection() {
 
             <div className="text-center mt-12">
                 <Link
-                    href="/courses"
+                    href="/onderwijs#courses"
                     className="inline-flex items-center justify-center bg-crown/90 hover:bg-crown text-white px-8 py-3 rounded-lg font-semibold transition-colors uppercase tracking-wide text-sm"
                 >
                     Bekijk alle cursussen

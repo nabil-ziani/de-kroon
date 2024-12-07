@@ -50,7 +50,7 @@ export default function CTASection() {
                                 </div>
                                 <div className="mt-auto">
                                     <Link
-                                        href="/vrijwilliger"
+                                        href="mailto:info@kidskroon.be"
                                         className="inline-flex items-center bg-white text-boy px-6 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors uppercase tracking-wide text-sm"
                                     >
                                         Meld je aan

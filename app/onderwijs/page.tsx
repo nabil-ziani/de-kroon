@@ -72,7 +72,7 @@ export default function OnderwijsPage() {
             </section>
 
             {/* Courses Grid */}
-            <section className="py-24 bg-gradient-to-b from-white to-gray-50/30">
+            <section id="courses" className="py-24 bg-gradient-to-b from-white to-gray-50/30">
                 <div className="container mx-auto px-4">
                     <div className="max-w-7xl mx-auto">
                         <h2 className="text-5xl font-bold text-gray-800 mb-16">

@@ -2,7 +2,7 @@
 
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { FaTimes, FaArrowRight } from 'react-icons/fa';
+import { FaTimes } from 'react-icons/fa';
 
 type Props = {
     isOpen: boolean;
@@ -107,10 +107,12 @@ export default function EnrollmentModal({ isOpen, onClose, courseName }: Props) 
                                         <div className="pt-4">
                                             <button
                                                 type="submit"
-                                                className="w-full bg-crown text-white px-6 py-3.5 rounded-xl font-semibold hover:bg-opacity-90 transition-colors text-sm uppercase tracking-wide flex items-center justify-center group"
+                                                className="w-full bg-crown text-white px-6 py-3.5 rounded-xl font-semibold hover:bg-opacity-90 transition-colors text-sm uppercase tracking-wide flex items-center justify-center space-x-2"
                                             >
                                                 <span>Inschrijven</span>
-                                                <FaArrowRight className="ml-2 transform transition-transform duration-300 group-hover:translate-x-1" />
+                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                                </svg>
                                             </button>
                                         </div>
                                     </form>
