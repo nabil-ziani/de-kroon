@@ -1,10 +1,11 @@
 'use client';
 
-import { FaGraduationCap, FaBook, FaChalkboardTeacher, FaUsers, FaArrowRight } from 'react-icons/fa';
+import { FaArrowRight } from 'react-icons/fa';
 import Image from 'next/image';
 import { useState } from 'react';
 import EnrollmentModal from '@/components/enrollment-modal';
 import Link from 'next/link';
+import { COURSES } from '@/constants';
 
 export default function OnderwijsPage() {
     const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
@@ -79,32 +80,7 @@ export default function OnderwijsPage() {
                             Onze Lessen
                         </h2>
                         <div className="grid md:grid-cols-2 gap-16">
-                            {[
-                                {
-                                    title: 'Arabische Taal',
-                                    level: 'Beginners tot Gevorderd',
-                                    description: 'Leer de Arabische taal van ervaren docenten.',
-                                    image: '/images/arabisch.png',
-                                    slug: 'arabische-taal',
-                                    gradient: 'from-boy/80 to-boy/20'
-                                },
-                                {
-                                    title: 'Koran Recitatie',
-                                    level: 'Alle Niveaus',
-                                    description: 'Verbeter je Koran recitatie met professionele begeleiding.',
-                                    image: '/images/koran.png',
-                                    slug: 'koran-recitatie',
-                                    gradient: 'from-crown/80 to-crown/20'
-                                },
-                                {
-                                    title: 'Weekend School',
-                                    level: 'Kinderen',
-                                    description: 'Islamitisch onderwijs voor kinderen in het weekend.',
-                                    image: '/images/weekend.png',
-                                    slug: 'weekend-school',
-                                    gradient: 'from-girl/80 to-girl/20'
-                                }
-                            ].map((course) => (
+                            {COURSES.map((course) => (
                                 <div key={course.title} className="group relative bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
                                     <Link
                                         href={`/onderwijs/${course.slug}`}
