@@ -69,13 +69,13 @@ export default function ContactPage() {
                                             <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
                                                 <FaPhone className="w-5 h-5 text-white" />
                                             </div>
-                                            <p className="text-white/90">+32 XXX XX XX XX</p>
+                                            <p className="text-white/90">+32 486 13 39 60</p>
                                         </div>
                                         <div className="flex items-center gap-4">
                                             <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
                                                 <FaEnvelope className="w-5 h-5 text-white" />
                                             </div>
-                                            <p className="text-white/90">info@centrum-dekroon.be</p>
+                                            <p className="text-white/90">info@kidskroon.be</p>
                                         </div>
                                     </div>
                                 </div>

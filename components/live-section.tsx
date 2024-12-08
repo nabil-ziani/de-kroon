@@ -1,9 +1,11 @@
 import { FaPlay, FaCalendarAlt, FaClock, FaExpand, FaCompress, FaYoutube } from 'react-icons/fa';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { YOUTUBE_CHANNEL_ID } from '@/constants';
 import Link from 'next/link';
 
 export default function LiveSection() {
     const [isFullscreen, setIsFullscreen] = useState(false);
+    const [isLive, setIsLive] = useState(false);
     const videoContainerRef = useRef<HTMLDivElement>(null);
 
     const toggleFullscreen = () => {
@@ -16,6 +18,24 @@ export default function LiveSection() {
         }
     };
 
+    // Check of de stream live is
+    useEffect(() => {
+        const checkLiveStatus = async () => {
+            try {
+                const response = await fetch(`https://www.youtube.com/channel/${YOUTUBE_CHANNEL_ID}/live`);
+                setIsLive(response.status === 200);
+            } catch (error) {
+                console.error('Error checking live status:', error);
+                setIsLive(false);
+            }
+        };
+
+        checkLiveStatus();
+        const interval = setInterval(checkLiveStatus, 60000); // Check elke minuut
+
+        return () => clearInterval(interval);
+    }, []);
+
     return (
         <div className="max-w-6xl mx-auto">
             <div className="grid md:grid-cols-2 gap-12 items-stretch">
@@ -26,24 +46,34 @@ export default function LiveSection() {
                 >
                     <div className={`absolute inset-0 bg-gradient-to-br from-white/10 to-transparent ${isFullscreen ? 'hidden' : ''}`} />
                     <div className="absolute inset-0">
-                        <div className="h-full flex items-center justify-center p-12">
-                            <div className="text-center relative z-10">
-                                <div className="w-20 h-20 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-8">
-                                    <FaYoutube className="w-8 h-8 text-white ml-1" />
-                                </div>
-                                <h3 className="text-3xl font-bold text-white mb-4">Volgende uitzending</h3>
-                                <div className="inline-flex items-center justify-center gap-6 bg-black/30 backdrop-blur-sm text-white/90 px-8 py-4 rounded-xl">
-                                    <div className="flex items-center gap-2">
-                                        <FaCalendarAlt className="w-5 h-5" />
-                                        <span className="text-lg">Vrijdag</span>
+                        {isLive ? (
+                            <iframe
+                                className="w-full h-full"
+                                src={`https://www.youtube.com/embed/live_stream?channel=${YOUTUBE_CHANNEL_ID}&autoplay=1&mute=1`}
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                            />
+                        ) : (
+                            <div className="h-full flex items-center justify-center p-12">
+                                <div className="text-center relative z-10">
+                                    <div className="w-20 h-20 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-8">
+                                        <FaYoutube className="w-8 h-8 text-white ml-1" />
                                     </div>
-                                    <div className="flex items-center gap-2">
-                                        <FaClock className="w-5 h-5" />
-                                        <span className="text-lg">19:30</span>
+                                    <h3 className="text-3xl font-bold text-white mb-4">Volgende uitzending</h3>
+                                    <div className="inline-flex items-center justify-center gap-6 bg-black/30 backdrop-blur-sm text-white/90 px-8 py-4 rounded-xl">
+                                        <div className="flex items-center gap-2">
+                                            <FaCalendarAlt className="w-5 h-5" />
+                                            <span className="text-lg">Vrijdag</span>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <FaClock className="w-5 h-5" />
+                                            <span className="text-lg">19:30</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        )}
                     </div>
                     {/* Fullscreen button */}
                     <button
@@ -57,6 +87,19 @@ export default function LiveSection() {
                 {/* Schedule & Info */}
                 <div>
                     <div className="space-y-6">
+                        {/* Live Status */}
+                        {isLive && (
+                            <div className="bg-gradient-to-br from-red-500 to-red-600 rounded-2xl p-8 shadow-lg mb-6">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-3 h-3 bg-white rounded-full animate-pulse" />
+                                    <span className="text-white font-bold">LIVE</span>
+                                </div>
+                                <p className="text-white/90 mt-2">
+                                    De uitzending is momenteel live. Klik op de video om te kijken.
+                                </p>
+                            </div>
+                        )}
+
                         {/* Upcoming Streams */}
                         <div className="space-y-4">
                             <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 group">

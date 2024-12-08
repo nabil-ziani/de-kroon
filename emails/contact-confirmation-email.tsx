@@ -47,7 +47,7 @@ export default function ContactConfirmationEmail({ data }: ContactConfirmationEm
                         <Text style={contactInfo}>
                             Kroonstraat 72, 2140 Borgerhout
                             <br />
-                            +32 XXX XX XX XX
+                            +32 486 13 39 60
                         </Text>
                     </Section>
                 </Container>

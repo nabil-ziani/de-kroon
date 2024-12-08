@@ -52,7 +52,7 @@ export default function EnrollmentForm({ onSuccess, defaultValues }: Props) {
             label: 'Telefoonnummer',
             name: 'phone',
             type: 'tel' as const,
-            placeholder: '+32 XXX XX XX XX',
+            placeholder: '+32 486 13 39 60',
             required: true,
             gridCols: 1,
         }

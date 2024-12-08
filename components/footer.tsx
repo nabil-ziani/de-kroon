@@ -24,8 +24,8 @@ export default function Footer() {
                                     <div className="flex-shrink-0 w-8 h-8 bg-crown/10 rounded-full flex items-center justify-center">
                                         <FaPhone className="w-4 h-4 text-crown" />
                                     </div>
-                                    <a href="tel:+32XXXXXXXX" className="hover:text-crown transition-colors">
-                                        +32 XXX XX XX XX
+                                    <a href="tel:+32486133960" className="hover:text-crown transition-colors">
+                                        +32 486 13 39 60
                                     </a>
                                 </li>
                                 <li className="flex items-center space-x-3">

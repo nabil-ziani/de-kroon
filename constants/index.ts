@@ -26,3 +26,5 @@ export const COURSES: Course[] = [
         gradient: 'from-girl/80 to-girl/20'
     }
 ]
+
+export const YOUTUBE_CHANNEL_ID = 'UCrm5292knI_xLYQZHntfPhg'

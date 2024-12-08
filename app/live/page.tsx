@@ -1,10 +1,12 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import { YOUTUBE_CHANNEL_ID } from '@/constants';
+import React, { useState, useRef, useEffect } from 'react';
 import { FaVideo, FaCalendarAlt, FaClock, FaArchive, FaYoutube, FaBookReader, FaArrowRight, FaExpand, FaCompress } from 'react-icons/fa';
 
 export default function LivePage() {
     const [isFullscreen, setIsFullscreen] = useState(false);
+    const [isLive, setIsLive] = useState(false);
     const videoContainerRef = useRef<HTMLDivElement>(null);
 
     const toggleFullscreen = async () => {
@@ -32,6 +34,24 @@ export default function LivePage() {
             console.error('Error toggling fullscreen:', error);
         }
     };
+
+    // Check of de stream live is
+    useEffect(() => {
+        const checkLiveStatus = async () => {
+            try {
+                const response = await fetch(`https://www.youtube.com/channel/${YOUTUBE_CHANNEL_ID}/live`);
+                setIsLive(response.status === 200);
+            } catch (error) {
+                console.error('Error checking live status:', error);
+                setIsLive(false);
+            }
+        };
+
+        checkLiveStatus();
+        const interval = setInterval(checkLiveStatus, 60000); // Check elke minuut
+
+        return () => clearInterval(interval);
+    }, []);
 
     // Update fullscreen state when browser fullscreen changes
     React.useEffect(() => {
@@ -80,8 +100,14 @@ export default function LivePage() {
                     <div className="max-w-7xl mx-auto">
                         {/* Title Section */}
                         <div className="mb-12">
-                            <h2 className="text-4xl font-bold text-gray-800 mb-4">Huidige Uitzending</h2>
-                            <p className="text-xl text-gray-600">Bekijk onze live uitzendingen of eerdere opnames</p>
+                            <h2 className="text-4xl font-bold text-gray-800 mb-4">
+                                {isLive ? 'Nu Live' : 'Volgende Uitzending'}
+                            </h2>
+                            <p className="text-xl text-gray-600">
+                                {isLive
+                                    ? 'De uitzending is momenteel live. Klik op de video om te kijken.'
+                                    : 'Bekijk onze live uitzendingen of eerdere opnames'}
+                            </p>
                         </div>
 
                         <div className={`grid grid-cols-1 ${isFullscreen ? '' : 'md:grid-cols-3'} gap-6`}>
@@ -94,11 +120,21 @@ export default function LivePage() {
                                         className="aspect-video bg-gray-900/50 flex items-center justify-center relative group"
                                     >
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-                                        <div className="relative z-20 text-center text-white p-8">
-                                            <FaYoutube className="w-20 h-20 mx-auto mb-4 text-white/80" />
-                                            <h3 className="text-2xl font-bold mb-2">Volgende uitzending</h3>
-                                            <p className="text-lg">Vrijdag 13:30 - Vrijdaggebed</p>
-                                        </div>
+                                        {isLive ? (
+                                            <iframe
+                                                className="w-full h-full"
+                                                src={`https://www.youtube.com/embed/live_stream?channel=${YOUTUBE_CHANNEL_ID}&autoplay=1&mute=0`}
+                                                frameBorder="0"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                allowFullScreen
+                                            />
+                                        ) : (
+                                            <div className="relative z-20 text-center text-white p-8">
+                                                <FaYoutube className="w-20 h-20 mx-auto mb-4 text-white/80" />
+                                                <h3 className="text-2xl font-bold mb-2">Volgende uitzending</h3>
+                                                <p className="text-lg">Vrijdag 13:30 - Vrijdaggebed</p>
+                                            </div>
+                                        )}
                                         {/* Fullscreen toggle button */}
                                         <button
                                             onClick={toggleFullscreen}
@@ -111,9 +147,13 @@ export default function LivePage() {
                                     {/* Stream informatie - alleen zichtbaar als niet in fullscreen */}
                                     {!isFullscreen && (
                                         <div className="p-8">
-                                            <h2 className="text-2xl font-bold text-white mb-4">Live Stream</h2>
+                                            <h2 className="text-2xl font-bold text-white mb-4">
+                                                {isLive ? 'Live Stream' : 'Volgende Uitzending'}
+                                            </h2>
                                             <p className="text-white/90">
-                                                De stream start automatisch wanneer de uitzending begint.
+                                                {isLive
+                                                    ? 'De uitzending is nu live. Klik op de video om te kijken.'
+                                                    : 'De stream start automatisch wanneer de uitzending begint.'}
                                             </p>
                                         </div>
                                     )}
