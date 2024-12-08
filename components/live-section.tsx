@@ -1,11 +1,16 @@
 import { FaPlay, FaCalendarAlt, FaClock, FaExpand, FaCompress, FaYoutube } from 'react-icons/fa';
 import { useState, useRef, useEffect } from 'react';
-import { YOUTUBE_CHANNEL_ID } from '@/constants';
 import Link from 'next/link';
+
+const CHANNELS = {
+    dekroon: 'UW_KANAAL_ID',
+    // andere: 'KANAAL_ID',
+};
 
 export default function LiveSection() {
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [isLive, setIsLive] = useState(false);
+    const [activeChannel, setActiveChannel] = useState<keyof typeof CHANNELS>('dekroon');
     const videoContainerRef = useRef<HTMLDivElement>(null);
 
     const toggleFullscreen = () => {
@@ -18,12 +23,20 @@ export default function LiveSection() {
         }
     };
 
-    // Check of de stream live is
+    // Check of er een stream live is
     useEffect(() => {
         const checkLiveStatus = async () => {
             try {
-                const response = await fetch(`https://www.youtube.com/channel/${YOUTUBE_CHANNEL_ID}/live`);
-                setIsLive(response.status === 200);
+                // Check alle kanalen
+                for (const [key, channelId] of Object.entries(CHANNELS)) {
+                    const response = await fetch(`https://www.youtube.com/channel/${channelId}/live`);
+                    if (response.status === 200) {
+                        setIsLive(true);
+                        setActiveChannel(key as keyof typeof CHANNELS);
+                        return;
+                    }
+                }
+                setIsLive(false);
             } catch (error) {
                 console.error('Error checking live status:', error);
                 setIsLive(false);
@@ -47,13 +60,19 @@ export default function LiveSection() {
                     <div className={`absolute inset-0 bg-gradient-to-br from-white/10 to-transparent ${isFullscreen ? 'hidden' : ''}`} />
                     <div className="absolute inset-0">
                         {isLive ? (
-                            <iframe
-                                className="w-full h-full"
-                                src={`https://www.youtube.com/embed/live_stream?channel=${YOUTUBE_CHANNEL_ID}&autoplay=1&mute=1`}
-                                frameBorder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen
-                            />
+                            <div className="relative h-full">
+                                <iframe
+                                    className="w-full h-full"
+                                    src={`https://www.youtube.com/embed/live_stream?channel=${CHANNELS[activeChannel]}&autoplay=1&mute=1`}
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                />
+                                {/* Kanaal indicator */}
+                                <div className="absolute top-4 left-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
+                                    {activeChannel === 'dekroon' ? 'De Kroon' : 'Andere Moskee'}
+                                </div>
+                            </div>
                         ) : (
                             <div className="h-full flex items-center justify-center p-12">
                                 <div className="text-center relative z-10">
@@ -95,7 +114,9 @@ export default function LiveSection() {
                                     <span className="text-white font-bold">LIVE</span>
                                 </div>
                                 <p className="text-white/90 mt-2">
-                                    De uitzending is momenteel live. Klik op de video om te kijken.
+                                    {activeChannel === 'dekroon'
+                                        ? 'Onze uitzending is momenteel live.'
+                                        : 'Er is een live uitzending van een andere moskee beschikbaar.'}
                                 </p>
                             </div>
                         )}
