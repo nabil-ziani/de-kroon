@@ -77,7 +77,7 @@ export default function ContactPage() {
                             </div>
 
                             {/* Phone Card */}
-                            <div className="bg-gradient-to-br from-boy/5 to-boy/10 rounded-3xl p-6 border border-boy/10">
+                            <div className="bg-gradient-to-br from-boy/5 to-boy/10 rounded-3xl p-6">
                                 <div className="flex items-start gap-4">
                                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-boy to-boy/80 
                                                 flex items-center justify-center flex-shrink-0">
@@ -100,7 +100,7 @@ export default function ContactPage() {
                             </div>
 
                             {/* Email Card */}
-                            <div className="bg-gradient-to-br from-girl/5 to-girl/10 rounded-3xl p-6 border border-girl/10">
+                            <div className="bg-gradient-to-br from-girl/5 to-girl/10 rounded-3xl p-6">
                                 <div className="flex items-start gap-4">
                                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-girl to-girl/80 
                                                 flex items-center justify-center flex-shrink-0">
@@ -123,7 +123,7 @@ export default function ContactPage() {
                             </div>
 
                             {/* WhatsApp Card */}
-                            <div className="bg-gradient-to-br from-green-500/5 to-green-500/10 rounded-3xl p-6 border border-green-500/10">
+                            <div className="bg-gradient-to-br from-green-500/5 to-green-500/10 rounded-3xl p-6">
                                 <div className="flex items-start gap-4">
                                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-green-600 
                                                 flex items-center justify-center flex-shrink-0">

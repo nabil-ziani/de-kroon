@@ -227,7 +227,7 @@ export default function DonatePage() {
                                         </div>
                                     </div>
 
-                                    <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-crown/10">
+                                    <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8">
                                         <h3 className="text-xl font-bold text-white mb-4">Vragen?</h3>
                                         <p className="text-lg text-white/90 mb-6">
                                             Heeft u vragen over doneren of wilt u meer informatie? Neem gerust contact met ons op.

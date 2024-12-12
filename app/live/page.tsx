@@ -3,10 +3,30 @@
 import React from 'react';
 import Link from 'next/link';
 import { FaArchive, FaPlay, FaExpand, FaCompress } from 'react-icons/fa';
+import { YOUTUBE_CHANNEL_ID } from '@/constants';
 
 export default function LivePage() {
     const [isFullscreen, setIsFullscreen] = React.useState(false);
+    const [isLive, setIsLive] = React.useState(false);
     const videoRef = React.useRef<HTMLDivElement>(null);
+
+    // Check of er een stream live is
+    React.useEffect(() => {
+        const checkLiveStatus = async () => {
+            try {
+                const response = await fetch(`https://www.youtube.com/channel/${YOUTUBE_CHANNEL_ID}/live`);
+                setIsLive(response.status === 200);
+            } catch (error) {
+                console.error('Error checking live status:', error);
+                setIsLive(false);
+            }
+        };
+
+        checkLiveStatus();
+        const interval = setInterval(checkLiveStatus, 60000); // Check elke minuut
+
+        return () => clearInterval(interval);
+    }, []);
 
     const toggleFullscreen = async () => {
         if (!videoRef.current) return;
@@ -58,9 +78,10 @@ export default function LivePage() {
                             <h2 className="text-5xl font-bold text-gray-800 mb-6">
                                 Volg ons live
                             </h2>
-                            <p className="text-xl text-gray-600">
-                                Volg onze live uitzendingen en bekijk eerdere opnames in het archief.
-                                Mis nooit meer een belangrijke lezing of evenement.
+                            <p className="text-lg text-gray-600">
+                                {isLive
+                                    ? 'De uitzending is momenteel live. Klik op de video om te kijken.'
+                                    : 'De volgende uitzending start vrijdag om 13:30.'}
                             </p>
                         </div>
 
@@ -68,22 +89,36 @@ export default function LivePage() {
                         <div className="grid md:grid-cols-3 gap-6 md:gap-8">
                             {/* Main Live Stream */}
                             <div className="md:col-span-2 rounded-3xl overflow-hidden shadow-xl bg-white border border-gray-100">
-                                <div
+                                <div 
                                     ref={videoRef}
-                                    className={`relative aspect-video bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 ${isFullscreen ? 'fixed inset-0 z-50 h-screen w-screen' : ''
-                                        }`}
+                                    className={`relative aspect-video bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 ${
+                                        isFullscreen ? 'fixed inset-0 z-50 h-screen w-screen' : ''
+                                    }`}
                                 >
-                                    {/* Placeholder content */}
-                                    <div className="absolute inset-0 flex flex-col items-center justify-center text-white/80">
-                                        <div className="w-20 h-20 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center mb-4">
-                                            <FaPlay className="w-8 h-8" />
+                                    <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
+                                    
+                                    {isLive ? (
+                                        // Live YouTube Embed
+                                        <iframe
+                                            className="w-full h-full"
+                                            src={`https://www.youtube.com/embed/live_stream?channel=${YOUTUBE_CHANNEL_ID}&autoplay=1&mute=0`}
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                            allowFullScreen
+                                        />
+                                    ) : (
+                                        // Placeholder content
+                                        <div className="absolute inset-0 flex flex-col items-center justify-center text-white/90">
+                                            <div className="w-20 h-20 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center mb-4 
+                                                        shadow-[0_0_40px_rgba(255,255,255,0.1)]">
+                                                <FaPlay className="w-8 h-8" />
+                                            </div>
+                                            <h3 className="text-xl font-medium mb-2">Geen live uitzending</h3>
+                                            <p className="text-sm opacity-80">De volgende uitzending start vrijdag om 13:30</p>
                                         </div>
-                                        <h3 className="text-xl font-medium mb-2">Geen live uitzending</h3>
-                                        <p className="text-sm opacity-80">De volgende uitzending start vrijdag om 13:30</p>
-                                    </div>
+                                    )}
 
                                     {/* Fullscreen button */}
-                                    <button
+                                    <button 
                                         onClick={toggleFullscreen}
                                         className="absolute top-4 right-4 p-3 rounded-xl bg-black/20 hover:bg-black/30 transition-colors"
                                     >
@@ -99,16 +134,27 @@ export default function LivePage() {
                                         <div className="flex items-center justify-between mb-4">
                                             <div className="flex items-center gap-3">
                                                 <span className="flex h-3 w-3">
-                                                    <span className="relative inline-flex rounded-full h-3 w-3 bg-gray-300"></span>
+                                                    {isLive ? (
+                                                        <>
+                                                            <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-red-400 opacity-75"></span>
+                                                            <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                                                        </>
+                                                    ) : (
+                                                        <span className="relative inline-flex rounded-full h-3 w-3 bg-gray-300"></span>
+                                                    )}
                                                 </span>
-                                                <span className="font-medium text-gray-400">Offline</span>
+                                                <span className={`font-medium ${isLive ? 'text-red-500' : 'text-gray-400'}`}>
+                                                    {isLive ? 'Live' : 'Offline'}
+                                                </span>
                                             </div>
                                         </div>
                                         <h3 className="text-xl font-semibold text-gray-900 mb-2">
                                             Vrijdagpreek
                                         </h3>
                                         <p className="text-gray-600">
-                                            De live uitzending start automatisch wanneer we online gaan.
+                                            {isLive 
+                                                ? 'Live uitzending van de vrijdagpreek vanuit de grote zaal.'
+                                                : 'De live uitzending start automatisch wanneer we online gaan.'}
                                         </p>
                                     </div>
                                 )}
@@ -121,8 +167,8 @@ export default function LivePage() {
                                     <div className="h-full flex flex-col">
                                         <div className="flex-1">
                                             <div className="w-16 h-16 mb-6 rounded-2xl bg-gradient-to-br from-crown to-crown/80 
-                                                        flex items-center justify-center transform -rotate-6 
-                                                        transition-transform group-hover:rotate-0">
+                                                        flex items-center justify-center transform transition-transform duration-300
+                                                        group-hover:-rotate-6">
                                                 <FaArchive className="w-8 h-8 text-white" />
                                             </div>
                                             <h3 className="text-2xl font-bold text-gray-900 mb-4">
