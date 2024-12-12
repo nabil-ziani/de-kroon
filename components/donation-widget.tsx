@@ -2,12 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import { FaHandHoldingHeart, FaTimes } from 'react-icons/fa';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function DonationWidget() {
     const [isVisible, setIsVisible] = useState(false);
     const [isDismissed, setIsDismissed] = useState(false);
     const [donorCount, setDonorCount] = useState<number>(0);
+    const router = useRouter();
 
     useEffect(() => {
         // Wacht 30 seconden voordat de widget verschijnt
@@ -29,6 +30,11 @@ export default function DonationWidget() {
 
         return () => clearTimeout(timer);
     }, [isDismissed]);
+
+    const handleDonateClick = () => {
+        setIsDismissed(true);
+        router.push('/donatie');
+    };
 
     if (!isVisible || isDismissed) return null;
 
@@ -62,23 +68,14 @@ export default function DonationWidget() {
                         </p>
                     )}
 
-                    <Link
-                        href="/donatie"
+                    <button
+                        onClick={handleDonateClick}
                         className="block w-full bg-gradient-to-br from-girl/80 to-girl text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition-all duration-300"
                     >
                         Steun vanaf €10 per maand
-                    </Link>
+                    </button>
                 </div>
             </div>
         </div>
     );
 }
-
-// Voeg deze CSS toe aan je globals.css
-// @keyframes fade-in {
-//     from { opacity: 0; transform: translateY(10px); }
-//     to { opacity: 1; transform: translateY(0); }
-// }
-// .animate-fade-in {
-//     animation: fade-in 0.5s ease-out forwards;
-// } 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { format, addMonths, subMonths, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isToday } from 'date-fns';
 import { nl } from 'date-fns/locale';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
@@ -8,7 +8,6 @@ type Event = {
     title: string;
     start: Date;
     end: Date;
-    category: 'onderwijs' | 'activiteit' | 'special';
     audience: 'man' | 'vrouw' | 'gemengd';
     location: string;
     description: string;
@@ -23,10 +22,13 @@ interface CalendarProps {
 export default function Calendar({ events, onEventClick }: CalendarProps) {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [isChangingMonth, setIsChangingMonth] = useState(false);
+    const [renderedDays, setRenderedDays] = useState<Date[]>([]);
 
-    const startDate = startOfMonth(currentDate);
-    const endDate = endOfMonth(currentDate);
-    const days = eachDayOfInterval({ start: startDate, end: endDate });
+    useEffect(() => {
+        const startDate = startOfMonth(currentDate);
+        const endDate = endOfMonth(currentDate);
+        setRenderedDays(eachDayOfInterval({ start: startDate, end: endDate }));
+    }, [currentDate]);
 
     const goToPreviousMonth = () => {
         setIsChangingMonth(true);
@@ -46,13 +48,13 @@ export default function Calendar({ events, onEventClick }: CalendarProps) {
         );
     };
 
-    const getCategoryColor = (category: Event['category']) => {
+    const getCategoryColor = (category: Event['audience']) => {
         switch (category) {
-            case 'onderwijs':
+            case 'man':
                 return 'from-boy/90 to-boy/80';
-            case 'activiteit':
+            case 'vrouw':
                 return 'from-girl/90 to-girl/80';
-            case 'special':
+            case 'gemengd':
                 return 'from-crown/90 to-crown/80';
         }
     };
@@ -102,56 +104,66 @@ export default function Calendar({ events, onEventClick }: CalendarProps) {
                 ))}
 
                 {/* Calendar Days */}
-                {!isChangingMonth && (
-                    <div className="col-span-7 grid grid-cols-7 gap-2 md:gap-4">
-                        {days.map((day) => {
-                            const dayEvents = getEventsForDay(day);
-                            const isCurrentMonth = isSameMonth(day, currentDate);
-                            const isCurrentDay = isToday(day);
+                <div className={`col-span-7 grid grid-cols-7 gap-2 md:gap-4 transition-opacity duration-300 ${isChangingMonth ? 'opacity-0' : 'opacity-100'}`}>
+                    {renderedDays.map((day) => {
+                        const dayEvents = getEventsForDay(day);
+                        const isCurrentMonth = isSameMonth(day, currentDate);
+                        const isCurrentDay = isToday(day);
+                        const hasEvents = dayEvents.length > 0;
 
-                            return (
-                                <div
-                                    key={day.toString()}
-                                    className={`relative min-h-[100px] md:min-h-[140px] rounded-2xl p-2 md:p-4 
-                                                transition-all duration-300 backdrop-blur-sm
-                                                ${isCurrentMonth
-                                            ? 'bg-white/40 hover:bg-white/60 hover:shadow-lg'
-                                            : 'opacity-30 bg-gray-50/30'}`}
-                                >
-                                    {/* Day Number */}
-                                    <div className={`absolute top-2 right-2 md:top-3 md:right-3 
-                                                    w-6 h-6 md:w-8 md:h-8 flex items-center justify-center
-                                                    rounded-lg transition-all duration-300
-                                                    ${isCurrentDay
-                                            ? 'bg-crown text-white font-semibold shadow-lg'
-                                            : 'bg-white/80 text-gray-600 shadow-sm'}`}>
-                                        {format(day, 'd')}
-                                    </div>
-
-                                    {/* Events */}
-                                    <div className="mt-8 space-y-1">
-                                        {dayEvents.map(event => (
-                                            <button
-                                                key={event.id}
-                                                onClick={() => onEventClick(event)}
-                                                className={`w-full text-left px-2 py-1.5 md:px-3 md:py-2 
-                                                            rounded-xl text-white text-xs md:text-sm
-                                                            bg-gradient-to-r ${getCategoryColor(event.category)}
-                                                            shadow-sm hover:shadow-md transition-all duration-300
-                                                            hover:scale-[1.02] hover:-translate-y-0.5`}
-                                            >
-                                                <div className="font-medium line-clamp-1">{event.title}</div>
-                                                <div className="text-[10px] md:text-xs opacity-80">
-                                                    {format(event.start, 'HH:mm')}
-                                                </div>
-                                            </button>
-                                        ))}
-                                    </div>
+                        return (
+                            <div
+                                key={day.toString()}
+                                className={`relative min-h-[100px] md:min-h-[140px] rounded-2xl p-2 md:p-4 
+                                            transition-all duration-300 backdrop-blur-sm origin-center
+                                            hover:scale-[1.02] hover:-translate-y-1
+                                            ${isCurrentMonth
+                                        ? 'bg-gray-50/80 hover:outline hover:outline-2 hover:outline-crown/50'
+                                        : 'opacity-30 bg-gray-50/30'}`}
+                                onClick={() => hasEvents && onEventClick(dayEvents[0])}
+                            >
+                                {/* Day Number */}
+                                <div className={`absolute top-2 right-2 md:top-3 md:right-3 
+                                                w-6 h-6 md:w-8 md:h-8 flex items-center justify-center
+                                                rounded-lg transition-all duration-300
+                                                ${isCurrentDay
+                                        ? 'bg-crown text-white font-semibold shadow-lg'
+                                        : hasEvents
+                                            ? 'bg-white text-gray-800 font-medium shadow-md'
+                                            : 'bg-white text-gray-600 shadow-sm'}`}>
+                                    {format(day, 'd')}
                                 </div>
-                            );
-                        })}
-                    </div>
-                )}
+
+                                {/* Events Preview */}
+                                {hasEvents && (
+                                    <div className="mt-8">
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                onEventClick(dayEvents[0]);
+                                            }}
+                                            className={`w-full text-left px-2 py-1.5 md:px-3 md:py-2 
+                                                        rounded-xl text-white text-xs md:text-sm
+                                                        bg-gradient-to-r ${getCategoryColor(dayEvents[0].audience)}
+                                                        shadow-sm hover:shadow-md transition-all duration-300`}
+                                        >
+                                            <div className="font-medium line-clamp-1">{dayEvents[0].title}</div>
+                                            <div className="text-[10px] md:text-xs opacity-80">
+                                                {format(dayEvents[0].start, 'HH:mm')}
+                                            </div>
+                                        </button>
+
+                                        {dayEvents.length > 1 && (
+                                            <div className="text-xs text-gray-500 text-center mt-2 cursor-pointer hover:text-gray-800 transition-colors">
+                                                +{dayEvents.length - 1} meer
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+                        );
+                    })}
+                </div>
             </div>
         </div>
     );

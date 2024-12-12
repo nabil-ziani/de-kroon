@@ -11,7 +11,6 @@ type Event = {
     title: string;
     start: Date;
     end: Date;
-    category: 'onderwijs' | 'activiteit' | 'special';
     audience: 'man' | 'vrouw' | 'gemengd';
     location: string;
     description: string;
@@ -29,7 +28,6 @@ const events: Event[] = [
         title: 'Arabische Les - Beginners',
         start: new Date(currentYear, currentMonth, 15, 9, 0),
         end: new Date(currentYear, currentMonth, 15, 12, 0),
-        category: 'onderwijs',
         audience: 'gemengd',
         location: 'Lokaal 1.01',
         description: 'Arabische les voor beginners. Leer de basis van het Arabisch schrift en uitspraak.',
@@ -38,9 +36,8 @@ const events: Event[] = [
     {
         id: '2',
         title: 'Zusters Bijeenkomst',
-        start: new Date(currentYear, currentMonth, 20, 14, 0),
+        start: new Date(currentYear, currentMonth, 15, 9, 0),
         end: new Date(currentYear, currentMonth, 20, 17, 0),
-        category: 'activiteit',
         audience: 'vrouw',
         location: 'Grote zaal',
         description: 'Speciale bijeenkomst voor zusters met diverse workshops en lezingen.',
@@ -49,9 +46,8 @@ const events: Event[] = [
     {
         id: '3',
         title: 'Islamitische Studies',
-        start: new Date(currentYear, currentMonth, 22, 18, 30),
+        start: new Date(currentYear, currentMonth, 15, 9, 0),
         end: new Date(currentYear, currentMonth, 22, 20, 30),
-        category: 'onderwijs',
         audience: 'gemengd',
         location: 'Lokaal 2.03',
         description: 'Verdiepende les over islamitische studies en fiqh.',
@@ -62,7 +58,6 @@ const events: Event[] = [
         title: 'Sport & Fitness (Broeders)',
         start: new Date(currentYear, currentMonth, 25, 19, 0),
         end: new Date(currentYear, currentMonth, 25, 21, 0),
-        category: 'activiteit',
         audience: 'man',
         location: 'Sportzaal',
         description: 'Sportactiviteiten en fitness training voor broeders.',
@@ -73,7 +68,6 @@ const events: Event[] = [
         title: 'Koran Recitatie',
         start: new Date(currentYear, currentMonth, 27, 10, 0),
         end: new Date(currentYear, currentMonth, 27, 12, 0),
-        category: 'onderwijs',
         audience: 'gemengd',
         location: 'Gebedsruimte',
         description: 'Leer de juiste uitspraak en regels van Koran recitatie.',
@@ -84,7 +78,6 @@ const events: Event[] = [
         title: 'Iftar Bijeenkomst',
         start: new Date(currentYear, currentMonth + 2, 15, 18, 0),
         end: new Date(currentYear, currentMonth + 2, 15, 21, 0),
-        category: 'special',
         audience: 'gemengd',
         location: 'Grote zaal',
         description: 'Gezamenlijke iftar tijdens Ramadan met een speciale lezing.',
@@ -93,78 +86,110 @@ const events: Event[] = [
 ];
 
 // Event Modal Component
-function EventModal({ event, onClose }: { event: Event; onClose: () => void }) {
+function EventModal({ event, onClose, allEvents }: { event: Event; onClose: () => void; allEvents?: Event[] }) {
+    const sameTimeEvents = allEvents?.filter(e => 
+        format(e.start, 'yyyy-MM-dd') === format(event.start, 'yyyy-MM-dd')
+    ) || [event];
+
+    const isSingleEvent = sameTimeEvents.length === 1;
+
     return (
         <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fade-in"
             onClick={onClose}>
             <div
-                className="bg-white/95 backdrop-blur-xl rounded-3xl p-6 md:p-8 max-w-lg w-full shadow-2xl animate-scale-in"
+                className={`bg-white rounded-3xl shadow-2xl animate-scale-in overflow-hidden
+                    ${isSingleEvent ? 'max-w-2xl' : 'max-w-4xl'} w-full`}
                 onClick={e => e.stopPropagation()}
             >
-                <div className="flex justify-between items-start mb-6">
-                    <h3 className="text-xl md:text-2xl font-bold text-gray-800">{event.title}</h3>
-                    <button onClick={onClose} className="p-2 hover:bg-gray-100/80 rounded-xl transition-colors">
-                        <FaTimes className="w-5 h-5 text-gray-400" />
+                {/* Header */}
+                <div className="relative h-32 bg-gradient-to-br from-gray-900 to-gray-800 flex items-center px-8 md:px-12">
+                    <button 
+                        onClick={onClose} 
+                        className="absolute right-4 top-4 p-2 rounded-xl text-white/60 hover:text-white hover:bg-white/10 transition-colors"
+                    >
+                        <FaTimes className="w-5 h-5" />
                     </button>
-                </div>
-
-                <div className="space-y-6">
-                    <div className="flex items-center gap-3 text-gray-600">
-                        <FaClock className="w-5 h-5 text-gray-400 flex-shrink-0" />
-                        <div>
-                            <div className="text-sm font-medium text-gray-500">Datum & Tijd</div>
-                            <div className="text-base text-gray-800">
-                                {format(event.start, 'EEEE d MMMM', { locale: nl })}
-                                <br />
-                                {format(event.start, 'HH:mm', { locale: nl })} - {format(event.end, 'HH:mm', { locale: nl })} uur
-                            </div>
+                    
+                    <div>
+                        <h3 className="text-white/80 text-sm font-medium mb-1">
+                            {format(event.start, 'EEEE', { locale: nl })}
+                        </h3>
+                        <div className="text-3xl text-white font-bold">
+                            {format(event.start, 'd MMMM yyyy', { locale: nl })}
                         </div>
-                    </div>
-
-                    <div className="flex items-center gap-3 text-gray-600">
-                        <FaMapMarkerAlt className="w-5 h-5 text-gray-400 flex-shrink-0" />
-                        <div>
-                            <div className="text-sm font-medium text-gray-500">Locatie</div>
-                            <div className="text-base text-gray-800">{event.location}</div>
-                        </div>
-                    </div>
-
-                    <div className="flex items-center gap-3 text-gray-600">
-                        <FaUserFriends className="w-5 h-5 text-gray-400 flex-shrink-0" />
-                        <div>
-                            <div className="text-sm font-medium text-gray-500">Voor wie?</div>
-                            <div className="text-base text-gray-800 flex items-center gap-2">
-                                {event.audience === 'man' && <FaMars className="text-boy" />}
-                                {event.audience === 'vrouw' && <FaVenus className="text-girl" />}
-                                {event.audience === 'gemengd' && <FaUsers className="text-crown" />}
-                                {event.audience === 'man' ? 'Alleen broeders' :
-                                    event.audience === 'vrouw' ? 'Alleen zusters' :
-                                        'Iedereen welkom'}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="text-gray-600 leading-relaxed">
-                        {event.description}
                     </div>
                 </div>
 
-                <div className="mt-8 pt-6 border-t border-gray-100 flex flex-col-reverse md:flex-row gap-3 md:justify-end">
-                    <button
-                        className="w-full md:w-auto px-6 py-3 rounded-xl text-sm font-medium bg-gray-100/80 
-                            text-gray-600 hover:bg-gray-200/80 transition-all duration-300
-                            hover:shadow-md active:transform active:scale-95"
-                        onClick={onClose}
-                    >
-                        Sluiten
-                    </button>
-                    <button
-                        className="w-full md:w-auto px-6 py-3 rounded-xl text-sm font-medium bg-gradient-to-r 
-                            from-crown to-crown/90 text-white transition-all duration-300
-                            hover:shadow-md active:transform active:scale-95"
-                    >
-                        Inschrijven
-                    </button>
+                <div className="p-8 md:p-12">
+                    {isSingleEvent ? (
+                        // Single Event Layout
+                        <div>
+                            <div className="mb-8">
+                                <h4 className="text-2xl font-bold text-gray-900 mb-3">{event.title}</h4>
+                                <div className="inline-flex items-center px-3 py-1 bg-gray-100 text-gray-600 text-sm rounded-lg">
+                                    {format(event.start, 'HH:mm', { locale: nl })} - {format(event.end, 'HH:mm', { locale: nl })} uur
+                                </div>
+                            </div>
+
+                            <div className="grid gap-8">
+                                <div>
+                                    <div className="text-sm text-gray-400 mb-1">Locatie</div>
+                                    <div className="text-gray-900">{event.location}</div>
+                                </div>
+
+                                <div>
+                                    <div className="text-sm text-gray-400 mb-1">Voor wie?</div>
+                                    <div className="text-gray-900">
+                                        {event.audience === 'man' ? 'Alleen broeders' :
+                                            event.audience === 'vrouw' ? 'Alleen zusters' :
+                                                'Iedereen welkom'}
+                                    </div>
+                                </div>
+
+                                {event.description && (
+                                    <div>
+                                        <div className="text-sm text-gray-400 mb-1">Beschrijving</div>
+                                        <p className="text-gray-600 leading-relaxed">{event.description}</p>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    ) : (
+                        // Multiple Events Layout
+                        <div>
+                            <div className="mb-8 flex items-center justify-between">
+                                <h4 className="text-xl font-medium text-gray-400">
+                                    {sameTimeEvents.length} activiteiten op deze dag
+                                </h4>
+                            </div>
+
+                            <div className="grid gap-6">
+                                {sameTimeEvents.map((evt) => (
+                                    <div key={evt.id} className="p-6 rounded-2xl bg-gray-50">
+                                        <div className="flex items-start justify-between mb-4">
+                                            <div>
+                                                <h5 className="text-xl font-bold text-gray-900 mb-1">{evt.title}</h5>
+                                                <div className="text-sm text-gray-500">
+                                                    {format(evt.start, 'HH:mm', { locale: nl })} - {format(evt.end, 'HH:mm', { locale: nl })} uur
+                                                    <span className="mx-2">•</span>
+                                                    {evt.location}
+                                                </div>
+                                            </div>
+                                            <div className="text-sm text-gray-500">
+                                                {evt.audience === 'man' ? 'Alleen broeders' :
+                                                    evt.audience === 'vrouw' ? 'Alleen zusters' :
+                                                        'Iedereen welkom'}
+                                            </div>
+                                        </div>
+
+                                        {evt.description && (
+                                            <p className="text-gray-600 text-sm leading-relaxed">{evt.description}</p>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
@@ -216,28 +241,14 @@ export default function ActiviteitenPage() {
                             <div className="flex flex-wrap items-center gap-4 md:gap-6">
                                 <div className="flex items-center gap-2">
                                     <div className="w-3 h-3 rounded-full bg-boy"></div>
-                                    <span className="text-sm text-gray-600">Onderwijs</span>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <div className="w-3 h-3 rounded-full bg-girl"></div>
-                                    <span className="text-sm text-gray-600">Activiteiten</span>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <div className="w-3 h-3 rounded-full bg-crown"></div>
-                                    <span className="text-sm text-gray-600">Speciale events</span>
-                                </div>
-                            </div>
-                            <div className="flex flex-wrap items-center gap-4 md:gap-6">
-                                <div className="flex items-center gap-2">
-                                    <FaMars className="text-boy" />
                                     <span className="text-sm text-gray-600">Broeders</span>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                    <FaVenus className="text-girl" />
+                                    <div className="w-3 h-3 rounded-full bg-girl"></div>
                                     <span className="text-sm text-gray-600">Zusters</span>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                    <FaUsers className="text-crown" />
+                                    <div className="w-3 h-3 rounded-full bg-crown"></div>
                                     <span className="text-sm text-gray-600">Iedereen</span>
                                 </div>
                             </div>
@@ -258,6 +269,7 @@ export default function ActiviteitenPage() {
             {selectedEvent && (
                 <EventModal
                     event={selectedEvent}
+                    allEvents={events}
                     onClose={() => setSelectedEvent(null)}
                 />
             )}

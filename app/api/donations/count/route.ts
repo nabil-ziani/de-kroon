@@ -3,14 +3,12 @@ import prisma from '@/lib/prisma';
 
 export async function GET() {
     try {
-        console.log("Fetching donation count...");
         const recurringCount = await prisma.donation.count({
             where: {
                 isRecurring: true,
                 status: 'completed'
             }
         });
-        console.log("Recurring count:", recurringCount);
 
         return NextResponse.json({
             recurringCount,
