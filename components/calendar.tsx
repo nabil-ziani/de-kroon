@@ -1,5 +1,18 @@
 import { useState, useEffect } from 'react';
-import { format, addMonths, subMonths, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isToday } from 'date-fns';
+import {
+    format,
+    addMonths,
+    subMonths,
+    startOfMonth,
+    endOfMonth,
+    eachDayOfInterval,
+    isSameMonth,
+    isToday,
+    startOfWeek,
+    endOfWeek,
+    isSameDay,
+    addDays
+} from 'date-fns';
 import { nl } from 'date-fns/locale';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
@@ -22,12 +35,27 @@ interface CalendarProps {
 export default function Calendar({ events, onEventClick }: CalendarProps) {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [isChangingMonth, setIsChangingMonth] = useState(false);
-    const [renderedDays, setRenderedDays] = useState<Date[]>([]);
+    const [calendarDays, setCalendarDays] = useState<Date[]>([]);
 
     useEffect(() => {
-        const startDate = startOfMonth(currentDate);
-        const endDate = endOfMonth(currentDate);
-        setRenderedDays(eachDayOfInterval({ start: startDate, end: endDate }));
+        const start = startOfMonth(currentDate);
+        const end = endOfMonth(currentDate);
+
+        // Get the start of the week for the first day of the month
+        const firstDayOfMonth = startOfWeek(start, { weekStartsOn: 1, locale: nl });
+        // Get the end of the week for the last day of the month
+        const lastDayOfMonth = endOfWeek(end, { weekStartsOn: 1, locale: nl });
+
+        // Create array of all days to display
+        const days: Date[] = [];
+        let day = firstDayOfMonth;
+
+        while (isSameDay(day, lastDayOfMonth) || day < lastDayOfMonth) {
+            days.push(day);
+            day = addDays(day, 1);
+        }
+
+        setCalendarDays(days);
     }, [currentDate]);
 
     const goToPreviousMonth = () => {
@@ -105,7 +133,7 @@ export default function Calendar({ events, onEventClick }: CalendarProps) {
 
                 {/* Calendar Days */}
                 <div className={`col-span-7 grid grid-cols-7 gap-2 md:gap-4 transition-opacity duration-300 ${isChangingMonth ? 'opacity-0' : 'opacity-100'}`}>
-                    {renderedDays.map((day) => {
+                    {calendarDays.map((day) => {
                         const dayEvents = getEventsForDay(day);
                         const isCurrentMonth = isSameMonth(day, currentDate);
                         const isCurrentDay = isToday(day);
@@ -118,7 +146,7 @@ export default function Calendar({ events, onEventClick }: CalendarProps) {
                                             transition-all duration-300 backdrop-blur-sm origin-center
                                             hover:scale-[1.02] hover:-translate-y-1
                                             ${isCurrentMonth
-                                        ? 'bg-gray-50/80 hover:outline hover:outline-2 hover:outline-crown/50'
+                                        ? 'bg-gray-50/80 hover:bg-white hover:shadow-lg'
                                         : 'opacity-30 bg-gray-50/30'}`}
                                 onClick={() => hasEvents && onEventClick(dayEvents[0])}
                             >
