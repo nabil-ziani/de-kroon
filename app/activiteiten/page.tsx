@@ -180,7 +180,7 @@ export default function ActiviteitenPage() {
             <section className="relative py-24 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-900 to-boy">
                     <div className="absolute inset-0 opacity-30 mix-blend-soft-light 
-                        bg-[radial-gradient(at_top_right,_#1dbffe_0%,_transparent_50%)]" />
+                                  bg-[radial-gradient(at_top_right,_#1dbffe_0%,_transparent_50%)]" />
                 </div>
                 <div className="absolute -bottom-1 left-0 right-0">
                     <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -188,11 +188,9 @@ export default function ActiviteitenPage() {
                     </svg>
                 </div>
                 <div className="relative z-10 container mx-auto px-4 pt-12 md:pt-24">
-                    <div
-                        className="max-w-4xl animate-slide-up"
-                    >
+                    <div className="max-w-4xl animate-slide-up">
                         <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-                            Onze activiteiten
+                            Activiteiten
                         </h1>
                     </div>
                 </div>
@@ -202,6 +200,17 @@ export default function ActiviteitenPage() {
             <section className="py-12 md:py-24">
                 <div className="container mx-auto px-4">
                     <div className="max-w-7xl mx-auto">
+                        {/* Section Title */}
+                        <div className="max-w-3xl mx-auto text-center mb-16">
+                            <h2 className="text-5xl font-bold text-gray-800 mb-6">
+                                Bekijk onze agenda
+                            </h2>
+                            <p className="text-lg text-gray-600">
+                                Ontdek onze diverse activiteiten en onderwijsprogramma's.
+                                Van Arabische lessen tot sportactiviteiten, er is voor ieder wat wils.
+                            </p>
+                        </div>
+
                         {/* Legend */}
                         <div className="mb-12 flex flex-wrap gap-y-6 gap-x-8">
                             <div className="flex flex-wrap items-center gap-4 md:gap-6">
@@ -235,9 +244,7 @@ export default function ActiviteitenPage() {
                         </div>
 
                         {/* Calendar */}
-                        <div
-                            className="bg-white rounded-3xl shadow-xl border border-gray-100 p-4 md:p-8 animate-fade-in"
-                        >
+                        <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-4 md:p-8 animate-fade-in">
                             <Calendar
                                 events={events}
                                 onEventClick={setSelectedEvent}

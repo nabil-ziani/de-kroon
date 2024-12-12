@@ -1,82 +1,37 @@
 'use client';
 
-import { YOUTUBE_CHANNEL_ID } from '@/constants';
-import React, { useState, useRef, useEffect } from 'react';
-import { FaVideo, FaCalendarAlt, FaClock, FaArchive, FaYoutube, FaBookReader, FaArrowRight, FaExpand, FaCompress } from 'react-icons/fa';
+import React from 'react';
+import Link from 'next/link';
+import { FaArchive, FaPlay, FaExpand, FaCompress } from 'react-icons/fa';
 
 export default function LivePage() {
-    const [isFullscreen, setIsFullscreen] = useState(false);
-    const [isLive, setIsLive] = useState(false);
-    const videoContainerRef = useRef<HTMLDivElement>(null);
+    const [isFullscreen, setIsFullscreen] = React.useState(false);
+    const videoRef = React.useRef<HTMLDivElement>(null);
 
     const toggleFullscreen = async () => {
-        if (!videoContainerRef.current) return;
+        if (!videoRef.current) return;
 
-        try {
-            if (!isFullscreen) {
-                if (videoContainerRef.current.requestFullscreen) {
-                    await videoContainerRef.current.requestFullscreen();
-                } else if ((videoContainerRef.current as any).webkitRequestFullscreen) {
-                    await (videoContainerRef.current as any).webkitRequestFullscreen();
-                } else if ((videoContainerRef.current as any).msRequestFullscreen) {
-                    await (videoContainerRef.current as any).msRequestFullscreen();
-                }
-            } else {
-                if (document.exitFullscreen) {
-                    await document.exitFullscreen();
-                } else if ((document as any).webkitExitFullscreen) {
-                    await (document as any).webkitExitFullscreen();
-                } else if ((document as any).msExitFullscreen) {
-                    await (document as any).msExitFullscreen();
-                }
+        if (!isFullscreen) {
+            try {
+                await videoRef.current.requestFullscreen();
+                setIsFullscreen(true);
+            } catch (err) {
+                console.error('Error attempting to enable fullscreen:', err);
             }
-        } catch (error) {
-            console.error('Error toggling fullscreen:', error);
+        } else {
+            try {
+                await document.exitFullscreen();
+                setIsFullscreen(false);
+            } catch (err) {
+                console.error('Error attempting to exit fullscreen:', err);
+            }
         }
     };
 
-    // Check of de stream live is
-    useEffect(() => {
-        const checkLiveStatus = async () => {
-            try {
-                const response = await fetch(`https://www.youtube.com/channel/${YOUTUBE_CHANNEL_ID}/live`);
-                setIsLive(response.status === 200);
-            } catch (error) {
-                console.error('Error checking live status:', error);
-                setIsLive(false);
-            }
-        };
-
-        checkLiveStatus();
-        const interval = setInterval(checkLiveStatus, 60000); // Check elke minuut
-
-        return () => clearInterval(interval);
-    }, []);
-
-    // Update fullscreen state when browser fullscreen changes
-    React.useEffect(() => {
-        const handleFullscreenChange = () => {
-            setIsFullscreen(Boolean(
-                document.fullscreenElement ||
-                (document as any).webkitFullscreenElement ||
-                (document as any).msFullscreenElement
-            ));
-        };
-
-        document.addEventListener('fullscreenchange', handleFullscreenChange);
-        document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
-        document.addEventListener('msfullscreenchange', handleFullscreenChange);
-
-        return () => {
-            document.removeEventListener('fullscreenchange', handleFullscreenChange);
-            document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
-            document.removeEventListener('msfullscreenchange', handleFullscreenChange);
-        };
-    }, []);
-
     return (
         <main className="min-h-screen bg-white">
-            <section className="relative py-24">
+            {/* Hero Section */}
+            <section className="relative py-24 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-900 to-boy">
                     <div className="absolute inset-0 opacity-30 mix-blend-soft-light bg-[radial-gradient(at_top_right,_#1dbffe_0%,_transparent_50%)]" />
                 </div>
@@ -85,163 +40,109 @@ export default function LivePage() {
                         <path fill="white" d="M0 48.5129L60 54.0129C120 59.5129 240 70.5129 360 75.5129C480 80.5129 600 80.0129 720 70.0129C840 59.5129 960 37.5129 1080 32.0129C1200 27.0129 1320 37.5129 1380 43.0129L1440 48.5129V100H1380C1320 100 1200 100 1080 100C960 100 840 100 720 100C600 100 480 100 360 100C240 100 120 100 60 100H0V48.5129Z" />
                     </svg>
                 </div>
-                <div className="relative z-10 container mx-auto px-4 pt-24">
-                    <div className="max-w-4xl">
-                        <h1 className="text-6xl font-bold text-white mb-6">
+                <div className="relative z-10 container mx-auto px-4 pt-12 md:pt-24">
+                    <div className="max-w-4xl animate-slide-up">
+                        <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
                             Live uitzendingen
                         </h1>
                     </div>
                 </div>
             </section>
 
-            {/* Bento Grid Layout */}
+            {/* Live Content Section */}
             <section className="py-20">
                 <div className="container mx-auto px-4">
                     <div className="max-w-7xl mx-auto">
-                        {/* Title Section */}
-                        <div className="mb-12">
-                            <h2 className="text-4xl font-bold text-gray-800 mb-4">
-                                {isLive ? 'Nu Live' : 'Volgende Uitzending'}
+                        {/* Section Title */}
+                        <div className="max-w-3xl mx-auto text-center mb-16">
+                            <h2 className="text-5xl font-bold text-gray-800 mb-6">
+                                Volg ons live
                             </h2>
                             <p className="text-xl text-gray-600">
-                                {isLive
-                                    ? 'De uitzending is momenteel live. Klik op de video om te kijken.'
-                                    : 'Bekijk onze live uitzendingen of eerdere opnames'}
+                                Volg onze live uitzendingen en bekijk eerdere opnames in het archief.
+                                Mis nooit meer een belangrijke lezing of evenement.
                             </p>
                         </div>
 
-                        <div className={`grid grid-cols-1 ${isFullscreen ? '' : 'md:grid-cols-3'} gap-6`}>
-                            {/* Live Stream - Large Card */}
-                            <div className={`${isFullscreen ? 'col-span-full' : 'md:col-span-2 md:row-span-2'} transition-all duration-300`}>
-                                <div className="bg-gradient-to-br from-boy to-boy/70 rounded-3xl overflow-hidden shadow-lg">
-                                    {/* Video container with ref */}
-                                    <div
-                                        ref={videoContainerRef}
-                                        className="aspect-video bg-gray-900/50 flex items-center justify-center relative group"
-                                    >
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-                                        {isLive ? (
-                                            <iframe
-                                                className="w-full h-full"
-                                                src={`https://www.youtube.com/embed/live_stream?channel=${YOUTUBE_CHANNEL_ID}&autoplay=1&mute=0`}
-                                                frameBorder="0"
-                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                allowFullScreen
-                                            />
-                                        ) : (
-                                            <div className="relative z-20 text-center text-white p-8">
-                                                <FaYoutube className="w-20 h-20 mx-auto mb-4 text-white/80" />
-                                                <h3 className="text-2xl font-bold mb-2">Volgende uitzending</h3>
-                                                <p className="text-lg">Vrijdag 13:30 - Vrijdaggebed</p>
-                                            </div>
-                                        )}
-                                        {/* Fullscreen toggle button */}
-                                        <button
-                                            onClick={toggleFullscreen}
-                                            className="absolute top-4 right-4 bg-black/30 hover:bg-black/50 p-3 rounded-lg transition-all duration-300 text-white/80 hover:text-white z-30"
-                                        >
-                                            {isFullscreen ? <FaCompress size={20} /> : <FaExpand size={20} />}
-                                        </button>
+                        {/* Bento Grid Layout */}
+                        <div className="grid md:grid-cols-3 gap-6 md:gap-8">
+                            {/* Main Live Stream */}
+                            <div className="md:col-span-2 rounded-3xl overflow-hidden shadow-xl bg-white border border-gray-100">
+                                <div
+                                    ref={videoRef}
+                                    className={`relative aspect-video bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 ${isFullscreen ? 'fixed inset-0 z-50 h-screen w-screen' : ''
+                                        }`}
+                                >
+                                    {/* Placeholder content */}
+                                    <div className="absolute inset-0 flex flex-col items-center justify-center text-white/80">
+                                        <div className="w-20 h-20 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center mb-4">
+                                            <FaPlay className="w-8 h-8" />
+                                        </div>
+                                        <h3 className="text-xl font-medium mb-2">Geen live uitzending</h3>
+                                        <p className="text-sm opacity-80">De volgende uitzending start vrijdag om 13:30</p>
                                     </div>
 
-                                    {/* Stream informatie - alleen zichtbaar als niet in fullscreen */}
-                                    {!isFullscreen && (
-                                        <div className="p-8">
-                                            <h2 className="text-2xl font-bold text-white mb-4">
-                                                {isLive ? 'Live Stream' : 'Volgende Uitzending'}
-                                            </h2>
-                                            <p className="text-white/90">
-                                                {isLive
-                                                    ? 'De uitzending is nu live. Klik op de video om te kijken.'
-                                                    : 'De stream start automatisch wanneer de uitzending begint.'}
+                                    {/* Fullscreen button */}
+                                    <button
+                                        onClick={toggleFullscreen}
+                                        className="absolute top-4 right-4 p-3 rounded-xl bg-black/20 hover:bg-black/30 transition-colors"
+                                    >
+                                        {isFullscreen ? (
+                                            <FaCompress className="w-5 h-5 text-white" />
+                                        ) : (
+                                            <FaExpand className="w-5 h-5 text-white" />
+                                        )}
+                                    </button>
+                                </div>
+                                {!isFullscreen && (
+                                    <div className="p-6">
+                                        <div className="flex items-center justify-between mb-4">
+                                            <div className="flex items-center gap-3">
+                                                <span className="flex h-3 w-3">
+                                                    <span className="relative inline-flex rounded-full h-3 w-3 bg-gray-300"></span>
+                                                </span>
+                                                <span className="font-medium text-gray-400">Offline</span>
+                                            </div>
+                                        </div>
+                                        <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                                            Vrijdagpreek
+                                        </h3>
+                                        <p className="text-gray-600">
+                                            De live uitzending start automatisch wanneer we online gaan.
+                                        </p>
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Archive Card */}
+                            <Link href="/archief" className="group">
+                                <div className="h-full rounded-3xl bg-gradient-to-br from-crown/5 to-crown/10 border border-crown/10 p-8 
+                                            transition-all duration-300 hover:shadow-xl hover:scale-[1.02] hover:-translate-y-1">
+                                    <div className="h-full flex flex-col">
+                                        <div className="flex-1">
+                                            <div className="w-16 h-16 mb-6 rounded-2xl bg-gradient-to-br from-crown to-crown/80 
+                                                        flex items-center justify-center transform -rotate-6 
+                                                        transition-transform group-hover:rotate-0">
+                                                <FaArchive className="w-8 h-8 text-white" />
+                                            </div>
+                                            <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                                                Bekijk het archief
+                                            </h3>
+                                            <p className="text-gray-600 mb-8">
+                                                Toegang tot alle eerdere uitzendingen, lezingen en evenementen.
+                                                Nooit meer een belangrijke uitzending missen.
                                             </p>
                                         </div>
-                                    )}
+                                        <div className="inline-flex items-center gap-2 text-crown font-medium">
+                                            Ga naar archief
+                                            <svg className="w-4 h-4 transform transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                            </svg>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-
-                            {/* Schedule and Archive cards - Only show when not fullscreen */}
-                            {!isFullscreen && (
-                                <>
-                                    {/* Schedule Card */}
-                                    <div className="bg-gradient-to-br from-girl to-girl/70 rounded-3xl p-6 relative overflow-hidden group transition-all duration-300 hover:scale-105">
-                                        <div className="relative z-20">
-                                            <div className="flex items-center gap-3 mb-4">
-                                                <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
-                                                    <FaCalendarAlt className="w-5 h-5 text-white" />
-                                                </div>
-                                                <h3 className="text-xl font-bold text-white">Uitzendschema</h3>
-                                            </div>
-                                            <div className="space-y-4 text-white/90">
-                                                <div>
-                                                    <h4 className="font-semibold">Vrijdaggebed</h4>
-                                                    <p className="text-sm text-white/80">Elke vrijdag • 13:30 - 14:30</p>
-                                                </div>
-                                                <div>
-                                                    <h4 className="font-semibold">Lezingen</h4>
-                                                    <p className="text-sm text-white/80">Za/Zo • Na Maghreb gebed</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="absolute right-4 top-4 text-white/20 transform scale-150 transition-transform duration-300 group-hover:scale-[2]">
-                                            <FaClock size={40} />
-                                        </div>
-                                    </div>
-
-                                    {/* Archive Card */}
-                                    <div className="bg-gradient-to-br from-crown to-crown/70 rounded-3xl p-6 relative overflow-hidden group transition-all duration-300 hover:scale-105">
-                                        <div className="relative z-20">
-                                            <div className="flex items-center gap-3 mb-4">
-                                                <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
-                                                    <FaArchive className="w-5 h-5 text-white" />
-                                                </div>
-                                                <h3 className="text-xl font-bold text-white">Archief</h3>
-                                            </div>
-                                            <p className="text-white/90 mb-4">Bekijk eerdere uitzendingen terug</p>
-                                            <ul className="space-y-2 text-white/80 text-sm">
-                                                <li className="flex items-center gap-2">
-                                                    <FaVideo className="w-4 h-4" />
-                                                    <span>Vrijdagpreken</span>
-                                                </li>
-                                                <li className="flex items-center gap-2">
-                                                    <FaBookReader className="w-4 h-4" />
-                                                    <span>Lezingen</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div className="absolute right-4 top-4 text-white/20 transform scale-150 transition-transform duration-300 group-hover:scale-[2]">
-                                            <FaArchive size={40} />
-                                        </div>
-                                    </div>
-                                </>
-                            )}
+                            </Link>
                         </div>
-
-                        {/* Support Section - Only show when not fullscreen */}
-                        {!isFullscreen && (
-                            <div className="mt-12">
-                                <div className="bg-gradient-to-br from-gray-800/90 to-gray-900 p-10 rounded-xl">
-                                    <div className="flex flex-col items-center">
-                                        <div className="flex-shrink-0 w-16 h-16 bg-white/10 rounded-xl flex items-center justify-center mb-6">
-                                            <FaVideo className="w-8 h-8 text-white" />
-                                        </div>
-                                        <h2 className="text-3xl font-bold text-white mb-6">
-                                            Technische ondersteuning nodig?
-                                        </h2>
-                                        <p className="text-lg text-white/90 mb-8 max-w-3xl mx-auto text-center">
-                                            Heeft u problemen met het bekijken van de livestream? Neem contact met ons op.
-                                        </p>
-                                        <a
-                                            href="/contact"
-                                            className="group inline-flex items-center bg-white text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors uppercase tracking-wide text-sm"
-                                        >
-                                            Contact opnemen
-                                            <FaArrowRight className="ml-2 w-4 h-4 transform transition-transform duration-300 group-hover:translate-x-1" />
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
                     </div>
                 </div>
             </section>

@@ -50,10 +50,6 @@ export default function DonatePage() {
                         <h1 className="text-6xl font-bold text-white mb-6">
                             Word een Steunpilaar
                         </h1>
-                        <p className="text-xl text-white/90">
-                            Help ons bouwen aan een betere toekomst voor onze jongeren. Met jouw steun kunnen we kinderen
-                            de kans geven om te leren, spelen en groeien in een veilige, inspirerende omgeving.
-                        </p>
                     </div>
                 </div>
             </section>
@@ -63,10 +59,11 @@ export default function DonatePage() {
                 <div className="container mx-auto px-4">
                     <div className="max-w-7xl mx-auto">
                         <h2 className="text-5xl font-bold text-gray-800 mb-4">
-                            Waarom jouw bijdrage essentieel is
+                            Jouw bijdrage is essentieel
                         </h2>
                         <p className="text-xl text-gray-600 mb-12">
-                            Samen bouwen we aan een betere toekomst voor onze kinderen
+                            Help ons bouwen aan een betere toekomst voor onze jongeren. Met jouw steun kunnen we kinderen
+                            de kans geven om te leren, spelen en groeien in een veilige, inspirerende omgeving.
                         </p>
                         <div className="grid md:grid-cols-3 gap-12 mb-16">
                             <div className="bg-white/50 backdrop-blur-sm p-8 rounded-3xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.08)] transition-all duration-300">
