@@ -5,7 +5,6 @@ import { FaCheckCircle, FaArrowLeft } from 'react-icons/fa';
 import Link from 'next/link';
 
 export default function ThankYouPage() {
-    // Scroll naar boven bij laden
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
@@ -25,10 +24,10 @@ export default function ThankYouPage() {
                 <div className="relative z-10 container mx-auto px-4 pt-24">
                     <div className="max-w-4xl">
                         <h1 className="text-6xl font-bold text-white mb-6">
-                            Bedankt voor uw donatie
+                            Jazaak Allahoe ghairan
                         </h1>
                         <p className="text-xl text-white/90">
-                            Uw steun helpt ons om onze activiteiten voort te zetten en de gemeenschap te dienen.
+                            Je bent nu een Steunpilaar van Jeugdwerking De Kroon. Samen bouwen we aan een betere toekomst voor onze kinderen.
                         </p>
                     </div>
                 </div>
@@ -37,25 +36,41 @@ export default function ThankYouPage() {
             {/* Thank You Content */}
             <section className="py-24">
                 <div className="container mx-auto px-4">
-                    <div className="max-w-4xl mx-auto text-center">
-                        <div className="mb-8">
-                            <FaCheckCircle className="w-20 h-20 text-green-500 mx-auto" />
+                    <div className="max-w-4xl mx-auto">
+                        <div className="text-center mb-16">
+                            <div className="mb-8">
+                                <FaCheckCircle className="w-20 h-20 text-green-500 mx-auto" />
+                            </div>
+                            <h2 className="text-4xl font-bold text-gray-800 mb-6">
+                                Bedankt voor je steun
+                            </h2>
+                            <p className="text-xl text-gray-600">
+                                Met jouw bijdrage kunnen we blijven investeren in de ontwikkeling van onze jeugd.
+                            </p>
                         </div>
-                        <h2 className="text-4xl font-bold text-gray-800 mb-6">
-                            Jazaak Allahoe ghairan
-                        </h2>
-                        <p className="text-xl text-gray-600 mb-12">
-                            Uw donatie is succesvol verwerkt. We waarderen uw steun enorm en
-                            zullen deze gebruiken om onze gemeenschap te blijven dienen.
-                        </p>
 
-                        <Link
-                            href="/"
-                            className="inline-flex items-center bg-crown text-white px-8 py-4 rounded-xl font-semibold hover:bg-opacity-90 transition-all duration-300 group"
-                        >
-                            <FaArrowLeft className="mr-2 transform transition-transform duration-300 group-hover:-translate-x-1" />
-                            <span>Terug naar home</span>
-                        </Link>
+                        <div className="bg-gray-50 rounded-3xl p-8 mb-12">
+                            <blockquote className="text-center">
+                                <p className="text-xl text-gray-600 italic mb-4">
+                                    "De beste liefdadigheid is die welke regelmatig wordt gegeven, ook al is het weinig."
+                                </p>
+                                <footer className="text-sm text-gray-500">
+                                    - De Profeet Mohammed ﷺ
+                                    <br />
+                                    <span className="text-xs">(Sahih al-Bukhari, 6465; Sahih Muslim, 2853)</span>
+                                </footer>
+                            </blockquote>
+                        </div>
+
+                        <div className="text-center">
+                            <Link
+                                href="/"
+                                className="inline-flex items-center bg-crown text-white px-8 py-4 rounded-xl font-semibold hover:bg-opacity-90 transition-all duration-300 group"
+                            >
+                                <FaArrowLeft className="mr-2 transform transition-transform duration-300 group-hover:-translate-x-1" />
+                                <span>Terug naar home</span>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </section>

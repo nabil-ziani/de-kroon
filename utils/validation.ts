@@ -29,13 +29,42 @@ export const contactFormSchema = z.object({
 
 // Enrollment form schema
 export const enrollmentFormSchema = z.object({
-    studentName: nameSchema,
-    email: emailSchema,
-    phone: phoneSchema,
-    courseName: z.string().min(1, 'Selecteer een cursus'),
+    // Kind gegevens
+    childName: nameSchema,
     birthDate: z.string().min(1, 'Selecteer een geboortedatum'),
+    hadPreviousClasses: z.boolean().default(false),
+    previousLevel: z.string().optional(),
+    
+    // Ouder gegevens
+    fatherFirstName: nameSchema,
+    fatherLastName: nameSchema,
+    fatherPhone: phoneSchema,
+    fatherEmail: emailSchema,
+    motherFirstName: nameSchema,
+    motherLastName: nameSchema,
+    motherPhone: phoneSchema,
+    motherEmail: emailSchema,
+    
+    // Adres
+    street: z.string().min(2, 'Straatnaam moet minimaal 2 karakters bevatten'),
+    houseNumber: z.string().min(1, 'Huisnummer is verplicht'),
+    city: z.string().min(2, 'Gemeente moet minimaal 2 karakters bevatten'),
+    
+    // Extra info
+    learningDisorders: z.string().optional(),
+    allergies: z.string().optional(),
+    pickupMethod: z.enum(['ALONE', 'PARENTS', 'SIBLINGS']),
+    
+    // Cursus info
+    courseName: z.string().min(1, 'Selecteer een cursus'),
     message: messageSchema.optional(),
-});
+}).refine(
+    (data) => data.fatherEmail || data.motherEmail,
+    {
+        message: "Minstens één e-mailadres van een ouder is verplicht",
+        path: ["fatherEmail"]
+    }
+);
 
 // Types
 export type ContactFormData = z.infer<typeof contactFormSchema>;

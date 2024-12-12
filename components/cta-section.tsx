@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { FaHandHoldingHeart, FaUsers } from 'react-icons/fa';
+import { FaHandHoldingHeart, FaUsers, FaRegClock } from 'react-icons/fa';
 
 export default function CTASection() {
     return (
@@ -27,10 +27,10 @@ export default function CTASection() {
                 <div className="max-w-6xl mx-auto">
                     <div className="text-center mb-16">
                         <h2 className="text-5xl font-bold text-white mb-6">
-                            Doe Mee
+                            Word een Steunpilaar
                         </h2>
                         <p className="text-xl text-white/90 max-w-2xl mx-auto">
-                            Help onze gemeenschap groeien en maak impact
+                            Geef kinderen de kans om te leren, spelen en groeien
                         </p>
                     </div>
 
@@ -40,22 +40,31 @@ export default function CTASection() {
                             <div className="flex flex-col h-full">
                                 <div className="mb-8">
                                     <div className="flex-shrink-0 w-20 h-20 bg-white/10 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300">
-                                        <FaHandHoldingHeart className="w-10 h-10 text-white" />
+                                        <FaRegClock className="w-10 h-10 text-white" />
                                     </div>
                                     <h3 className="text-4xl font-bold text-white mb-6">
-                                        Steun Ons
+                                        Steun Maandelijks
                                     </h3>
-                                    <p className="text-lg text-white/90 mb-8">
-                                        Help ons om onderwijs en gemeenschapsactiviteiten mogelijk te maken.
-                                        Uw bijdrage maakt het verschil.
-                                    </p>
+                                    <div className="space-y-4 text-lg text-white/90 mb-8">
+                                        <p>Met jouw vaste steun kunnen we:</p>
+                                        <ul className="list-disc list-inside space-y-2 ml-4">
+                                            <li>Activiteiten organiseren die inspireren</li>
+                                            <li>Lesmateriaal vernieuwen</li>
+                                            <li>Onze leerkrachten ondersteunen</li>
+                                        </ul>
+                                        <p className="italic text-sm mt-6">
+                                            "De beste liefdadigheid is die welke regelmatig wordt gegeven, ook al is het weinig."
+                                            <br />
+                                            <span className="text-xs">- De Profeet Mohammed ﷺ</span>
+                                        </p>
+                                    </div>
                                 </div>
                                 <div className="mt-auto">
                                     <Link
                                         href="/donatie"
                                         className="inline-flex items-center bg-white text-girl px-8 py-4 rounded-xl font-semibold hover:bg-opacity-90 transition-colors uppercase tracking-wide text-sm group-hover:scale-105 transform transition-transform duration-300"
                                     >
-                                        Doneer nu
+                                        Word Steunpilaar
                                     </Link>
                                 </div>
                             </div>
@@ -71,17 +80,24 @@ export default function CTASection() {
                                     <h3 className="text-4xl font-bold text-white mb-6">
                                         Word Vrijwilliger
                                     </h3>
-                                    <p className="text-lg text-white/90 mb-8">
-                                        Zet je in voor de gemeenschap en help mee bij verschillende activiteiten.
-                                        We hebben diverse mogelijkheden.
-                                    </p>
+                                    <div className="space-y-4 text-lg text-white/90 mb-8">
+                                        <p>Help mee om impact te maken:</p>
+                                        <ul className="list-disc list-inside space-y-2 ml-4">
+                                            <li>Ondersteun onze lesprogramma's</li>
+                                            <li>Help bij activiteiten</li>
+                                            <li>Deel jouw kennis en ervaring</li>
+                                        </ul>
+                                        <p className="mt-6">
+                                            "Een investering in onze jongeren is een investering in een betere samenleving."
+                                        </p>
+                                    </div>
                                 </div>
                                 <div className="mt-auto">
                                     <Link
-                                        href="mailto:info@kidskroon.be"
+                                        href="/vrijwilliger-worden"
                                         className="inline-flex items-center bg-white text-boy px-8 py-4 rounded-xl font-semibold hover:bg-opacity-90 transition-colors uppercase tracking-wide text-sm group-hover:scale-105 transform transition-transform duration-300"
                                     >
-                                        Meld je aan
+                                        Word Vrijwilliger
                                     </Link>
                                 </div>
                             </div>
@@ -91,4 +107,4 @@ export default function CTASection() {
             </div>
         </section>
     );
-} 
+}

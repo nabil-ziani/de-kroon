@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model Enrollment {
+    id              String   @id @default(cuid())
+    createdAt       DateTime @default(now())
+    updatedAt       DateTime @updatedAt
+    
+    // Kind gegevens
+    childName       String
+    birthDate       DateTime
+    hadPreviousClasses Boolean @default(false)
+    previousLevel   String?
+    
+    // Ouder gegevens
+    fatherName      String?
+    fatherPhone     String?
+    fatherEmail     String?
+    motherName      String?
+    motherPhone     String?
+    motherEmail     String?
+    
+    // Adres
+    street          String
+    houseNumber     String
+    city            String
+    
+    // Extra info
+    learningDisorders String?
+    allergies        String?
+    pickupMethod     PickupMethod
+    
+    // Cursus info
+    courseName      String
+    message         String?
+    status          String   @default("pending") // pending, approved, rejected
+}
+
+enum PickupMethod {
+    ALONE
+    PARENTS
+    SIBLINGS
+}
+
+model Donation {
+    id            String   @id @default(cuid())
+    createdAt     DateTime @default(now())
+    updatedAt     DateTime @updatedAt
+    amount        Float
+    isRecurring   Boolean  @default(false)
+    status        String   @default("pending") // pending, completed, failed
+    donorEmail    String?
+    donorName     String?
+    transactionId String?  @unique
+    buckarooKey   String?  @unique
+}

@@ -1,12 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { FaHandHoldingHeart, FaArrowRight, FaCreditCard, FaQrcode, FaEuroSign } from 'react-icons/fa';
+import { FaHandHoldingHeart, FaArrowRight, FaCreditCard, FaQrcode, FaEuroSign, FaRegClock, FaGraduationCap, FaUsers } from 'react-icons/fa';
 import BuckarooPaymentButton from '@/components/buckaroo-payment-button';
 import toast from 'react-hot-toast';
 
 // Voorgestelde donatiebedragen
-const SUGGESTED_AMOUNTS = [5, 10, 25, 50, 100, 250];
+const SUGGESTED_AMOUNTS = [10, 15, 25, 50, 100, 250];
 
 interface DonationAmount {
     amount: number;
@@ -14,10 +14,9 @@ interface DonationAmount {
 }
 
 export default function DonatePage() {
-    const [selectedAmount, setSelectedAmount] = useState<DonationAmount>({ amount: 25, isCustom: false });
+    const [selectedAmount, setSelectedAmount] = useState<DonationAmount>({ amount: 10, isCustom: false });
     const [customAmount, setCustomAmount] = useState<string>('');
-    const [isRecurring, setIsRecurring] = useState<boolean>(false);
-    const [interval, setInterval] = useState<'monthly' | 'yearly'>('monthly');
+    const [isRecurring, setIsRecurring] = useState<boolean>(true);
     const [showQR, setShowQR] = useState<boolean>(false);
 
     const handleCustomAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,12 +48,63 @@ export default function DonatePage() {
                 <div className="relative z-10 container mx-auto px-4 pt-24">
                     <div className="max-w-4xl">
                         <h1 className="text-6xl font-bold text-white mb-6">
-                            Doneren
+                            Word een Steunpilaar
                         </h1>
                         <p className="text-xl text-white/90">
-                            Steun ons bij het organiseren van activiteiten, onderhoud van het gebouw
-                            en het verzorgen van onderwijs. Uw bijdrage maakt het verschil.
+                            Help ons bouwen aan een betere toekomst voor onze jongeren. Met jouw steun kunnen we kinderen
+                            de kans geven om te leren, spelen en groeien in een veilige, inspirerende omgeving.
                         </p>
+                    </div>
+                </div>
+            </section>
+
+            {/* Impact Section */}
+            <section className="pt-24 bg-gradient-to-br from-gray-50 to-white">
+                <div className="container mx-auto px-4">
+                    <div className="max-w-7xl mx-auto">
+                        <h2 className="text-5xl font-bold text-gray-800 mb-4">
+                            Waarom jouw bijdrage essentieel is
+                        </h2>
+                        <p className="text-xl text-gray-600 mb-12">
+                            Samen bouwen we aan een betere toekomst voor onze kinderen
+                        </p>
+                        <div className="grid md:grid-cols-3 gap-12 mb-16">
+                            <div className="bg-white/50 backdrop-blur-sm p-8 rounded-3xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.08)] transition-all duration-300">
+                                <div className="w-16 h-16 bg-crown/5 rounded-2xl flex items-center justify-center mx-auto mb-8">
+                                    <FaGraduationCap className="w-8 h-8 text-crown" />
+                                </div>
+                                <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">Educatie</h3>
+                                <p className="text-gray-600 text-lg leading-relaxed">
+                                    Kwaliteitsvolle lessen en educatieve momenten voor talentontwikkeling
+                                </p>
+                            </div>
+                            <div className="bg-white/50 backdrop-blur-sm p-8 rounded-3xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.08)] transition-all duration-300">
+                                <div className="w-16 h-16 bg-crown/5 rounded-2xl flex items-center justify-center mx-auto mb-8">
+                                    <FaUsers className="w-8 h-8 text-crown" />
+                                </div>
+                                <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">Activiteiten</h3>
+                                <p className="text-gray-600 text-lg leading-relaxed">
+                                    Inspirerende indoor en outdoor activiteiten die kinderen verbinden
+                                </p>
+                            </div>
+                            <div className="bg-white/50 backdrop-blur-sm p-8 rounded-3xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.08)] transition-all duration-300">
+                                <div className="w-16 h-16 bg-crown/5 rounded-2xl flex items-center justify-center mx-auto mb-8">
+                                    <FaRegClock className="w-8 h-8 text-crown" />
+                                </div>
+                                <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">Duurzame Steun</h3>
+                                <p className="text-gray-600 text-lg leading-relaxed">
+                                    Vaste maandelijkse steun voor continue ontwikkeling
+                                </p>
+                            </div>
+                        </div>
+                        <blockquote className="text-xl text-gray-600 italic mb-8 text-center max-w-3xl mx-auto">
+                            "De beste liefdadigheid is die welke regelmatig wordt gegeven, ook al is het weinig."
+                            <footer className="text-sm text-gray-500 mt-4">
+                                - De Profeet Mohammed ﷺ
+                                <br />
+                                <span className="text-xs">(Sahih al-Bukhari, 6465; Sahih Muslim, 2853)</span>
+                            </footer>
+                        </blockquote>
                     </div>
                 </div>
             </section>
@@ -63,15 +113,34 @@ export default function DonatePage() {
             <section className="py-24">
                 <div className="container mx-auto px-4">
                     <div className="max-w-7xl mx-auto">
-                        <h2 className="text-5xl font-bold text-gray-800 mb-16">
-                            Donatie Opties
+                        <h2 className="text-5xl font-bold text-gray-800 mb-6">
+                            Word Steunpilaar
                         </h2>
+                        <p className="text-xl text-gray-600 mb-12">
+                            Kies een maandelijkse bijdrage die bij jou past. Elke bijdrage, hoe klein ook, maakt een verschil
+                            in het leven van onze kinderen.
+                        </p>
                         <div className="grid gap-8">
                             {/* Donation Amount Selection */}
                             <div className="bg-white rounded-3xl p-10 shadow-lg border border-gray-100">
-                                <h3 className="text-2xl font-bold text-gray-800 mb-6">
-                                    Kies een bedrag
-                                </h3>
+                                <div className="flex items-center justify-between mb-8">
+                                    <h3 className="text-2xl font-bold text-gray-800">
+                                        Kies je bijdrage
+                                    </h3>
+                                    <div className="flex items-center gap-4">
+                                        <label className="flex items-center bg-crown/5 px-4 py-2 rounded-xl border-2 border-crown/10">
+                                            <input
+                                                type="checkbox"
+                                                checked={isRecurring}
+                                                onChange={(e) => setIsRecurring(e.target.checked)}
+                                                className="w-5 h-5 rounded border-gray-300 accent-crown focus:ring-crown focus:ring-offset-0"
+                                            />
+                                            <span className="ml-2 text-gray-700 font-medium">Maandelijkse donatie</span>
+                                            <span className="ml-2 text-xs bg-crown/10 text-crown px-2 py-1 rounded-full">Aanbevolen</span>
+                                        </label>
+                                    </div>
+                                </div>
+
                                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
                                     {SUGGESTED_AMOUNTS.map((amount) => (
                                         <button
@@ -103,61 +172,23 @@ export default function DonatePage() {
                                             value={customAmount}
                                             onChange={handleCustomAmountChange}
                                             placeholder="Voer bedrag in"
-                                            className="w-full pl-8 pr-4 py-3 rounded-xl border-2 border-gray-200 focus:border-crown focus:ring-2 focus:ring-crown/20 transition-all duration-300"
+                                            className="w-full pl-8 pr-4 py-3 rounded-xl border-2 border-gray-200 focus:border-crown focus:ring-0 transition-all duration-300 outline-none"
                                         />
                                     </div>
-                                </div>
-
-                                {/* Recurring Options */}
-                                <div className="mb-8">
-                                    <label className="flex items-center mb-4">
-                                        <input
-                                            type="checkbox"
-                                            checked={isRecurring}
-                                            onChange={(e) => setIsRecurring(e.target.checked)}
-                                            className="w-5 h-5 rounded border-gray-300 text-crown focus:ring-crown"
-                                        />
-                                        <span className="ml-2 text-gray-700">Maak dit een terugkerende donatie</span>
-                                    </label>
-
-                                    {isRecurring && (
-                                        <div className="flex gap-4 ml-7">
-                                            <button
-                                                onClick={() => setInterval('monthly')}
-                                                className={`px-4 py-2 rounded-lg border transition-all duration-300
-                                                    ${interval === 'monthly'
-                                                        ? 'border-crown bg-crown/10 text-crown'
-                                                        : 'border-gray-200 hover:border-crown/50 text-gray-600'
-                                                    }`}
-                                            >
-                                                Maandelijks
-                                            </button>
-                                            <button
-                                                onClick={() => setInterval('yearly')}
-                                                className={`px-4 py-2 rounded-lg border transition-all duration-300
-                                                    ${interval === 'yearly'
-                                                        ? 'border-crown bg-crown/10 text-crown'
-                                                        : 'border-gray-200 hover:border-crown/50 text-gray-600'
-                                                    }`}
-                                            >
-                                                Jaarlijks
-                                            </button>
-                                        </div>
-                                    )}
                                 </div>
 
                                 {/* Donation Buttons */}
                                 <div className="grid md:grid-cols-2 gap-4">
                                     <BuckarooPaymentButton
                                         amount={selectedAmount.amount}
-                                        description={`Donatie aan De Kroon${isRecurring ? ` (${interval})` : ''}`}
+                                        description={`${isRecurring ? 'Maandelijkse' : 'Eenmalige'} donatie aan De Kroon`}
                                         isRecurring={isRecurring}
-                                        interval={isRecurring ? interval : undefined}
+                                        interval={isRecurring ? 'monthly' : undefined}
                                         onSuccess={handlePaymentSuccess}
                                         onError={handlePaymentError}
-                                        className="bg-crown text-white px-6 py-4 rounded-xl font-semibold hover:bg-opacity-90 transition-all duration-300 flex items-center justify-center group"
+                                        className="bg-crown text-white px-6 py-4 rounded-xl font-semibold hover:bg-opacity-90 transition-all duration-300 flex items-center justify-center group relative"
                                     >
-                                        <span>Doneer nu met Bancontact/iDEAL</span>
+                                        <span>{isRecurring ? 'Word Steunpilaar' : 'Doneer nu'}</span>
                                         <FaArrowRight className="ml-2 transform transition-transform duration-300 group-hover:translate-x-1" />
                                     </BuckarooPaymentButton>
                                     <button
@@ -170,11 +201,11 @@ export default function DonatePage() {
                                 </div>
                             </div>
 
-                            {/* Bank Details Card - Behouden */}
+                            {/* Bank Details Card */}
                             <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl p-10 shadow-lg relative overflow-hidden">
                                 {/* Subtle yellow gradient overlay */}
                                 <div className="absolute inset-0 bg-gradient-to-br from-crown/5 to-transparent" />
-                                
+
                                 <div className="relative z-10 grid md:grid-cols-2 gap-16 items-center">
                                     <div>
                                         <div className="flex-shrink-0 w-16 h-16 bg-crown/10 rounded-xl flex items-center justify-center mb-6">
@@ -227,11 +258,16 @@ export default function DonatePage() {
                             Scan QR-code om te doneren
                         </h3>
                         <div className="aspect-square bg-gray-100 rounded-xl mb-4 flex items-center justify-center">
-                            {/* TODO: Implement actual QR code */}
-                            <FaQrcode className="w-32 h-32 text-gray-400" />
+                            <img
+                                src={`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(
+                                    `https://de-kroon.vercel.app/donatie?amount=${selectedAmount.amount}&recurring=${isRecurring}`
+                                )}`}
+                                alt="QR Code voor donatie"
+                                className="w-full h-full object-contain p-4"
+                            />
                         </div>
                         <p className="text-gray-600 mb-6">
-                            Scan deze code met uw bank app om €{selectedAmount.amount} te doneren
+                            Scan deze code met uw bank app om {isRecurring ? 'maandelijks' : ''} €{selectedAmount.amount} te doneren
                         </p>
                         <button
                             onClick={() => setShowQR(false)}

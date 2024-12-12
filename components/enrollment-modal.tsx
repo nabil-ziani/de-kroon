@@ -30,7 +30,7 @@ export default function EnrollmentModal({ isOpen, onClose, courseName }: Props) 
 
                 {/* Modal */}
                 <div className="fixed inset-0 overflow-y-auto">
-                    <div className="min-h-full flex items-center justify-center p-4">
+                    <div className="flex min-h-full items-center justify-center p-4">
                         <Transition.Child
                             as={Fragment}
                             enter="ease-out duration-300"
@@ -40,16 +40,17 @@ export default function EnrollmentModal({ isOpen, onClose, courseName }: Props) 
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95"
                         >
-                            <Dialog.Panel className="bg-white rounded-2xl shadow-xl w-full max-w-5xl transform transition-all">
-                                <div className="relative p-8 md:p-10">
-                                    <button
-                                        onClick={onClose}
-                                        className="absolute right-6 top-6 text-gray-400 hover:text-gray-600 transition-colors rounded-lg p-2 hover:bg-gray-100"
-                                    >
-                                        <FaTimes className="w-5 h-5" />
-                                    </button>
+                            <Dialog.Panel className="relative w-full max-w-6xl transform transition-all">
+                                <div className="relative bg-white rounded-2xl shadow-xl max-h-[85vh] overflow-hidden">
+                                    {/* Header - Fixed */}
+                                    <div className="sticky top-0 bg-white px-8 py-6 border-b border-gray-100 z-10">
+                                        <button
+                                            onClick={onClose}
+                                            className="absolute right-6 top-6 text-gray-400 hover:text-gray-600 transition-colors rounded-lg p-2 hover:bg-gray-100"
+                                        >
+                                            <FaTimes className="w-5 h-5" />
+                                        </button>
 
-                                    <div className="mb-8">
                                         <Dialog.Title className="text-3xl font-bold text-gray-800 mb-2">
                                             Inschrijven voor {courseName}
                                         </Dialog.Title>
@@ -58,10 +59,13 @@ export default function EnrollmentModal({ isOpen, onClose, courseName }: Props) 
                                         </p>
                                     </div>
 
-                                    <EnrollmentForm
-                                        onSuccess={onClose}
-                                        defaultValues={{ courseName }}
-                                    />
+                                    {/* Scrollable Content */}
+                                    <div className="overflow-y-auto px-8 py-6" style={{ maxHeight: 'calc(85vh - 120px)' }}>
+                                        <EnrollmentForm
+                                            onSuccess={onClose}
+                                            defaultValues={{ courseName }}
+                                        />
+                                    </div>
                                 </div>
                             </Dialog.Panel>
                         </Transition.Child>
