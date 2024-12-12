@@ -4,199 +4,63 @@
 @tailwind components;
 @tailwind utilities;
 
-@keyframes fade-in {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .animate-fade-in {
-    animation: fade-in 0.5s ease-out forwards;
+    animation: fadeIn 0.2s ease-out;
 }
 
-/* Calendar Customization */
-.custom-calendar {
-    @apply font-sans bg-white rounded-3xl p-12;
+.animate-slide-up {
+    animation: slideUp 0.3s ease-out;
 }
 
-/* Month Header */
-.custom-calendar .rbc-toolbar {
-    @apply flex flex-col items-center justify-center mb-16;
-}
-
-.custom-calendar .rbc-toolbar-label {
-    @apply text-4xl font-bold text-gray-800 mb-8;
-}
-
-/* Navigation Buttons - Moved to bottom */
-.custom-calendar .rbc-btn-group {
-    @apply fixed bottom-12 left-1/2 -translate-x-1/2 flex gap-4 bg-white/80 
-           backdrop-blur-md rounded-full px-6 py-3 shadow-lg z-50;
-}
-
-.custom-calendar .rbc-btn-group button {
-    @apply p-2 rounded-xl transition-all duration-300 hover:bg-gray-50;
-}
-
-/* Headers (dagen van de week) */
-.custom-calendar .rbc-header {
-    @apply py-6 font-medium text-gray-400 border-0 text-sm uppercase tracking-wider;
-}
-
-/* Month View Container */
-.custom-calendar .rbc-month-view {
-    @apply border-0 gap-4;
-}
-
-/* Week Rows */
-.custom-calendar .rbc-month-row {
-    @apply mb-4;
-}
-
-.custom-calendar .rbc-row-bg {
-    @apply gap-4;
-}
-
-.custom-calendar .rbc-row-content {
-    @apply gap-4 z-20;
-}
-
-/* Day Cells */
-.custom-calendar .rbc-date-cell {
-    @apply min-h-[140px] bg-gray-50/60 rounded-2xl p-4 relative transition-all duration-300
-           hover:shadow-lg hover:bg-white/80 backdrop-blur-sm;
-}
-
-/* Day Number Container */
-.custom-calendar .rbc-date-cell > a {
-    @apply absolute top-3 right-3 w-8 h-8 flex items-center justify-center
-           bg-white/80 backdrop-blur-sm rounded-lg shadow-sm
-           text-base font-medium text-gray-600
-           hover:bg-crown/10 hover:text-crown transition-all duration-300;
-}
-
-/* Current Day */
-.custom-calendar .rbc-today {
-    @apply bg-white/90 shadow-lg;
-}
-
-.custom-calendar .rbc-today > a {
-    @apply bg-crown/10 text-crown font-semibold;
-}
-
-/* Days outside current month */
-.custom-calendar .rbc-off-range-bg {
-    @apply opacity-40;
-}
-
-.custom-calendar .rbc-off-range {
-    @apply opacity-40;
-}
-
-/* Events */
-.custom-calendar .rbc-event {
-    @apply shadow-sm transition-all duration-300 cursor-pointer rounded-xl border-0 
-           my-1 mx-1 p-2 bg-gradient-to-r;
-}
-
-.custom-calendar .rbc-event.event-onderwijs {
-    @apply from-boy/90 to-boy/80 text-white;
-}
-
-.custom-calendar .rbc-event.event-activiteit {
-    @apply from-girl/90 to-girl/80 text-white;
-}
-
-.custom-calendar .rbc-event.event-special {
-    @apply from-crown/90 to-crown/80 text-white;
-}
-
-.custom-calendar .rbc-event:hover {
-    @apply transform scale-[1.02] shadow-md -translate-y-0.5;
-}
-
-.custom-calendar .rbc-event-content {
-    @apply text-sm font-medium leading-snug;
-}
-
-/* More Events Link */
-.custom-calendar .rbc-show-more {
-    @apply text-xs font-medium text-crown hover:text-crown/80 bg-transparent
-           px-3 py-1 rounded-full hover:bg-crown/5 transition-colors duration-200;
-}
-
-/* Event Modal */
-.event-modal {
-    @apply fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 p-4;
-}
-
-.event-modal-content {
-    @apply bg-white/95 backdrop-blur-xl rounded-3xl p-8 max-w-lg w-full shadow-2xl
-           transform transition-all duration-300 animate-fade-in;
-}
-
-.event-modal-header {
-    @apply flex justify-between items-start mb-6;
-}
-
-.event-modal-title {
-    @apply text-2xl font-bold text-gray-800;
-}
-
-.event-modal-close {
-    @apply p-2 hover:bg-gray-100/80 rounded-xl transition-colors;
-}
-
-.event-modal-body {
-    @apply space-y-6;
-}
-
-.event-modal-info {
-    @apply flex items-center gap-3 text-gray-600;
-}
-
-.event-modal-label {
-    @apply text-sm font-medium text-gray-500;
-}
-
-.event-modal-value {
-    @apply text-base text-gray-800;
-}
-
-.event-modal-description {
-    @apply text-gray-600 leading-relaxed;
-}
-
-.event-modal-footer {
-    @apply mt-8 pt-6 border-t border-gray-100 flex justify-end gap-4;
-}
-
-.event-modal-button {
-    @apply px-6 py-3 rounded-xl text-sm font-medium transition-all duration-300
-           hover:shadow-md active:transform active:scale-95;
-}
-
-.event-modal-button-primary {
-    @apply bg-gradient-to-r from-crown to-crown/90 text-white;
-}
-
-.event-modal-button-secondary {
-    @apply bg-gray-100/80 text-gray-600 hover:bg-gray-200/80;
+.animate-scale-in {
+    animation: scaleIn 0.2s ease-out;
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    --background: #ffffff;
+    --foreground: #171717;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+    :root {
+        --background: #0a0a0a;
+        --foreground: #ededed;
+    }
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+    color: var(--foreground);
+    background: var(--background);
+    font-family: Arial, Helvetica, sans-serif;
 }

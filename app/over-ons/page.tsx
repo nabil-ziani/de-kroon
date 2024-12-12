@@ -68,8 +68,6 @@ export default function AboutPage() {
                                 />
                             </div>
                             <div className="relative">
-                                <div className="absolute -top-8 -left-8 w-32 h-32 bg-gradient-to-br from-boy/30 to-boy/0 rounded-full blur-2xl" />
-                                <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-gradient-to-br from-crown/30 to-crown/0 rounded-full blur-2xl" />
                                 <div className="relative">
                                     <span className="text-boy font-semibold mb-2 block">Onze Missie</span>
                                     <h2 className="text-5xl font-bold text-gray-800 mb-6">

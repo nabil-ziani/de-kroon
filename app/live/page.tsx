@@ -88,7 +88,7 @@ export default function LivePage() {
                 <div className="relative z-10 container mx-auto px-4 pt-24">
                     <div className="max-w-4xl">
                         <h1 className="text-6xl font-bold text-white mb-6">
-                            Live Uitzendingen
+                            Live uitzendingen
                         </h1>
                     </div>
                 </div>

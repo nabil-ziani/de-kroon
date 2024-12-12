@@ -25,47 +25,50 @@ export default function OnderwijsPage() {
                 <div className="relative z-10 container mx-auto px-4 pt-24">
                     <div className="max-w-4xl">
                         <h1 className="text-6xl font-bold text-white mb-6">
-                            Ons Onderwijs
+                            Ons onderwijs
                         </h1>
                     </div>
                 </div>
             </section>
 
             {/* Intro Section */}
-            <section className="py-24">
+            <section className="py-24 bg-gradient-to-b from-white to-gray-50/30">
                 <div className="container mx-auto px-4">
                     <div className="max-w-7xl mx-auto">
                         <div className="grid md:grid-cols-2 gap-16 items-center">
-                            <div>
-                                <h2 className="text-5xl font-bold text-gray-800 mb-8">
-                                    Islamitisch Onderwijs
-                                </h2>
-                                <p className="text-lg text-gray-600 mb-10">
-                                    Bij De Kroon bieden we kwalitatief islamitisch onderwijs aan voor alle leeftijden.
-                                    Onze lessen worden gegeven door gekwalificeerde docenten die de kennis op een
-                                    moderne en toegankelijke manier overbrengen.
-                                </p>
-                                <div className="space-y-4">
-                                    {[
-                                        'Arabische taal',
-                                        'Koran recitatie',
-                                        'Islamitische studies',
-                                        'Weekend lessen'
-                                    ].map((item) => (
-                                        <div key={item} className="flex items-center gap-3">
-                                            <div className="w-2 h-2 rounded-full bg-crown" />
-                                            <p className="text-gray-700">{item}</p>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                            <div className="relative h-[500px] rounded-3xl overflow-hidden shadow-xl">
+                            <div className="relative h-[500px] rounded-3xl overflow-hidden shadow-xl order-last">
+                                <div className="absolute inset-0 bg-gradient-to-br from-boy/20 to-transparent" />
                                 <Image
                                     src="/images/placeholder.png"
-                                    alt="Islamitisch onderwijs"
+                                    alt="Onze activiteiten"
                                     fill
                                     className="object-cover"
                                 />
+                            </div>
+                            <div className="relative">
+                                <div className="relative">
+                                    <h2 className="text-5xl font-bold text-gray-800 mb-6">
+                                        Islamitisch Onderwijs
+                                    </h2>
+                                    <p className="text-xl text-gray-600 mb-8">
+                                        Bij De Kroon bieden we kwalitatief islamitisch onderwijs aan voor alle leeftijden.
+                                        Onze lessen worden gegeven door gekwalificeerde docenten die de kennis op een
+                                        moderne en toegankelijke manier overbrengen.
+                                    </p>
+                                    <div className="space-y-4">
+                                        {[
+                                            'Arabische taal',
+                                            'Koran recitatie',
+                                            'Islamitische studies',
+                                            'Weekend lessen'
+                                        ].map((item) => (
+                                            <div key={item} className="flex items-start gap-4">
+                                                <div className="w-2 h-2 rounded-full bg-crown mt-2.5" />
+                                                <p className="text-gray-700 leading-relaxed">{item}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

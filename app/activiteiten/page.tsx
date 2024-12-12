@@ -5,7 +5,6 @@ import { format } from 'date-fns';
 import { nl } from 'date-fns/locale';
 import { FaMars, FaVenus, FaUsers, FaTimes, FaMapMarkerAlt, FaUserFriends, FaClock } from 'react-icons/fa';
 import Calendar from '../components/Calendar/Calendar';
-import { motion, AnimatePresence } from 'framer-motion';
 
 type Event = {
     id: string;
@@ -96,13 +95,10 @@ const events: Event[] = [
 // Event Modal Component
 function EventModal({ event, onClose }: { event: Event; onClose: () => void }) {
     return (
-        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fade-in"
             onClick={onClose}>
-            <motion.div
-                className="bg-white/95 backdrop-blur-xl rounded-3xl p-6 md:p-8 max-w-lg w-full shadow-2xl transform transition-all duration-300"
-                initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            <div
+                className="bg-white/95 backdrop-blur-xl rounded-3xl p-6 md:p-8 max-w-lg w-full shadow-2xl animate-scale-in"
                 onClick={e => e.stopPropagation()}
             >
                 <div className="flex justify-between items-start mb-6">
@@ -156,21 +152,21 @@ function EventModal({ event, onClose }: { event: Event; onClose: () => void }) {
                 <div className="mt-8 pt-6 border-t border-gray-100 flex flex-col-reverse md:flex-row gap-3 md:justify-end">
                     <button
                         className="w-full md:w-auto px-6 py-3 rounded-xl text-sm font-medium bg-gray-100/80 
-                                 text-gray-600 hover:bg-gray-200/80 transition-all duration-300
-                                 hover:shadow-md active:transform active:scale-95"
+                            text-gray-600 hover:bg-gray-200/80 transition-all duration-300
+                            hover:shadow-md active:transform active:scale-95"
                         onClick={onClose}
                     >
                         Sluiten
                     </button>
                     <button
                         className="w-full md:w-auto px-6 py-3 rounded-xl text-sm font-medium bg-gradient-to-r 
-                                 from-crown to-crown/90 text-white transition-all duration-300
-                                 hover:shadow-md active:transform active:scale-95"
+                            from-crown to-crown/90 text-white transition-all duration-300
+                            hover:shadow-md active:transform active:scale-95"
                     >
                         Inschrijven
                     </button>
                 </div>
-            </motion.div>
+            </div>
         </div>
     );
 }
@@ -184,7 +180,7 @@ export default function ActiviteitenPage() {
             <section className="relative py-24 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-900 to-boy">
                     <div className="absolute inset-0 opacity-30 mix-blend-soft-light 
-                                  bg-[radial-gradient(at_top_right,_#1dbffe_0%,_transparent_50%)]" />
+                        bg-[radial-gradient(at_top_right,_#1dbffe_0%,_transparent_50%)]" />
                 </div>
                 <div className="absolute -bottom-1 left-0 right-0">
                     <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -192,20 +188,13 @@ export default function ActiviteitenPage() {
                     </svg>
                 </div>
                 <div className="relative z-10 container mx-auto px-4 pt-12 md:pt-24">
-                    <motion.div
-                        className="max-w-4xl"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5 }}
+                    <div
+                        className="max-w-4xl animate-slide-up"
                     >
                         <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-                            Activiteiten & Onderwijs
+                            Onze activiteiten
                         </h1>
-                        <p className="text-lg md:text-xl text-white/90 leading-relaxed">
-                            Ontdek onze diverse activiteiten en onderwijsprogramma's.
-                            Van Arabische lessen tot sportactiviteiten, er is voor ieder wat wils.
-                        </p>
-                    </motion.div>
+                    </div>
                 </div>
             </section>
 
@@ -246,30 +235,25 @@ export default function ActiviteitenPage() {
                         </div>
 
                         {/* Calendar */}
-                        <motion.div
-                            className="bg-white rounded-3xl shadow-xl border border-gray-100 p-4 md:p-8"
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: 0.2 }}
+                        <div
+                            className="bg-white rounded-3xl shadow-xl border border-gray-100 p-4 md:p-8 animate-fade-in"
                         >
                             <Calendar
                                 events={events}
                                 onEventClick={setSelectedEvent}
                             />
-                        </motion.div>
+                        </div>
                     </div>
                 </div>
             </section>
 
             {/* Event Modal */}
-            <AnimatePresence>
-                {selectedEvent && (
-                    <EventModal
-                        event={selectedEvent}
-                        onClose={() => setSelectedEvent(null)}
-                    />
-                )}
-            </AnimatePresence>
+            {selectedEvent && (
+                <EventModal
+                    event={selectedEvent}
+                    onClose={() => setSelectedEvent(null)}
+                />
+            )}
         </main>
     );
 } 
