@@ -49,7 +49,7 @@ export default function EnrollmentConfirmationEmail({ data }: EnrollmentConfirma
                                 <strong style={labelStyle}>Cursus:</strong> {data.courseName}
                             </Text>
                             <Text style={detailText}>
-                                <strong style={labelStyle}>Student:</strong> {data.studentName}
+                                <strong style={labelStyle}>Student:</strong> {data.childName}
                             </Text>
                             <Text style={detailText}>
                                 <strong style={labelStyle}>Geboortedatum:</strong> {new Date(data.birthDate).toLocaleDateString('nl-BE')}

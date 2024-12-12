@@ -25,39 +25,75 @@ export default function AboutPage() {
                 </div>
             </section>
 
-            {/* Mission & Vision */}
+            {/* Introduction Section - Centered */}
             <section className="py-24">
+                <div className="container mx-auto px-4">
+                    <div className="max-w-3xl mx-auto text-center mb-16">
+                        <span className="text-crown font-semibold mb-2 block">Sinds 2022</span>
+                        <h2 className="text-5xl font-bold text-gray-800 mb-6">
+                            Educatief Jeugdcentrum
+                        </h2>
+                        <p className="text-xl text-gray-600 leading-relaxed">
+                            VZW Educatief Jeugdcentrum De Kroon is een vereniging zonder winstoogmerk, gevestigd in het hart van Borgerhout. We zetten ons in voor de ontwikkeling en vorming van jongeren, met als doel hen te helpen een actieve rol in de samenleving te vervullen.
+                        </p>
+                    </div>
+                    <div className="max-w-4xl mx-auto relative">
+                        <div className="absolute -top-8 -left-8 w-32 h-32 bg-gradient-to-br from-crown/30 to-crown/0 rounded-full blur-2xl" />
+                        <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-gradient-to-br from-boy/30 to-boy/0 rounded-full blur-2xl" />
+                        <div className="relative h-[500px] rounded-3xl overflow-hidden shadow-xl">
+                            <div className="absolute inset-0 bg-gradient-to-br from-crown/20 to-transparent" />
+                            <Image
+                                src="/images/placeholder.png"
+                                alt="De Kroon locatie"
+                                fill
+                                className="object-cover"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Mission & Vision */}
+            <section className="py-24 bg-gradient-to-b from-white to-gray-50/30">
                 <div className="container mx-auto px-4">
                     <div className="max-w-7xl mx-auto">
                         <div className="grid md:grid-cols-2 gap-16 items-center">
-                            <div>
-                                <h2 className="text-5xl font-bold text-gray-800 mb-8">
-                                    Onze Missie
-                                </h2>
-                                <p className="text-lg text-gray-600 mb-10">
-                                    Bij De Kroon streven we ernaar om een inspirerende leeromgeving te creëren
-                                    waar jongeren zich kunnen ontwikkelen op alle vlakken.
-                                </p>
-                                <div className="space-y-4">
-                                    {[
-                                        'Kwalitatief islamitisch onderwijs',
-                                        'Persoonlijke ontwikkeling',
-                                        'Gemeenschapsvorming',
-                                    ].map((item) => (
-                                        <div key={item} className="flex items-center gap-3">
-                                            <div className="w-2 h-2 rounded-full bg-crown" />
-                                            <p className="text-gray-700">{item}</p>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                            <div className="relative h-[500px] rounded-3xl overflow-hidden shadow-xl">
+                            <div className="relative h-[500px] rounded-3xl overflow-hidden shadow-xl order-last">
+                                <div className="absolute inset-0 bg-gradient-to-br from-boy/20 to-transparent" />
                                 <Image
                                     src="/images/placeholder.png"
-                                    alt="Foto van een groep jongeren"
+                                    alt="Onze activiteiten"
                                     fill
                                     className="object-cover"
                                 />
+                            </div>
+                            <div className="relative">
+                                <div className="absolute -top-8 -left-8 w-32 h-32 bg-gradient-to-br from-boy/30 to-boy/0 rounded-full blur-2xl" />
+                                <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-gradient-to-br from-crown/30 to-crown/0 rounded-full blur-2xl" />
+                                <div className="relative">
+                                    <span className="text-boy font-semibold mb-2 block">Onze Missie</span>
+                                    <h2 className="text-5xl font-bold text-gray-800 mb-6">
+                                        Ontwikkeling & Vorming
+                                    </h2>
+                                    <p className="text-xl text-gray-600 mb-8">
+                                        Bij De Kroon streven we ernaar om een inspirerende leeromgeving te creëren waar jongeren zich kunnen ontwikkelen op alle vlakken.
+                                    </p>
+                                    <div className="space-y-4">
+                                        {[
+                                            'Een vormingsaanbod van hoge kwaliteit organiseren en waarborgen',
+                                            'Jongeren pedagogisch begeleiden in hun ontwikkeling',
+                                            'Een aangename omgeving creëren voor samen leren en spelen',
+                                            'Culturele en ontspanningsactiviteiten organiseren voor alle sociale klassen',
+                                            'Ruimte bieden voor schoolactiviteiten en huiswerkbegeleiding',
+                                            'Samenwerken met lokale organisaties en instanties'
+                                        ].map((item) => (
+                                            <div key={item} className="flex items-start gap-4">
+                                                <div className="w-2 h-2 rounded-full bg-boy mt-2.5" />
+                                                <p className="text-gray-700 leading-relaxed">{item}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -69,7 +105,7 @@ export default function AboutPage() {
                 <div className="container mx-auto px-4">
                     <div className="max-w-7xl mx-auto">
                         <h2 className="text-5xl font-bold text-gray-800 mb-16">
-                            Onze Kernwaarden
+                            Kernwaarden
                         </h2>
                         <div className="grid gap-8">
                             {/* Top row - 3 equal cards */}
@@ -77,20 +113,20 @@ export default function AboutPage() {
                                 {[
                                     {
                                         icon: FaGraduationCap,
-                                        title: 'Educatie',
-                                        description: 'Focus op kwalitatief onderwijs en persoonlijke groei',
+                                        title: 'Ontwikkeling',
+                                        description: 'Focus op educatieve vorming en persoonlijke groei',
                                         bgColor: 'from-boy/90 to-boy/70'
                                     },
                                     {
                                         icon: FaHeart,
-                                        title: 'Betrokkenheid',
-                                        description: 'Actieve participatie in de gemeenschap',
+                                        title: 'Respect',
+                                        description: 'Positief omgaan met diversiteit en gelijkwaardigheid',
                                         bgColor: 'from-girl/90 to-girl/70'
                                     },
                                     {
                                         icon: FaUsers,
-                                        title: 'Inclusiviteit',
-                                        description: 'Een warme welkom voor iedereen',
+                                        title: 'Samenwerking',
+                                        description: 'Verbinding tussen jongeren en de gemeenschap stimuleren',
                                         bgColor: 'from-crown/90 to-crown/70'
                                     }
                                 ].map((value) => (
@@ -111,7 +147,7 @@ export default function AboutPage() {
                             </div>
 
                             {/* Bottom row - Full width card */}
-                            <div className="bg-gradient-to-br from-gray-800/90 to-gray-900 p-10 rounded-3xl shadow-lg">
+                            <div className="bg-gradient-to-br from-gray-800/90 to-gray-900 p-10 rounded-3xl shadow-lg mt-8">
                                 <div className="flex flex-col items-center text-center">
                                     <div className="flex-shrink-0 w-16 h-16 bg-white/10 rounded-xl flex items-center justify-center mb-6">
                                         <FaEnvelope className="w-8 h-8 text-white" />
@@ -120,7 +156,8 @@ export default function AboutPage() {
                                         Wil je meer weten over De Kroon?
                                     </h2>
                                     <p className="text-lg text-white/90 mb-8 max-w-3xl">
-                                        Neem contact met ons op of kom gerust langs, we staan je graag te woord!
+                                        Bezoek ons op de Kroonstraat 72 in Borgerhout of neem contact met ons op.
+                                        Samen bouwen we aan een inspirerende toekomst voor jongeren.
                                     </p>
                                     <a
                                         href="/contact"
