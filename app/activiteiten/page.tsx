@@ -1,47 +1,48 @@
 'use client';
 
-import { Calendar, dateFnsLocalizer, View } from 'react-big-calendar';
-import format from 'date-fns/format';
-import parse from 'date-fns/parse';
-import startOfWeek from 'date-fns/startOfWeek';
+import { Calendar, DateLocalizer } from 'react-big-calendar';
+import { dateFnsLocalizer } from 'react-big-calendar';
+import { format, parse, startOfWeek, getDay } from 'date-fns';
 import { nl } from 'date-fns/locale';
 import { useState } from 'react';
-import { FaCalendarAlt, FaTimes, FaMars, FaVenus, FaUsers, FaChevronLeft, FaChevronRight, FaCalendarDay, FaCalendarWeek, FaRegClock } from 'react-icons/fa';
+import { FaCalendarAlt, FaTimes, FaMars, FaVenus, FaUsers, FaChevronLeft, FaChevronRight, FaMapMarkerAlt, FaUserFriends, FaClock } from 'react-icons/fa';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
-// Types
-interface Event {
+type Event = {
     id: string;
     title: string;
     start: Date;
     end: Date;
-    description?: string;
     category: 'onderwijs' | 'activiteit' | 'special';
     audience: 'man' | 'vrouw' | 'gemengd';
-    location?: string;
-    maxParticipants?: number;
-}
-
-// Localisatie setup
-const locales = {
-    'nl-NL': nl,
+    location: string;
+    description: string;
+    maxParticipants: number;
 };
 
-const localizer = dateFnsLocalizer({
+const locales = {
+    'nl': nl,
+};
+
+const localizer: DateLocalizer = dateFnsLocalizer({
     format,
     parse,
-    startOfWeek,
-    getDay: (date: Date) => date.getDay(),
+    startOfWeek: () => startOfWeek(new Date(), { locale: nl }),
+    getDay,
     locales,
 });
 
-// Voorbeeld events
+// Voorbeeld events voor de huidige maand
+const currentDate = new Date();
+const currentYear = currentDate.getFullYear();
+const currentMonth = currentDate.getMonth();
+
 const events: Event[] = [
     {
         id: '1',
         title: 'Arabische Les - Beginners',
-        start: new Date(2024, 0, 15, 9, 0),
-        end: new Date(2024, 0, 15, 12, 0),
+        start: new Date(currentYear, currentMonth, 15, 9, 0),
+        end: new Date(currentYear, currentMonth, 15, 12, 0),
         category: 'onderwijs',
         audience: 'gemengd',
         location: 'Lokaal 1.01',
@@ -51,8 +52,8 @@ const events: Event[] = [
     {
         id: '2',
         title: 'Zusters Bijeenkomst',
-        start: new Date(2024, 0, 20, 14, 0),
-        end: new Date(2024, 0, 20, 17, 0),
+        start: new Date(currentYear, currentMonth, 20, 14, 0),
+        end: new Date(currentYear, currentMonth, 20, 17, 0),
         category: 'activiteit',
         audience: 'vrouw',
         location: 'Grote zaal',
@@ -61,9 +62,20 @@ const events: Event[] = [
     },
     {
         id: '3',
-        title: 'Sport & Fitness',
-        start: new Date(2024, 0, 18, 18, 0),
-        end: new Date(2024, 0, 18, 20, 0),
+        title: 'Islamitische Studies',
+        start: new Date(currentYear, currentMonth, 22, 18, 30),
+        end: new Date(currentYear, currentMonth, 22, 20, 30),
+        category: 'onderwijs',
+        audience: 'gemengd',
+        location: 'Lokaal 2.03',
+        description: 'Verdiepende les over islamitische studies en fiqh.',
+        maxParticipants: 25
+    },
+    {
+        id: '4',
+        title: 'Sport & Fitness (Broeders)',
+        start: new Date(currentYear, currentMonth, 25, 19, 0),
+        end: new Date(currentYear, currentMonth, 25, 21, 0),
         category: 'activiteit',
         audience: 'man',
         location: 'Sportzaal',
@@ -71,152 +83,178 @@ const events: Event[] = [
         maxParticipants: 20
     },
     {
-        id: '4',
-        title: 'Islamitische Studies',
-        start: new Date(2024, 0, 21, 10, 0),
-        end: new Date(2024, 0, 21, 12, 0),
+        id: '5',
+        title: 'Koran Recitatie',
+        start: new Date(currentYear, currentMonth, 27, 10, 0),
+        end: new Date(currentYear, currentMonth, 27, 12, 0),
         category: 'onderwijs',
         audience: 'gemengd',
-        location: 'Lokaal 2.03',
-        description: 'Verdiepende les over islamitische studies en fiqh.',
-        maxParticipants: 25
+        location: 'Gebedsruimte',
+        description: 'Leer de juiste uitspraak en regels van Koran recitatie.',
+        maxParticipants: 15
+    },
+    {
+        id: '6',
+        title: 'Iftar Bijeenkomst',
+        start: new Date(currentYear, currentMonth + 2, 15, 18, 0),
+        end: new Date(currentYear, currentMonth + 2, 15, 21, 0),
+        category: 'special',
+        audience: 'gemengd',
+        location: 'Grote zaal',
+        description: 'Gezamenlijke iftar tijdens Ramadan met een speciale lezing.',
+        maxParticipants: 100
     }
 ];
 
-const eventStyleGetter = (event: Event) => {
-    let backgroundColor = '#4F46E5';
-    let borderColor = 'transparent';
-    
-    switch (event.category) {
-        case 'onderwijs':
-            backgroundColor = '#3B82F6';
-            break;
-        case 'activiteit':
-            backgroundColor = '#EC4899';
-            break;
-        case 'special':
-            backgroundColor = '#F59E0B';
-            break;
-    }
-
-    // Add a subtle border for different audiences
-    switch (event.audience) {
-        case 'man':
-            borderColor = '#2563EB';
-            break;
-        case 'vrouw':
-            borderColor = '#DB2777';
-            break;
-    }
-
-    return {
-        style: {
-            backgroundColor,
-            borderLeft: `4px solid ${borderColor}`,
-            borderRadius: '8px',
-            opacity: 0.8,
-            color: 'white',
-            padding: '4px 8px',
-            fontWeight: 500,
-        }
-    };
-};
-
 // Custom Toolbar Component
 function CustomToolbar(toolbar: any) {
-    const goToBack = () => {
-        toolbar.onNavigate('PREV');
-    };
-
-    const goToNext = () => {
-        toolbar.onNavigate('NEXT');
-    };
-
-    const goToCurrent = () => {
-        toolbar.onNavigate('TODAY');
-    };
-
-    const viewButtons = [
-        { label: 'Maand', view: 'month', icon: FaCalendarAlt },
-        { label: 'Week', view: 'week', icon: FaCalendarWeek },
-        { label: 'Dag', view: 'day', icon: FaCalendarDay },
-    ];
-
     return (
-        <div className="flex flex-col gap-8">
-            {/* Current Month/Week/Day Display */}
-            <div className="flex items-baseline gap-4">
-                <h2 className="text-4xl font-bold text-gray-800">
-                    {toolbar.label}
-                </h2>
-                <div className="flex items-center gap-3">
-                    <button
-                        onClick={goToBack}
-                        className="p-2 rounded-xl hover:bg-gray-50 transition-colors"
-                    >
-                        <FaChevronLeft className="w-4 h-4 text-gray-400" />
-                    </button>
-                    <button
-                        onClick={goToNext}
-                        className="p-2 rounded-xl hover:bg-gray-50 transition-colors"
-                    >
-                        <FaChevronRight className="w-4 h-4 text-gray-400" />
-                    </button>
-                </div>
-            </div>
-
-            <div className="flex justify-between items-center">
-                {/* View Switcher */}
-                <div className="flex gap-2">
-                    {viewButtons.map(({ label, view, icon: Icon }) => (
-                        <button
-                            key={view}
-                            onClick={() => toolbar.onView(view)}
-                            className={`flex items-center gap-2 px-6 py-3 rounded-2xl transition-all duration-300 ${
-                                toolbar.view === view 
-                                    ? 'bg-gradient-to-r from-crown to-crown/90 text-white shadow-lg'
-                                    : 'hover:bg-gray-50 text-gray-600'
-                            }`}
-                        >
-                            <Icon className="w-4 h-4" />
-                            <span>{label}</span>
-                        </button>
-                    ))}
-                </div>
-
+        <div className="flex flex-col items-center gap-8">
+            {/* Current Month Display */}
+            <h2 className="text-4xl font-bold text-gray-800">
+                {format(new Date(toolbar.date), 'MMMM yyyy', { locale: nl })}
+            </h2>
+            
+            {/* Navigation Buttons */}
+            <div className="fixed bottom-12 left-1/2 -translate-x-1/2 flex gap-4 bg-white/80 
+                          backdrop-blur-md rounded-full px-6 py-3 shadow-lg z-50">
                 <button
-                    onClick={goToCurrent}
-                    className="flex items-center gap-2 px-6 py-3 rounded-2xl border border-gray-200 hover:bg-gray-50 transition-all duration-300 text-gray-600"
+                    onClick={() => toolbar.onNavigate('PREV')}
+                    className="p-2 rounded-xl hover:bg-gray-50/80 transition-colors"
                 >
-                    <FaRegClock className="w-4 h-4" />
-                    <span>Vandaag</span>
+                    <FaChevronLeft className="w-4 h-4 text-gray-400" />
+                </button>
+                <button
+                    onClick={() => toolbar.onNavigate('NEXT')}
+                    className="p-2 rounded-xl hover:bg-gray-50/80 transition-colors"
+                >
+                    <FaChevronRight className="w-4 h-4 text-gray-400" />
                 </button>
             </div>
         </div>
     );
 }
 
+// Event Modal Component
+function EventModal({ event, onClose }: { event: Event; onClose: () => void }) {
+    return (
+        <div className="event-modal" onClick={onClose}>
+            <div className="event-modal-content" onClick={e => e.stopPropagation()}>
+                <div className="event-modal-header">
+                    <h3 className="event-modal-title">{event.title}</h3>
+                    <button onClick={onClose} className="event-modal-close">
+                        <FaTimes className="w-5 h-5 text-gray-400" />
+                    </button>
+                </div>
+                
+                <div className="event-modal-body">
+                    <div className="event-modal-info">
+                        <FaClock className="w-5 h-5 text-gray-400" />
+                        <div>
+                            <div className="event-modal-label">Datum & Tijd</div>
+                            <div className="event-modal-value">
+                                {format(event.start, 'EEEE d MMMM', { locale: nl })}
+                                <br />
+                                {format(event.start, 'HH:mm', { locale: nl })} - {format(event.end, 'HH:mm', { locale: nl })} uur
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="event-modal-info">
+                        <FaMapMarkerAlt className="w-5 h-5 text-gray-400" />
+                        <div>
+                            <div className="event-modal-label">Locatie</div>
+                            <div className="event-modal-value">{event.location}</div>
+                        </div>
+                    </div>
+
+                    <div className="event-modal-info">
+                        <FaUserFriends className="w-5 h-5 text-gray-400" />
+                        <div>
+                            <div className="event-modal-label">Voor wie?</div>
+                            <div className="event-modal-value flex items-center gap-2">
+                                {event.audience === 'man' && <FaMars className="text-boy" />}
+                                {event.audience === 'vrouw' && <FaVenus className="text-girl" />}
+                                {event.audience === 'gemengd' && <FaUsers className="text-crown" />}
+                                {event.audience === 'man' ? 'Alleen broeders' :
+                                 event.audience === 'vrouw' ? 'Alleen zusters' :
+                                 'Iedereen welkom'}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="event-modal-description">
+                        {event.description}
+                    </div>
+                </div>
+
+                <div className="event-modal-footer">
+                    <button 
+                        className="event-modal-button event-modal-button-secondary"
+                        onClick={onClose}
+                    >
+                        Sluiten
+                    </button>
+                    <button className="event-modal-button event-modal-button-primary">
+                        Inschrijven
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+const eventStyleGetter = (event: Event) => {
+    return {
+        className: `event-${event.category}`,
+        style: {
+            borderLeft: event.audience === 'man' ? '3px solid #2563EB' :
+                       event.audience === 'vrouw' ? '3px solid #DB2777' :
+                       'none'
+        }
+    };
+};
+
+// Nederlandse vertalingen
+const messages = {
+    month: 'Maand',
+    previous: '',
+    next: '',
+    today: '',
+    agenda: 'Agenda',
+    allDay: 'Hele dag',
+    date: 'Datum',
+    time: 'Tijd',
+    event: 'Activiteit',
+    noEventsInRange: 'Geen activiteiten in deze periode',
+    showMore: (total: number) => `+${total} meer`,
+};
+
+// Nederlandse dagen en maanden
+const formats = {
+    monthHeaderFormat: (date: Date) => format(date, 'MMMM yyyy', { locale: nl }),
+    weekdayFormat: (date: Date) => format(date, 'EEEE', { locale: nl }),
+    dayFormat: (date: Date) => format(date, 'd', { locale: nl }),
+    dayRangeHeaderFormat: ({ start, end }: { start: Date, end: Date }) => 
+        `${format(start, 'd MMMM', { locale: nl })} - ${format(end, 'd MMMM', { locale: nl })}`,
+};
+
 export default function ActiviteitenPage() {
     const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
-    const [view, setView] = useState<View>('month');
 
     return (
         <main className="min-h-screen bg-white">
             {/* Hero Section */}
-            <section className="relative py-24">
-                <div className="absolute inset-0 bg-gradient-to-r from-gray-900 to-boy">
-                    <div className="absolute inset-0 opacity-30 mix-blend-soft-light bg-[radial-gradient(at_top_right,_#1dbffe_0%,_transparent_50%)]" />
-                </div>
-                <div className="absolute -bottom-1 left-0 right-0">
-                    <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill="white" d="M0 48.5129L60 54.0129C120 59.5129 240 70.5129 360 75.5129C480 80.5129 600 80.0129 720 70.0129C840 59.5129 960 37.5129 1080 32.0129C1200 27.0129 1320 37.5129 1380 43.0129L1440 48.5129V100H1380C1320 100 1200 100 1080 100C960 100 840 100 720 100C600 100 480 100 360 100C240 100 120 100 60 100H0V48.5129Z" />
-                    </svg>
-                </div>
-                <div className="relative z-10 container mx-auto px-4 pt-24">
+            <section className="bg-gradient-to-b from-crown/5 to-transparent py-24">
+                <div className="container mx-auto px-4">
                     <div className="max-w-4xl">
-                        <h1 className="text-6xl font-bold text-white">
-                            Activiteiten
+                        <h1 className="text-5xl font-bold text-gray-800 mb-6">
+                            Activiteiten & Onderwijs
                         </h1>
+                        <p className="text-xl text-gray-600 leading-relaxed">
+                            Ontdek onze diverse activiteiten en onderwijsprogramma's. 
+                            Van Arabische lessen tot sportactiviteiten, er is voor ieder wat wils.
+                        </p>
                     </div>
                 </div>
             </section>
@@ -226,39 +264,33 @@ export default function ActiviteitenPage() {
                 <div className="container mx-auto px-4">
                     <div className="max-w-7xl mx-auto">
                         {/* Legend */}
-                        <div className="flex flex-wrap gap-8 mb-12">
-                            <div className="space-y-3">
-                                <h3 className="font-medium text-gray-900">Type Activiteit</h3>
-                                <div className="flex gap-6">
-                                    <div className="flex items-center gap-2">
-                                        <div className="w-3 h-3 rounded-full bg-boy"></div>
-                                        <span className="text-gray-600">Onderwijs</span>
-                                    </div>
-                                    <div className="flex items-center gap-2">
-                                        <div className="w-3 h-3 rounded-full bg-girl"></div>
-                                        <span className="text-gray-600">Activiteiten</span>
-                                    </div>
-                                    <div className="flex items-center gap-2">
-                                        <div className="w-3 h-3 rounded-full bg-crown"></div>
-                                        <span className="text-gray-600">Speciaal</span>
-                                    </div>
+                        <div className="mb-12 flex flex-wrap gap-8">
+                            <div className="flex items-center gap-6">
+                                <div className="flex items-center gap-2">
+                                    <div className="w-3 h-3 rounded-full bg-boy"></div>
+                                    <span className="text-sm text-gray-600">Onderwijs</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <div className="w-3 h-3 rounded-full bg-girl"></div>
+                                    <span className="text-sm text-gray-600">Activiteiten</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <div className="w-3 h-3 rounded-full bg-crown"></div>
+                                    <span className="text-sm text-gray-600">Speciale events</span>
                                 </div>
                             </div>
-                            <div className="space-y-3">
-                                <h3 className="font-medium text-gray-900">Voor Wie</h3>
-                                <div className="flex gap-6">
-                                    <div className="flex items-center gap-2">
-                                        <FaMars className="text-boy" />
-                                        <span className="text-gray-600">Broeders</span>
-                                    </div>
-                                    <div className="flex items-center gap-2">
-                                        <FaVenus className="text-girl" />
-                                        <span className="text-gray-600">Zusters</span>
-                                    </div>
-                                    <div className="flex items-center gap-2">
-                                        <FaUsers className="text-gray-400" />
-                                        <span className="text-gray-600">Iedereen</span>
-                                    </div>
+                            <div className="flex items-center gap-6">
+                                <div className="flex items-center gap-2">
+                                    <FaMars className="text-boy" />
+                                    <span className="text-sm text-gray-600">Broeders</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <FaVenus className="text-girl" />
+                                    <span className="text-sm text-gray-600">Zusters</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <FaUsers className="text-crown" />
+                                    <span className="text-sm text-gray-600">Iedereen</span>
                                 </div>
                             </div>
                         </div>
@@ -273,22 +305,14 @@ export default function ActiviteitenPage() {
                                 style={{ height: 800 }}
                                 eventPropGetter={eventStyleGetter}
                                 onSelectEvent={(event) => setSelectedEvent(event as Event)}
-                                view={view}
-                                onView={(newView) => setView(newView)}
-                                messages={{
-                                    week: 'Week',
-                                    work_week: 'Werkweek',
-                                    day: 'Dag',
-                                    month: 'Maand',
-                                    previous: '',
-                                    next: '',
-                                    today: 'Vandaag',
-                                    agenda: 'Agenda',
-                                }}
+                                messages={messages}
+                                formats={formats}
                                 className="custom-calendar"
                                 components={{
                                     toolbar: CustomToolbar,
                                 }}
+                                views={['month']}
+                                defaultView="month"
                             />
                         </div>
                     </div>
@@ -297,70 +321,10 @@ export default function ActiviteitenPage() {
 
             {/* Event Modal */}
             {selectedEvent && (
-                <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-                    <div className="bg-white rounded-2xl shadow-xl max-w-lg w-full p-6">
-                        <div className="flex justify-between items-start mb-6">
-                            <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center">
-                                    <FaCalendarAlt className="w-5 h-5 text-gray-600" />
-                                </div>
-                                <div>
-                                    <h3 className="text-2xl font-bold text-gray-800">{selectedEvent.title}</h3>
-                                    <div className="flex items-center gap-2 mt-1">
-                                        {selectedEvent.audience === 'man' && <FaMars className="text-boy" />}
-                                        {selectedEvent.audience === 'vrouw' && <FaVenus className="text-girl" />}
-                                        {selectedEvent.audience === 'gemengd' && <FaUsers className="text-gray-400" />}
-                                        <span className="text-sm text-gray-500">
-                                            {selectedEvent.audience === 'man' ? 'Alleen broeders' : 
-                                             selectedEvent.audience === 'vrouw' ? 'Alleen zusters' : 
-                                             'Voor iedereen'}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <button 
-                                onClick={() => setSelectedEvent(null)}
-                                className="text-gray-400 hover:text-gray-600 transition-colors"
-                            >
-                                <FaTimes className="w-5 h-5" />
-                            </button>
-                        </div>
-                        <div className="space-y-4">
-                            <div>
-                                <p className="text-sm text-gray-500">Datum & Tijd</p>
-                                <p className="text-gray-700">
-                                    {format(selectedEvent.start, 'EEEE d MMMM yyyy', { locale: nl })}
-                                </p>
-                                <p className="text-gray-700">
-                                    {format(selectedEvent.start, 'HH:mm', { locale: nl })} - {format(selectedEvent.end, 'HH:mm', { locale: nl })}
-                                </p>
-                            </div>
-                            {selectedEvent.location && (
-                                <div>
-                                    <p className="text-sm text-gray-500">Locatie</p>
-                                    <p className="text-gray-700">{selectedEvent.location}</p>
-                                </div>
-                            )}
-                            {selectedEvent.description && (
-                                <div>
-                                    <p className="text-sm text-gray-500">Beschrijving</p>
-                                    <p className="text-gray-700">{selectedEvent.description}</p>
-                                </div>
-                            )}
-                            {selectedEvent.maxParticipants && (
-                                <div>
-                                    <p className="text-sm text-gray-500">Maximaal aantal deelnemers</p>
-                                    <p className="text-gray-700">{selectedEvent.maxParticipants} personen</p>
-                                </div>
-                            )}
-                            <div className="pt-4">
-                                <button className="w-full bg-crown text-white px-6 py-3 rounded-xl font-medium hover:bg-crown/90 transition-colors">
-                                    Inschrijven
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <EventModal 
+                    event={selectedEvent} 
+                    onClose={() => setSelectedEvent(null)} 
+                />
             )}
         </main>
     );

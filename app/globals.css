@@ -15,118 +15,172 @@
 
 /* Calendar Customization */
 .custom-calendar {
-    @apply font-sans bg-white rounded-3xl p-8;
+    @apply font-sans bg-white rounded-3xl p-12;
+}
+
+/* Month Header */
+.custom-calendar .rbc-toolbar {
+    @apply flex flex-col items-center justify-center mb-16;
+}
+
+.custom-calendar .rbc-toolbar-label {
+    @apply text-4xl font-bold text-gray-800 mb-8;
+}
+
+/* Navigation Buttons - Moved to bottom */
+.custom-calendar .rbc-btn-group {
+    @apply fixed bottom-12 left-1/2 -translate-x-1/2 flex gap-4 bg-white/80 
+           backdrop-blur-md rounded-full px-6 py-3 shadow-lg z-50;
+}
+
+.custom-calendar .rbc-btn-group button {
+    @apply p-2 rounded-xl transition-all duration-300 hover:bg-gray-50;
 }
 
 /* Headers (dagen van de week) */
 .custom-calendar .rbc-header {
-    @apply py-8 font-medium text-gray-400 border-0 text-sm uppercase tracking-wider;
+    @apply py-6 font-medium text-gray-400 border-0 text-sm uppercase tracking-wider;
 }
 
-/* Maand weergave */
+/* Month View Container */
 .custom-calendar .rbc-month-view {
-    @apply border-0;
+    @apply border-0 gap-4;
 }
 
-/* Dag cells */
-.custom-calendar .rbc-day-bg {
-    @apply transition-all duration-300;
+/* Week Rows */
+.custom-calendar .rbc-month-row {
+    @apply mb-4;
 }
 
-/* Huidige dag */
+.custom-calendar .rbc-row-bg {
+    @apply gap-4;
+}
+
+.custom-calendar .rbc-row-content {
+    @apply gap-4 z-20;
+}
+
+/* Day Cells */
+.custom-calendar .rbc-date-cell {
+    @apply min-h-[140px] bg-gray-50/60 rounded-2xl p-4 relative transition-all duration-300
+           hover:shadow-lg hover:bg-white/80 backdrop-blur-sm;
+}
+
+/* Day Number Container */
+.custom-calendar .rbc-date-cell > a {
+    @apply absolute top-3 right-3 w-8 h-8 flex items-center justify-center
+           bg-white/80 backdrop-blur-sm rounded-lg shadow-sm
+           text-base font-medium text-gray-600
+           hover:bg-crown/10 hover:text-crown transition-all duration-300;
+}
+
+/* Current Day */
 .custom-calendar .rbc-today {
-    @apply relative;
+    @apply bg-white/90 shadow-lg;
 }
 
-.custom-calendar .rbc-today::after {
-    content: '';
-    @apply absolute inset-2 bg-crown/5 rounded-2xl border-2 border-crown z-0;
+.custom-calendar .rbc-today > a {
+    @apply bg-crown/10 text-crown font-semibold;
 }
 
-/* Dagen buiten huidige maand */
+/* Days outside current month */
 .custom-calendar .rbc-off-range-bg {
-    @apply bg-transparent opacity-40;
+    @apply opacity-40;
 }
 
-/* Toolbar (navigatie en view switches) */
-.custom-calendar .rbc-toolbar {
-    @apply mb-12 flex flex-wrap justify-between items-center gap-6;
-}
-
-/* View switcher buttons */
-.custom-calendar .rbc-btn-group {
-    @apply flex gap-2;
-}
-
-.custom-calendar .rbc-toolbar button {
-    @apply px-6 py-3 rounded-2xl text-sm font-medium transition-all duration-300 
-           hover:bg-gray-50 hover:shadow-md hover:-translate-y-0.5
-           active:translate-y-0 active:shadow-sm;
-}
-
-.custom-calendar .rbc-toolbar button.rbc-active {
-    @apply bg-gradient-to-r from-crown to-crown/90 text-white shadow-lg
-           hover:shadow-crown/20 hover:-translate-y-0.5;
+.custom-calendar .rbc-off-range {
+    @apply opacity-40;
 }
 
 /* Events */
 .custom-calendar .rbc-event {
-    @apply shadow-lg transition-all duration-300 cursor-pointer rounded-xl border-0 
-           my-1 mx-2 p-2 backdrop-blur-sm bg-white/10;
+    @apply shadow-sm transition-all duration-300 cursor-pointer rounded-xl border-0 
+           my-1 mx-1 p-2 bg-gradient-to-r;
+}
+
+.custom-calendar .rbc-event.event-onderwijs {
+    @apply from-boy/90 to-boy/80 text-white;
+}
+
+.custom-calendar .rbc-event.event-activiteit {
+    @apply from-girl/90 to-girl/80 text-white;
+}
+
+.custom-calendar .rbc-event.event-special {
+    @apply from-crown/90 to-crown/80 text-white;
 }
 
 .custom-calendar .rbc-event:hover {
-    @apply transform scale-[1.02] shadow-xl -translate-y-0.5;
+    @apply transform scale-[1.02] shadow-md -translate-y-0.5;
 }
 
 .custom-calendar .rbc-event-content {
-    @apply text-sm font-medium;
+    @apply text-sm font-medium leading-snug;
 }
 
-/* Date cell */
-.custom-calendar .rbc-date-cell {
-    @apply p-2 text-sm;
-}
-
-.custom-calendar .rbc-date-cell > a {
-    @apply w-8 h-8 flex items-center justify-center mx-auto rounded-full
-           transition-all duration-300 hover:bg-gray-50;
-}
-
-.custom-calendar .rbc-date-cell.rbc-now > a {
-    @apply bg-crown text-white font-medium hover:bg-crown/90;
-}
-
-/* Row height */
-.custom-calendar .rbc-month-row {
-    @apply min-h-[150px];
-}
-
-/* More link */
+/* More Events Link */
 .custom-calendar .rbc-show-more {
     @apply text-xs font-medium text-crown hover:text-crown/80 bg-transparent
            px-3 py-1 rounded-full hover:bg-crown/5 transition-colors duration-200;
 }
 
-/* Week view specific */
-.custom-calendar .rbc-time-view {
-    @apply rounded-2xl overflow-hidden border-0 shadow-sm;
+/* Event Modal */
+.event-modal {
+    @apply fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 p-4;
 }
 
-.custom-calendar .rbc-time-header {
-    @apply border-0;
+.event-modal-content {
+    @apply bg-white/95 backdrop-blur-xl rounded-3xl p-8 max-w-lg w-full shadow-2xl
+           transform transition-all duration-300 animate-fade-in;
 }
 
-.custom-calendar .rbc-time-content {
-    @apply border-0;
+.event-modal-header {
+    @apply flex justify-between items-start mb-6;
 }
 
-.custom-calendar .rbc-time-slot {
-    @apply text-sm text-gray-400;
+.event-modal-title {
+    @apply text-2xl font-bold text-gray-800;
 }
 
-.custom-calendar .rbc-current-time-indicator {
-    @apply bg-crown h-0.5;
+.event-modal-close {
+    @apply p-2 hover:bg-gray-100/80 rounded-xl transition-colors;
+}
+
+.event-modal-body {
+    @apply space-y-6;
+}
+
+.event-modal-info {
+    @apply flex items-center gap-3 text-gray-600;
+}
+
+.event-modal-label {
+    @apply text-sm font-medium text-gray-500;
+}
+
+.event-modal-value {
+    @apply text-base text-gray-800;
+}
+
+.event-modal-description {
+    @apply text-gray-600 leading-relaxed;
+}
+
+.event-modal-footer {
+    @apply mt-8 pt-6 border-t border-gray-100 flex justify-end gap-4;
+}
+
+.event-modal-button {
+    @apply px-6 py-3 rounded-xl text-sm font-medium transition-all duration-300
+           hover:shadow-md active:transform active:scale-95;
+}
+
+.event-modal-button-primary {
+    @apply bg-gradient-to-r from-crown to-crown/90 text-white;
+}
+
+.event-modal-button-secondary {
+    @apply bg-gray-100/80 text-gray-600 hover:bg-gray-200/80;
 }
 
 :root {
