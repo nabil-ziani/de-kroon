@@ -43,9 +43,9 @@ export default function Footer() {
                         <h3 className="text-xl font-bold mb-6">Snelle Links</h3>
                         <div className="space-y-4">
                             <p>
-                                <Link href="/over-ons" className="hover:text-crown transition-colors flex items-center space-x-2">
+                                <Link href="/gebedstijden" className="hover:text-crown transition-colors flex items-center space-x-2">
                                     <span>→</span>
-                                    <span>Over Ons</span>
+                                    <span>Gebedstijden</span>
                                 </Link>
                             </p>
                             <p>
