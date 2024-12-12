@@ -2,6 +2,7 @@ import {
     Body,
     Container,
     Head,
+    Heading,
     Hr,
     Html,
     Img,
@@ -12,77 +13,133 @@ import {
 import { EnrollmentFormData } from '@/utils/validation';
 import { Font } from './custom-font';
 
-interface EnrollmentEmailProps {
+interface Props {
     data: EnrollmentFormData;
 }
 
-export default function EnrollmentEmail({ data }: EnrollmentEmailProps) {
+export default function EnrollmentEmail({ data }: Props) {
+    const pickupMethods = {
+        ALONE: 'Mag alleen naar huis',
+        PARENTS: 'Wordt opgehaald door ouders',
+        SIBLINGS: 'Wordt opgehaald door broer of zus'
+    };
+
     return (
         <Html>
             <Head>
                 <Font />
             </Head>
-            <Preview>Nieuwe inschrijving voor {data.courseName} van {data.studentName}</Preview>
+            <Preview>Nieuwe inschrijving voor {data.courseName}</Preview>
             <Body style={main}>
-                <Img
-                    src={`https://de-kroon.vercel.app/logo-2.png`}
-                    width="auto"
-                    height="100"
-                    alt="De Kroon"
-                    style={logo}
-                />
-
                 <Container style={container}>
                     <Section style={section}>
+                        <Img
+                            src={`https://de-kroon.vercel.app/logo-2.png`}
+                            width="auto"
+                            height="100"
+                            alt="De Kroon"
+                            style={logo}
+                        />
+
                         <Text style={greeting}>
                             Nieuwe inschrijving ontvangen via het inschrijfformulier:
                         </Text>
 
-                        <Hr style={hr} />
-
+                        {/* Student Info */}
                         <Section style={messageBox}>
+                            <Heading style={h2}>Student Informatie</Heading>
                             <Text style={detailText}>
-                                <strong style={labelStyle}>Student:</strong> {data.studentName}
-                            </Text>
-                            <Text style={detailText}>
-                                <strong style={labelStyle}>Email:</strong> {data.email}
-                            </Text>
-                            <Text style={detailText}>
-                                <strong style={labelStyle}>Telefoonnummer:</strong> {data.phone}
+                                <strong style={labelStyle}>Naam:</strong> {data.childName}
                             </Text>
                             <Text style={detailText}>
                                 <strong style={labelStyle}>Geboortedatum:</strong> {new Date(data.birthDate).toLocaleDateString('nl-BE')}
                             </Text>
                             <Text style={detailText}>
+                                <strong style={labelStyle}>Eerdere lessen gevolgd:</strong> {data.hadPreviousClasses ? 'Ja' : 'Nee'}
+                            </Text>
+                            {data.previousLevel && (
+                                <Text style={detailText}>
+                                    <strong style={labelStyle}>Vorig niveau:</strong> {data.previousLevel}
+                                </Text>
+                            )}
+                            <Text style={detailText}>
                                 <strong style={labelStyle}>Cursus:</strong> {data.courseName}
                             </Text>
                         </Section>
 
-                        {data.message && (
-                            <>
-                                <Text style={messageContent}>
-                                    {data.message}
-                                </Text>
-                            </>
-                        )}
+                        {/* Father Info */}
+                        <Section style={section}>
+                            <Heading style={h2}>Vader</Heading>
+                            <Text style={detailText}>
+                                <strong style={labelStyle}>Naam:</strong> {data.fatherFirstName} {data.fatherLastName}
+                            </Text>
+                            <Text style={detailText}>
+                                <strong style={labelStyle}>E-mail:</strong> {data.fatherEmail}
+                            </Text>
+                            <Text style={detailText}>
+                                <strong style={labelStyle}>Telefoon:</strong> {data.fatherPhone}
+                            </Text>
+                        </Section>
+
+                        {/* Mother Info */}
+                        <Section style={section}>
+                            <Heading style={h2}>Moeder</Heading>
+                            <Text style={detailText}>
+                                <strong style={labelStyle}>Naam:</strong> {data.motherFirstName} {data.motherLastName}
+                            </Text>
+                            <Text style={detailText}>
+                                <strong style={labelStyle}>E-mail:</strong> {data.motherEmail}
+                            </Text>
+                            <Text style={detailText}>
+                                <strong style={labelStyle}>Telefoon:</strong> {data.motherPhone}
+                            </Text>
+                        </Section>
+
+                        {/* Address */}
+                        <Section style={section}>
+                            <Heading style={h2}>Adres</Heading>
+                            <Text style={detailText}>
+                                <strong style={labelStyle}>Straat:</strong> {data.street} {data.houseNumber}
+                            </Text>
+                            <Text style={detailText}>
+                                <strong style={labelStyle}>Gemeente:</strong> {data.city}
+                            </Text>
+                        </Section>
+
+                        {/* Additional Info */}
+                        <Section style={section}>
+                            <Heading style={h2}>Extra Informatie</Heading>
+                            <Text style={detailText}>
+                                <strong style={labelStyle}>Ophaalmethode:</strong> {pickupMethods[data.pickupMethod]}
+                            </Text>
+                            <Text style={detailText}>
+                                <strong style={labelStyle}>Leerstoornissen:</strong><br /> {data.learningDisorders || 'Geen'}
+                            </Text>
+                            <Text style={detailText}>
+                                <strong style={labelStyle}>Allergieën:</strong><br /> {data.allergies || 'Geen'}
+                            </Text>
+                            <Text style={detailText}>
+                                <strong style={labelStyle}>Extra bericht:</strong><br /> {data.message}
+                            </Text>
+                        </Section>
 
                         <Hr style={hr} />
 
                         <Text style={footer}>
-                            Deze inschrijving is verzonden via het inschrijfformulier op moskee-nasr.be
+                            Deze inschrijving is ontvangen via het online formulier op kidskroon.be
                         </Text>
                     </Section>
                 </Container>
-            </Body>
-        </Html>
+            </Body >
+        </Html >
     );
 }
 
-// Styling
 const main = {
     fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif',
     margin: '0',
     padding: '40px 20px',
+    backgroundColor: '#f6f9fc',
 };
 
 const logo = {
@@ -110,6 +167,14 @@ const greeting = {
     fontSize: '16px',
     lineHeight: '32px',
     margin: '0 0 24px',
+};
+
+const h2 = {
+    color: '#374151',
+    fontSize: '18px',
+    fontWeight: '600',
+    lineHeight: '1.25',
+    marginBottom: '16px',
 };
 
 const messageBox = {
@@ -142,27 +207,13 @@ const labelStyle = {
 };
 
 const hr = {
-    borderTop: 'dotted 4px rgba(26, 47, 51, 0.2)',
-    margin: '32px 0 16px 0',
-};
-
-const messageContent = {
-    color: '#64748b',
-    fontSize: '16px',
-    lineHeight: '26px',
-    margin: '0 0 32px',
-    backgroundColor: '#ffffff',
-    padding: '24px',
-    borderRadius: '8px',
-    whiteSpace: 'pre-wrap' as const,
-    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)',
-    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif',
+    borderColor: '#e5e7eb',
+    margin: '24px 0',
 };
 
 const footer = {
-    color: '#64748b',
-    fontSize: '14px',
+    color: '#6b7280',
+    fontSize: '12px',
+    lineHeight: '16px',
     textAlign: 'center' as const,
-    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif',
-    margin: '24px 0 0',
 }; 

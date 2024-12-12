@@ -2,6 +2,7 @@ import {
     Body,
     Container,
     Head,
+    Heading,
     Hr,
     Html,
     Preview,
@@ -9,30 +10,26 @@ import {
     Text,
     Img,
 } from '@react-email/components';
-import { EnrollmentFormData } from '@/utils/validation';
 import { Font } from './custom-font';
 
-interface EnrollmentConfirmationEmailProps {
-    data: EnrollmentFormData;
-}
-
-export default function EnrollmentConfirmationEmail({ data }: EnrollmentConfirmationEmailProps) {
+export default function EnrollmentConfirmationEmail() {
     return (
         <Html>
             <Head>
                 <Font />
             </Head>
             <Preview>Bedankt voor uw inschrijving</Preview>
-            <Body style={main}>
-                <Img
-                    src={`https://de-kroon.vercel.app/logo-2.png`}
-                    width="auto"
-                    height="100"
-                    alt="De Kroon"
-                    style={logo}
-                />
 
+            <Body style={main}>
                 <Container style={container}>
+                    <Img
+                        src={`https://de-kroon.vercel.app/logo-2.png`}
+                        width="auto"
+                        height="100"
+                        alt="De Kroon"
+                        style={logo}
+                    />
+
                     <Section style={section}>
                         <Text style={greeting}>
                             Assalaamoe'alaikoem wa rahmatoellah wa barakaatoeh,
@@ -44,21 +41,7 @@ export default function EnrollmentConfirmationEmail({ data }: EnrollmentConfirma
 
                         <Hr style={hr} />
 
-                        <Section style={messageBox}>
-                            <Text style={detailText}>
-                                <strong style={labelStyle}>Cursus:</strong> {data.courseName}
-                            </Text>
-                            <Text style={detailText}>
-                                <strong style={labelStyle}>Student:</strong> {data.childName}
-                            </Text>
-                            <Text style={detailText}>
-                                <strong style={labelStyle}>Geboortedatum:</strong> {new Date(data.birthDate).toLocaleDateString('nl-BE')}
-                            </Text>
-                        </Section>
-
-                        <Hr style={hr} />
-
-                        <Text style={contactInfo}>
+                        <Text style={footer}>
                             Kroonstraat 72, 2140 Borgerhout
                             <br />
                             +32 486 13 39 60
@@ -70,7 +53,6 @@ export default function EnrollmentConfirmationEmail({ data }: EnrollmentConfirma
     );
 }
 
-// Styling
 const main = {
     fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif',
     margin: '0',
@@ -102,56 +84,25 @@ const greeting = {
     fontSize: '16px',
     lineHeight: '32px',
     margin: '0 0 24px',
-    fontStyle: 'italic',
+    textAlign: 'center' as const,
 };
 
 const messageText = {
-    color: '#64748b',
+    color: '#1a2f33',
     fontSize: '16px',
     lineHeight: '26px',
     margin: '0 0 32px',
     fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif',
 };
 
-const messageBox = {
-    backgroundColor: '#ffffff',
-    padding: '24px',
-    borderRadius: '8px',
-    marginTop: '24px',
-    marginBottom: '24px',
-    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)',
-    textAlign: 'left' as const,
-};
-
-const detailText = {
-    color: '#64748b',
-    fontSize: '16px',
-    lineHeight: '24px',
-    margin: '12px 0',
-    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif',
-    display: 'flex',
-    gap: '8px',
-    alignItems: 'center' as const,
-};
-
-const labelStyle = {
-    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif',
-    fontWeight: '600',
-    color: '#1a2f33',
-    display: 'inline-block',
-    textAlign: 'left' as const,
-};
-
 const hr = {
-    borderTop: 'dotted 4px rgba(26, 47, 51, 0.2)',
+    borderColor: '#e5e7eb',
     margin: '32px 0 16px 0',
 };
 
-const contactInfo = {
-    color: '#64748b',
+const footer = {
+    color: '#374151',
     fontSize: '14px',
     lineHeight: '20px',
     textAlign: 'center' as const,
-    margin: '24px 0 0',
-    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif',
 }; 

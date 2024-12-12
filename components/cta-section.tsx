@@ -7,7 +7,7 @@ export default function CTASection() {
             {/* Top Wave */}
             <div className="absolute top-0 left-0 right-0 w-[102%] -ml-[1%]">
                 <svg className="w-full h-24" viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-                    <path d="M0 100L60 94.5C120 89 240 78 360 73C480 68 600 68.5 720 78.5C840 89 960 111 1080 116.5C1200 121.5 1320 111 1380 105.5L1440 100V0H1380C1320 0 1200 0 1080 0C960 0 840 0 720 0C600 0 480 0 360 0C240 0 120 0 60 0H0V100Z" fill="white"/>
+                    <path d="M0 100L60 94.5C120 89 240 78 360 73C480 68 600 68.5 720 78.5C840 89 960 111 1080 116.5C1200 121.5 1320 111 1380 105.5L1440 100V0H1380C1320 0 1200 0 1080 0C960 0 840 0 720 0C600 0 480 0 360 0C240 0 120 0 60 0H0V100Z" fill="white" />
                 </svg>
             </div>
 
@@ -62,7 +62,7 @@ export default function CTASection() {
                                 <div className="mt-auto">
                                     <Link
                                         href="/donatie"
-                                        className="inline-flex items-center bg-white text-girl px-8 py-4 rounded-xl font-semibold hover:bg-opacity-90 transition-colors uppercase tracking-wide text-sm group-hover:scale-105 transform transition-transform duration-300"
+                                        className="inline-flex items-center bg-white text-girl px-8 py-4 rounded-xl font-semibold hover:bg-opacity-90 uppercase tracking-wide text-sm group-hover:scale-105 transform transition-transform duration-300"
                                     >
                                         Word Steunpilaar
                                     </Link>
@@ -95,7 +95,7 @@ export default function CTASection() {
                                 <div className="mt-auto">
                                     <Link
                                         href="/vrijwilliger-worden"
-                                        className="inline-flex items-center bg-white text-boy px-8 py-4 rounded-xl font-semibold hover:bg-opacity-90 transition-colors uppercase tracking-wide text-sm group-hover:scale-105 transform transition-transform duration-300"
+                                        className="inline-flex items-center bg-white text-boy px-8 py-4 rounded-xl font-semibold hover:bg-opacity-90 uppercase tracking-wide text-sm group-hover:scale-105 transform transition-transform duration-300"
                                     >
                                         Word Vrijwilliger
                                     </Link>

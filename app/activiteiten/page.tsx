@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { format } from 'date-fns';
 import { nl } from 'date-fns/locale';
 import { FaMars, FaVenus, FaUsers, FaTimes, FaMapMarkerAlt, FaUserFriends, FaClock } from 'react-icons/fa';
-import Calendar from '../components/Calendar/Calendar';
+import Calendar from '@/components/calendar';
 
 type Event = {
     id: string;
@@ -180,7 +180,7 @@ export default function ActiviteitenPage() {
             <section className="relative py-24 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-900 to-boy">
                     <div className="absolute inset-0 opacity-30 mix-blend-soft-light 
-                                  bg-[radial-gradient(at_top_right,_#1dbffe_0%,_transparent_50%)]" />
+                                bg-[radial-gradient(at_top_right,_#1dbffe_0%,_transparent_50%)]" />
                 </div>
                 <div className="absolute -bottom-1 left-0 right-0">
                     <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg">

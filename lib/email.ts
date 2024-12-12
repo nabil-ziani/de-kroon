@@ -30,7 +30,7 @@ export async function sendContactEmail(data: ContactFormData) {
             from: `De Kroon <${FROM_EMAIL}>`,
             to: data.email,
             subject: 'Bedankt voor uw bericht',
-            react: ContactConfirmationEmail({ data })
+            react: ContactConfirmationEmail()
         });
     } catch (error) {
         console.error('Error sending contact email:', error);
@@ -48,12 +48,17 @@ export async function sendEnrollmentEmail(data: EnrollmentFormData) {
             react: EnrollmentEmail({ data })
         });
 
-        // Bevestigingsmail naar gebruiker
+        // Bevestigingsmail naar beide ouders
+        const parentEmails = [data.fatherEmail];
+        if (data.motherEmail && data.motherEmail !== data.fatherEmail) {
+            parentEmails.push(data.motherEmail);
+        }
+
         await resend.emails.send({
             from: `De Kroon <${FROM_EMAIL}>`,
-            to: data.email,
+            to: parentEmails,
             subject: 'Bedankt voor uw inschrijving',
-            react: EnrollmentConfirmationEmail({ data })
+            react: EnrollmentConfirmationEmail()
         });
     } catch (error) {
         console.error('Error sending enrollment email:', error);

@@ -95,7 +95,7 @@ export function Form<T extends z.ZodType>({
                     form.register(name).onChange(e);
                     onChange?.(e);
                 }}
-                className="w-5 h-5 rounded border-gray-300 accent-crown focus:ring-0"
+                className="w-5 h-5 rounded border-gray-300 focus:ring-0"
             />
         ) : type === 'select' ? (
             <div className="relative">

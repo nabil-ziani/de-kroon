@@ -130,7 +130,7 @@ export default function DonatePage() {
                                                 type="checkbox"
                                                 checked={isRecurring}
                                                 onChange={(e) => setIsRecurring(e.target.checked)}
-                                                className="w-5 h-5 rounded border-gray-300 accent-crown focus:ring-crown focus:ring-offset-0"
+                                                className="w-5 h-5 rounded border-gray-300 focus:ring-crown focus:ring-offset-0"
                                             />
                                             <span className="ml-2 text-gray-700 font-medium">Maandelijkse donatie</span>
                                             <span className="ml-2 text-xs bg-crown/10 text-crown px-2 py-1 rounded-full">Aanbevolen</span>
