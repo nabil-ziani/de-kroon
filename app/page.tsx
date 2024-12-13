@@ -6,12 +6,10 @@ import CourseSection from "@/components/course-section";
 import LiveSection from "@/components/live-section";
 import CTASection from "@/components/cta-section";
 import { nlBE } from "date-fns/locale";
-import { useState } from "react";
 import { format } from 'date-fns';
+import { FaExternalLinkAlt } from 'react-icons/fa';
 
 export default function Home() {
-  const [currentDate, setCurrentDate] = useState(new Date());
-
   return (
     <main className="font-sans">
       <Hero />
@@ -23,12 +21,44 @@ export default function Home() {
             <h2 className="text-5xl mb-4 text-gray-800">
               <span className="text-6xl font-bold">Gebedstijden</span>
             </h2>
-            <p className="text-xl text-gray-500">
-              {format(currentDate, 'EEEE d MMMM yyyy', { locale: nlBE }).charAt(0).toUpperCase() + format(currentDate, 'EEEE d MMMM yyyy', { locale: nlBE }).slice(1)}
-              ,{" "} <span className="font-bold">Borgerhout</span>
-            </p>
+            <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
+              <p className="text-xl text-gray-500">
+                {format(new Date(), 'EEEE d MMMM yyyy', { locale: nlBE }).charAt(0).toUpperCase() +
+                  format(new Date(), 'EEEE d MMMM yyyy', { locale: nlBE }).slice(1)}
+                ,{" "} <span className="font-bold">Borgerhout</span>
+              </p>
+
+              <a
+                href="https://mawaqit.net/en/moskee-ennassr-borgerhout-2140-belgium"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-crown/10 text-crown rounded-lg text-sm hover:bg-crown/20 transition-colors"
+              >
+                Moskee Ennassr
+                <FaExternalLinkAlt className="w-3 h-3" />
+              </a>
+            </div>
           </div>
+
           <PrayerTimes />
+
+          <div className="max-w-2xl mx-auto mt-12">
+            <div className="bg-gray-50 rounded-2xl p-6 text-center">
+              <p className="text-sm text-gray-600">
+                Dit zijn indicatieve gebedstijden voor Borgerhout. Voor de exacte gebedstijden van <b>Moskee Ennassr</b>,
+                kunt u terecht op hun{' '}
+                <a
+                  href="https://mawaqit.net/en/moskee-ennassr-borgerhout-2140-belgium"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-crown hover:underline font-bold"
+                >
+                  mawaqit pagina
+                </a>
+                .
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 

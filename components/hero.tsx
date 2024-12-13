@@ -54,10 +54,11 @@ export default function Hero() {
                     <div className="hidden lg:block relative w-[800px] h-[800px]">
                         <Image
                             src="/images/hero-illustration.png"
-                            alt=""
+                            alt="Hero Illustration"
                             fill
-                            className="object-contain"
                             priority
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                            className="object-contain"
                         />
                     </div>
                 </div>
