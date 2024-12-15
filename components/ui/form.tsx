@@ -200,11 +200,7 @@ export function Form<T extends z.ZodType>({
     );
 
     return (
-        <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className={className}
-            noValidate
-        >
+        <form onSubmit={form.handleSubmit(onSubmit)} className={className} noValidate>
             {sections ? (
                 sections.map((section, index) => {
                     // Get root error for parent sections
