@@ -75,13 +75,16 @@ export default function LivePage() {
                     <div className="max-w-7xl mx-auto">
                         {/* Section Title */}
                         <div className="max-w-3xl mx-auto text-center mb-16">
+                            <div className="inline-flex items-center bg-crown/10 text-crown px-4 py-2 rounded-lg text-sm font-medium mb-6">
+                                Binnenkort beschikbaar
+                            </div>
                             <h2 className="text-5xl font-bold text-gray-800 mb-6">
                                 Volg ons live
                             </h2>
                             <p className="text-lg text-gray-600">
                                 {isLive
                                     ? 'De uitzending is momenteel live. Klik op de video om te kijken.'
-                                    : 'De volgende uitzending start vrijdag om 13:30.'}
+                                    : 'Live streaming wordt binnenkort geactiveerd.'}
                             </p>
                         </div>
 
@@ -89,14 +92,13 @@ export default function LivePage() {
                         <div className="grid md:grid-cols-3 gap-6 md:gap-8">
                             {/* Main Live Stream */}
                             <div className="md:col-span-2 rounded-3xl overflow-hidden shadow-xl bg-white border border-gray-100">
-                                <div 
+                                <div
                                     ref={videoRef}
-                                    className={`relative aspect-video bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 ${
-                                        isFullscreen ? 'fixed inset-0 z-50 h-screen w-screen' : ''
-                                    }`}
+                                    className={`relative aspect-video bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 ${isFullscreen ? 'fixed inset-0 z-50 h-screen w-screen' : ''
+                                        }`}
                                 >
                                     <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
-                                    
+
                                     {isLive ? (
                                         // Live YouTube Embed
                                         <iframe
@@ -113,12 +115,12 @@ export default function LivePage() {
                                                 <FaPlay className="w-8 h-8" />
                                             </div>
                                             <h3 className="text-xl font-medium mb-2">Geen live uitzending</h3>
-                                            <p className="text-sm opacity-80">De volgende uitzending start vrijdag om 13:30</p>
+                                            <p className="text-sm opacity-80">Nog geen live uitzendingen gepland.</p>
                                         </div>
                                     )}
 
                                     {/* Fullscreen button */}
-                                    <button 
+                                    <button
                                         onClick={toggleFullscreen}
                                         className="absolute top-4 right-4 p-3 rounded-xl bg-black/20 hover:bg-black/30 transition-colors"
                                     >
@@ -149,10 +151,10 @@ export default function LivePage() {
                                             </div>
                                         </div>
                                         <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                                            Vrijdagpreek
+                                            Uitzending
                                         </h3>
                                         <p className="text-gray-600">
-                                            {isLive 
+                                            {isLive
                                                 ? 'Live uitzending van de vrijdagpreek vanuit de grote zaal.'
                                                 : 'De live uitzending start automatisch wanneer we online gaan.'}
                                         </p>

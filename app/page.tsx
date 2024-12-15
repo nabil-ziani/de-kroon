@@ -84,9 +84,14 @@ export default function Home() {
       <section id="live" className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mb-16">
-            <h2 className="text-5xl mb-4 text-gray-800">
-              <span className="text-6xl font-bold">Live</span>
-            </h2>
+            <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
+              <h2 className="text-5xl mb-4 text-gray-800">
+                <span className="text-6xl font-bold">Live</span>
+              </h2>
+              <div className="inline-flex items-center bg-crown/10 text-crown px-4 py-2 rounded-lg text-sm font-medium">
+                Binnenkort beschikbaar
+              </div>
+            </div>
             <p className="text-xl text-gray-500">
               Volg onze diensten en lezingen live via de stream
             </p>

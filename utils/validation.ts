@@ -35,15 +35,17 @@ export const enrollmentFormSchema = z.object({
     hadPreviousClasses: z.boolean().default(false),
     previousLevel: z.string().optional(),
     
-    // Ouder gegevens
-    fatherFirstName: nameSchema,
-    fatherLastName: nameSchema,
-    fatherPhone: phoneSchema,
-    fatherEmail: emailSchema,
-    motherFirstName: nameSchema,
-    motherLastName: nameSchema,
-    motherPhone: phoneSchema,
-    motherEmail: emailSchema,
+    // Vader gegevens
+    fatherFirstName: nameSchema.optional(),
+    fatherLastName: nameSchema.optional(),
+    fatherPhone: phoneSchema.optional(),
+    fatherEmail: emailSchema.optional(),
+    
+    // Moeder gegevens
+    motherFirstName: nameSchema.optional(),
+    motherLastName: nameSchema.optional(),
+    motherPhone: phoneSchema.optional(),
+    motherEmail: emailSchema.optional(),
     
     // Adres
     street: z.string().min(2, 'Straatnaam moet minimaal 2 karakters bevatten'),
@@ -59,10 +61,15 @@ export const enrollmentFormSchema = z.object({
     courseName: z.string().min(1, 'Selecteer een cursus'),
     message: messageSchema.optional(),
 }).refine(
-    (data) => data.fatherEmail || data.motherEmail,
+    (data) => {
+        // Check if at least one parent's information is complete
+        const fatherComplete = data.fatherFirstName && data.fatherLastName && data.fatherPhone && data.fatherEmail;
+        const motherComplete = data.motherFirstName && data.motherLastName && data.motherPhone && data.motherEmail;
+        return fatherComplete || motherComplete;
+    },
     {
-        message: "Minstens één e-mailadres van een ouder is verplicht",
-        path: ["fatherEmail"]
+        message: "Vul de gegevens van minstens één ouder volledig in",
+        path: ["fatherFirstName"] // This will show the error at the first father field
     }
 );
 

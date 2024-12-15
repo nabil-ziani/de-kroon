@@ -16,6 +16,7 @@ export default function ArchivePage() {
     const [selectedType, setSelectedType] = useState<string | null>(null);
 
     const recordings: Recording[] = [
+        /*
         {
             title: 'Vrijdaggebed - De Waarde van Kennis',
             date: '15 maart 2024',
@@ -56,6 +57,7 @@ export default function ArchivePage() {
             type: 'Lezing',
             thumbnail: '/images/placeholder.png'
         }
+        */
     ];
 
     const filteredRecordings = selectedType
@@ -77,7 +79,7 @@ export default function ArchivePage() {
                 <div className="relative z-10 container mx-auto px-4 pt-24">
                     <div className="max-w-4xl">
                         <h1 className="text-6xl font-bold text-white mb-6">
-                            Video Archief
+                            Archief
                         </h1>
                         <p className="text-xl text-white/90">
                             Bekijk eerdere opnames van vrijdagpreken en lezingen terug.
