@@ -34,7 +34,7 @@ export default function AboutPage() {
                             Educatief Jeugdcentrum
                         </h2>
                         <p className="text-xl text-gray-600 leading-relaxed">
-                            VZW Educatief Jeugdcentrum De Kroon is een vereniging zonder winstoogmerk, gevestigd in het hart van Borgerhout. We zetten ons in voor de ontwikkeling en vorming van jongeren, met als doel hen te helpen een actieve rol in de samenleving te vervullen.
+                            De Kroon is een vereniging gevestigd in het hart van Borgerhout. We zetten ons in voor de ontwikkeling en vorming van jongeren, met als doel hen te helpen een actieve rol in de samenleving te vervullen.
                         </p>
                     </div>
                     <div className="max-w-4xl mx-auto relative">
