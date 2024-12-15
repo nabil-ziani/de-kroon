@@ -81,35 +81,32 @@ export default function EnrollmentForm({ onSuccess, defaultValues }: Props) {
     const fatherFields = [
         {
             label: 'Voornaam',
-            name: 'fatherFirstName',
+            name: 'father.firstName',
             type: 'text' as const,
             placeholder: 'Voornaam',
-            required: true,
             gridCols: 1,
+            hint: 'Vul de gegevens van minstens één ouder volledig in'
         },
         {
             label: 'Familienaam',
-            name: 'fatherLastName',
+            name: 'father.lastName',
             type: 'text' as const,
             placeholder: 'Familienaam',
-            required: true,
             gridCols: 2,
         },
         {
             label: 'Telefoon',
-            name: 'fatherPhone',
+            name: 'father.phone',
             type: 'tel' as const,
             placeholder: '+32 ...',
-            required: true,
             gridCols: 1,
         },
         {
             label: 'E-mailadres',
-            name: 'fatherEmail',
+            name: 'father.email',
             type: 'email' as const,
             placeholder: 'email@voorbeeld.be',
             gridCols: 2,
-            hint: 'Minstens één e-mailadres van een ouder is verplicht',
         },
     ];
 
@@ -117,35 +114,32 @@ export default function EnrollmentForm({ onSuccess, defaultValues }: Props) {
     const motherFields = [
         {
             label: 'Voornaam',
-            name: 'motherFirstName',
+            name: 'mother.firstName',
             type: 'text' as const,
             placeholder: 'Voornaam',
-            required: true,
             gridCols: 1,
+            hint: 'Vul de gegevens van minstens één ouder volledig in'
         },
         {
             label: 'Familienaam',
-            name: 'motherLastName',
+            name: 'mother.lastName',
             type: 'text' as const,
             placeholder: 'Familienaam',
-            required: true,
             gridCols: 2,
         },
         {
             label: 'Telefoon',
-            name: 'motherPhone',
+            name: 'mother.phone',
             type: 'tel' as const,
             placeholder: '+32 ...',
-            required: true,
             gridCols: 1,
         },
         {
             label: 'E-mailadres',
-            name: 'motherEmail',
+            name: 'mother.email',
             type: 'email' as const,
             placeholder: 'email@voorbeeld.be',
             gridCols: 2,
-            hint: 'Minstens één e-mailadres van een ouder is verplicht',
         },
     ];
 
@@ -222,8 +216,16 @@ export default function EnrollmentForm({ onSuccess, defaultValues }: Props) {
     // Combineer alle velden
     const fields = [
         { title: 'Gegevens kind', fields: [...childFields] },
-        { title: 'Gegevens vader', fields: fatherFields },
-        { title: 'Gegevens moeder', fields: motherFields },
+        {
+            title: 'Gegevens vader',
+            hint: 'Vul de gegevens van minstens één ouder volledig in',
+            fields: fatherFields.map(field => ({ ...field, hint: undefined }))
+        },
+        {
+            title: 'Gegevens moeder',
+            hint: 'Vul de gegevens van minstens één ouder volledig in',
+            fields: motherFields.map(field => ({ ...field, hint: undefined }))
+        },
         { title: 'Adres', fields: addressFields },
         { title: 'Extra informatie', fields: [...extraFields, ...messageField] },
     ];
@@ -246,8 +248,8 @@ export default function EnrollmentForm({ onSuccess, defaultValues }: Props) {
             submitClassName="w-full bg-crown text-white px-6 py-3.5 rounded-xl font-semibold hover:bg-opacity-90 transition-colors text-sm uppercase tracking-wide flex items-center justify-center group"
             gridClassName="grid md:grid-cols-3 gap-4"
             sectionClassName="bg-white p-6 rounded-2xl shadow-sm border border-gray-100"
-            sectionTitleClassName="text-xl font-bold text-gray-800 mb-6"
-            hintClassName="text-sm text-gray-500 mt-1"
+            sectionTitleClassName="text-xl font-bold text-gray-800 mb-2"
+            hintClassName="text-sm text-gray-500"
         />
     );
 } 

@@ -27,6 +27,31 @@ export const contactFormSchema = z.object({
     message: z.string().min(10, 'Bericht moet minimaal 10 karakters bevatten'),
 });
 
+// Parent schema
+const parentSchema = z.object({
+    firstName: z.string().optional(),
+    lastName: z.string().optional(),
+    phone: z.string().optional(),
+    email: z.string().optional()
+}).refine((data) => {
+    const hasAnyField = Object.values(data).some(value => value && value.length > 0);
+    if (!hasAnyField) return true;
+
+    const isComplete = Object.values(data).every(value => value && value.length > 0);
+    if (!isComplete) return false;
+
+    // Als alle velden zijn ingevuld, valideer ze
+    if (data.firstName && data.firstName.length < 2) return false;
+    if (data.lastName && data.lastName.length < 2) return false;
+    if (data.phone && data.phone.length < 10) return false;
+    if (data.email && !emailSchema.safeParse(data.email).success) return false;
+
+    return true;
+}, {
+    message: "Gelieve alle velden correct in te vullen",
+    path: []
+});
+
 // Enrollment form schema
 export const enrollmentFormSchema = z.object({
     // Kind gegevens
@@ -34,44 +59,32 @@ export const enrollmentFormSchema = z.object({
     birthDate: z.string().min(1, 'Selecteer een geboortedatum'),
     hadPreviousClasses: z.boolean().default(false),
     previousLevel: z.string().optional(),
-    
-    // Vader gegevens
-    fatherFirstName: nameSchema.optional(),
-    fatherLastName: nameSchema.optional(),
-    fatherPhone: phoneSchema.optional(),
-    fatherEmail: emailSchema.optional(),
-    
-    // Moeder gegevens
-    motherFirstName: nameSchema.optional(),
-    motherLastName: nameSchema.optional(),
-    motherPhone: phoneSchema.optional(),
-    motherEmail: emailSchema.optional(),
-    
+
+    // Ouder gegevens
+    father: parentSchema,
+    mother: parentSchema,
+
     // Adres
     street: z.string().min(2, 'Straatnaam moet minimaal 2 karakters bevatten'),
     houseNumber: z.string().min(1, 'Huisnummer is verplicht'),
     city: z.string().min(2, 'Gemeente moet minimaal 2 karakters bevatten'),
-    
+
     // Extra info
     learningDisorders: z.string().optional(),
     allergies: z.string().optional(),
     pickupMethod: z.enum(['ALONE', 'PARENTS', 'SIBLINGS']),
-    
+
     // Cursus info
     courseName: z.string().min(1, 'Selecteer een cursus'),
     message: messageSchema.optional(),
-}).refine(
-    (data) => {
-        // Check if at least one parent's information is complete
-        const fatherComplete = data.fatherFirstName && data.fatherLastName && data.fatherPhone && data.fatherEmail;
-        const motherComplete = data.motherFirstName && data.motherLastName && data.motherPhone && data.motherEmail;
-        return fatherComplete || motherComplete;
-    },
-    {
-        message: "Vul de gegevens van minstens één ouder volledig in",
-        path: ["fatherFirstName"] // This will show the error at the first father field
-    }
-);
+}).refine((data) => {
+    const fatherComplete = Object.values(data.father).every(value => value && value.length > 0);
+    const motherComplete = Object.values(data.mother).every(value => value && value.length > 0);
+    return fatherComplete || motherComplete;
+}, {
+    message: "Vul alle gegevens van minstens één ouder in",
+    path: ["father"]
+});
 
 // Types
 export type ContactFormData = z.infer<typeof contactFormSchema>;

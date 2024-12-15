@@ -21,6 +21,7 @@ interface Field {
 interface Section {
     title: string;
     fields: Field[];
+    hint?: string;
 }
 
 interface Props<T extends z.ZodType> {
@@ -76,8 +77,15 @@ export function Form<T extends z.ZodType>({
             hint
         } = field;
 
-        const error = form.formState.errors[name]?.message as string;
-        const baseInputClasses = `${inputClassName} ${error ? 'border-red-500' : ''}`;
+        // Get nested error (for parent fields)
+        const fieldPath = name.split('.');
+        let error = form.formState.errors;
+        for (const path of fieldPath) {
+            error = error?.[path] as any;
+        }
+        const errorMessage = (error as { message?: string })?.message;
+
+        const baseInputClasses = `${inputClassName} ${errorMessage ? 'border-red-500' : ''}`;
         const gridColClass = gridCols ? `md:col-span-${gridCols}` : '';
         const fieldClassName = `${gridColClass} ${className}`;
 
@@ -124,8 +132,7 @@ export function Form<T extends z.ZodType>({
                                 key={option.value}
                                 value={option.value}
                                 className={({ active }) =>
-                                    `relative cursor-pointer select-none py-3 px-4 ${active ? 'bg-crown/5 text-crown' : 'text-gray-800'
-                                    }`
+                                    `relative cursor-pointer select-none py-3 px-4 ${active ? 'bg-crown/5 text-crown' : 'text-gray-800'}`
                                 }
                             >
                                 {({ selected, active }) => (
@@ -175,12 +182,12 @@ export function Form<T extends z.ZodType>({
                     </>
                 )}
 
-                {hint && !error && (
+                {hint && !errorMessage && (
                     <p className={hintClassName}>{hint}</p>
                 )}
 
-                {error && (
-                    <p className="mt-1 text-sm text-red-500">{error}</p>
+                {errorMessage && (
+                    <p className="mt-1 text-sm text-red-500">{String(errorMessage)}</p>
                 )}
             </div>
         );
@@ -193,14 +200,33 @@ export function Form<T extends z.ZodType>({
     );
 
     return (
-        <form onSubmit={form.handleSubmit(onSubmit)} className={className}>
+        <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className={className}
+            noValidate
+        >
             {sections ? (
-                sections.map((section, index) => (
-                    <div key={index} className={sectionClassName}>
-                        <h3 className={sectionTitleClassName}>{section.title}</h3>
-                        {renderFields(section.fields)}
-                    </div>
-                ))
+                sections.map((section, index) => {
+                    // Get root error for parent sections
+                    const sectionName = section.title === 'Gegevens vader' ? 'father' : section.title === 'Gegevens moeder' ? 'mother' : '';
+                    const rootError = sectionName ? form.formState.errors[sectionName]?.root?.message : undefined;
+
+                    return (
+                        <div key={index} className={sectionClassName}>
+                            <div className="mb-6">
+                                <div className="space-y-0.5">
+                                    <h3 className={sectionTitleClassName}>{section.title}</h3>
+                                    {rootError ? (
+                                        <p className="text-sm text-red-500">{String(rootError)}</p>
+                                    ) : section.hint && (
+                                        <p className={hintClassName}>{section.hint}</p>
+                                    )}
+                                </div>
+                            </div>
+                            {renderFields(section.fields)}
+                        </div>
+                    );
+                })
             ) : (
                 fields && renderFields(fields)
             )}
