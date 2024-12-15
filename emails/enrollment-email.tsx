@@ -68,35 +68,35 @@ export default function EnrollmentEmail({ data }: Props) {
                         </Section>
 
                         {/* Father Info */}
-                        <Section style={section}>
+                        <Section style={messageBox}>
                             <Heading style={h2}>Vader</Heading>
                             <Text style={detailText}>
-                                <strong style={labelStyle}>Naam:</strong> {data.fatherFirstName} {data.fatherLastName}
+                                <strong style={labelStyle}>Naam:</strong> {data.father.firstName} {data.father.lastName}
                             </Text>
                             <Text style={detailText}>
-                                <strong style={labelStyle}>E-mail:</strong> {data.fatherEmail}
+                                <strong style={labelStyle}>E-mail:</strong> {data.father.email}
                             </Text>
                             <Text style={detailText}>
-                                <strong style={labelStyle}>Telefoon:</strong> {data.fatherPhone}
+                                <strong style={labelStyle}>Telefoon:</strong> {data.father.phone}
                             </Text>
                         </Section>
 
                         {/* Mother Info */}
-                        <Section style={section}>
+                        <Section style={messageBox}>
                             <Heading style={h2}>Moeder</Heading>
                             <Text style={detailText}>
-                                <strong style={labelStyle}>Naam:</strong> {data.motherFirstName} {data.motherLastName}
+                                <strong style={labelStyle}>Naam:</strong> {data.mother.firstName} {data.mother.lastName}
                             </Text>
                             <Text style={detailText}>
-                                <strong style={labelStyle}>E-mail:</strong> {data.motherEmail}
+                                <strong style={labelStyle}>E-mail:</strong> {data.mother.email}
                             </Text>
                             <Text style={detailText}>
-                                <strong style={labelStyle}>Telefoon:</strong> {data.motherPhone}
+                                <strong style={labelStyle}>Telefoon:</strong> {data.mother.phone}
                             </Text>
                         </Section>
 
                         {/* Address */}
-                        <Section style={section}>
+                        <Section style={messageBox}>
                             <Heading style={h2}>Adres</Heading>
                             <Text style={detailText}>
                                 <strong style={labelStyle}>Straat:</strong> {data.street} {data.houseNumber}
@@ -107,7 +107,7 @@ export default function EnrollmentEmail({ data }: Props) {
                         </Section>
 
                         {/* Additional Info */}
-                        <Section style={section}>
+                        <Section style={messageBox}>
                             <Heading style={h2}>Extra Informatie</Heading>
                             <Text style={detailText}>
                                 <strong style={labelStyle}>Ophaalmethode:</strong> {pickupMethods[data.pickupMethod]}
@@ -172,7 +172,7 @@ const greeting = {
 const h2 = {
     color: '#374151',
     fontSize: '18px',
-    fontWeight: '600',
+    fontWeight: '800',
     lineHeight: '1.25',
     marginBottom: '16px',
 };

@@ -24,16 +24,16 @@ export default function ContactEmail({ data }: ContactEmailProps) {
             </Head>
             <Preview>Nieuw bericht van {data.name}</Preview>
             <Body style={main}>
-                <Img
-                    src={`https://de-kroon.vercel.app/logo-2.png`}
-                    width="auto"
-                    height="100"
-                    alt="De Kroon"
-                    style={logo}
-                />
-
                 <Container style={container}>
                     <Section style={section}>
+                        <Img
+                            src={`https://de-kroon.vercel.app/logo-2.png`}
+                            width="auto"
+                            height="100"
+                            alt="De Kroon"
+                            style={logo}
+                        />
+
                         <Text style={greeting}>
                             Nieuw bericht ontvangen via het contactformulier:
                         </Text>

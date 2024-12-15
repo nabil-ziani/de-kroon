@@ -49,17 +49,22 @@ export async function sendEnrollmentEmail(data: EnrollmentFormData) {
         });
 
         // Bevestigingsmail naar beide ouders
-        const parentEmails = [data.fatherEmail];
-        if (data.motherEmail && data.motherEmail !== data.fatherEmail) {
-            parentEmails.push(data.motherEmail);
+        const parentEmails = [];
+        if (data.father.email) {
+            parentEmails.push(data.father.email);
+        }
+        if (data.mother.email && data.mother.email !== data.father.email) {
+            parentEmails.push(data.mother.email);
         }
 
-        await resend.emails.send({
-            from: `De Kroon <${FROM_EMAIL}>`,
-            to: parentEmails,
-            subject: 'Bedankt voor uw inschrijving',
-            react: EnrollmentConfirmationEmail()
-        });
+        if (parentEmails.length > 0) {
+            await resend.emails.send({
+                from: `De Kroon <${FROM_EMAIL}>`,
+                to: parentEmails,
+                subject: 'Bedankt voor uw inschrijving',
+                react: EnrollmentConfirmationEmail()
+            });
+        }
     } catch (error) {
         console.error('Error sending enrollment email:', error);
         throw new Error('Er is iets misgegaan bij het versturen van de email.');
