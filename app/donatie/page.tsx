@@ -219,10 +219,10 @@ export default function DonatePage() {
                                                 <span className="font-semibold text-crown/90">Naam:</span> De Kroon
                                             </p>
                                             <p className="text-white/90">
-                                                <span className="font-semibold text-crown/90">IBAN:</span> BE...
+                                                <span className="font-semibold text-crown/90">IBAN:</span> BE93 9501 6793 9667
                                             </p>
                                             <p className="text-white/90">
-                                                <span className="font-semibold text-crown/90">BIC:</span> ...
+                                                <span className="font-semibold text-crown/90">BIC:</span> CTBKBEBX
                                             </p>
                                         </div>
                                     </div>
