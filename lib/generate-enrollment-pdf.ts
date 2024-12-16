@@ -7,7 +7,7 @@ export async function generateEnrollmentPDF(data: EnrollmentFormData): Promise<B
         const doc = new PDFDocument({
             size: 'A4',
             margins: {
-                top: 50,
+                top: 20,
                 bottom: 50,
                 left: 50,
                 right: 50
@@ -28,139 +28,102 @@ export async function generateEnrollmentPDF(data: EnrollmentFormData): Promise<B
         doc.on('data', (chunk: Buffer) => chunks.push(chunk));
         doc.on('end', () => resolve(Buffer.concat(chunks)));
 
-        // Add logo - use absolute path
+        // Add logo
         const logoPath = path.join(process.cwd(), 'public', 'logo-2.png');
         doc.image(logoPath, {
             fit: [200, 100],
             align: 'center'
         });
 
-        doc.moveDown(2);
+        doc.moveDown(5);
 
-        // Title
+        // Title and student info
         doc.fontSize(20)
             .font('Poppins-Bold')
-            .text('Inschrijvingsformulier', { align: 'center' });
+            .text('Resultaten Instaptest', { align: 'center' });
+
+        doc.moveDown();
+
+        doc.fontSize(12)
+            .font('Poppins')
+            .text(`Student: ${data.childName}`, { align: 'center' })
+            .text(`Datum: ${new Date().toLocaleDateString('nl-BE')}`, { align: 'center' });
 
         doc.moveDown(2);
 
-        // Student Info
-        addSection(doc, 'Student Informatie', [
-            { label: 'Naam', value: data.childName },
-            { label: 'Geboortedatum', value: new Date(data.birthDate).toLocaleDateString('nl-BE') },
-            { label: 'Eerdere lessen gevolgd', value: data.hadPreviousClasses ? 'Ja' : 'Nee' },
-            { label: 'Cursus', value: data.courseName }
-        ]);
+        if (data.previousExperience) {
+            // Reading Skills Section
+            addSection(doc, 'Leesvaardigheid', [
+                { question: 'Kan de student de letters van het Arabisch alfabet herkennen wanneer ze los staan?', answer: data.previousExperience.canRecognizeLetters },
+                { question: 'Kan de student de letters herkennen in hun verschillende vormen (begin, midden, eind)?', answer: data.previousExperience.canRecognizeLetterForms },
+                { question: 'Kan de student leestekens (harakaat) correct lezen?', answer: data.previousExperience.canReadDiacritics },
+                { question: 'Kan de student verlengingen correct lezen?', answer: data.previousExperience.canReadExtensions },
+                { question: 'Kan de student woorden van drie letters lezen?', answer: data.previousExperience.canReadThreeLetterWords },
+                { question: 'Kan de student woorden van vier of meer letters lezen?', answer: data.previousExperience.canReadFourLetterWords },
+                { question: 'Kan de student de shadda correct lezen?', answer: data.previousExperience.canReadShadda },
+                { question: 'Kan de student de sokoun correct lezen?', answer: data.previousExperience.canReadSokoun },
+                { question: 'Kan de student zinnen van drie woorden lezen?', answer: data.previousExperience.canReadThreeWordSentence },
+                { question: 'Kan de student zinnen van vier of meer woorden lezen?', answer: data.previousExperience.canReadFourWordSentence },
+                { question: 'Stopt de student correct bij leestekens aan het einde van een zin?', answer: data.previousExperience.canStopAtEndOfSentence }
+            ]);
 
-        // Previous Experience
-        if (data.hadPreviousClasses && data.previousExperience) {
-            addSection(doc, 'Eerdere Ervaring', [
-                { label: 'Leesvaardigheid', isSubheading: true },
-                { label: 'Letters losstaand', value: data.previousExperience.canRecognizeLetters ? 'Ja' : 'Nee' },
-                { label: 'Letters in vormen', value: data.previousExperience.canRecognizeLetterForms ? 'Ja' : 'Nee' },
-                { label: 'Leestekens', value: data.previousExperience.canReadDiacritics ? 'Ja' : 'Nee' },
-                { label: 'Verlengingen', value: data.previousExperience.canReadExtensions ? 'Ja' : 'Nee' },
-                { label: '3-letter woorden', value: data.previousExperience.canReadThreeLetterWords ? 'Ja' : 'Nee' },
-                { label: '4+ letter woorden', value: data.previousExperience.canReadFourLetterWords ? 'Ja' : 'Nee' },
-                { label: 'Shadda', value: data.previousExperience.canReadShadda ? 'Ja' : 'Nee' },
-                { label: 'Sokoun', value: data.previousExperience.canReadSokoun ? 'Ja' : 'Nee' },
-                { label: '3-woord zinnen', value: data.previousExperience.canReadThreeWordSentence ? 'Ja' : 'Nee' },
-                { label: '4+ woord zinnen', value: data.previousExperience.canReadFourWordSentence ? 'Ja' : 'Nee' },
-                { label: 'Leestekens einde zin', value: data.previousExperience.canStopAtEndOfSentence ? 'Ja' : 'Nee' },
+            // Writing Skills Section
+            addSection(doc, 'Schrijfvaardigheid', [
+                { question: 'Kan de student Arabische letters schrijven?', answer: data.previousExperience.canWriteLetters },
+                { question: 'Kan de student letters in hun verschillende vormen schrijven?', answer: data.previousExperience.canWriteLetterForms },
+                { question: 'Kan de student letters correct met elkaar verbinden?', answer: data.previousExperience.canConnectLetters },
+                { question: 'Kent de student het verschil tussen zon- en maanletters?', answer: data.previousExperience.knowsSunAndMoonLetters },
+                { question: 'Kan de student schrijven volgens dictee?', answer: data.previousExperience.canWriteDictation }
+            ]);
 
-                { label: 'Schrijfvaardigheid', isSubheading: true },
-                { label: 'Letters schrijven', value: data.previousExperience.canWriteLetters ? 'Ja' : 'Nee' },
-                { label: 'Letters in vormen', value: data.previousExperience.canWriteLetterForms ? 'Ja' : 'Nee' },
-                { label: 'Letters verbinden', value: data.previousExperience.canConnectLetters ? 'Ja' : 'Nee' },
-                { label: 'Zon- en maanletters', value: data.previousExperience.knowsSunAndMoonLetters ? 'Ja' : 'Nee' },
-                { label: 'Dictee', value: data.previousExperience.canWriteDictation ? 'Ja' : 'Nee' },
+            // Speaking Skills Section
+            addSection(doc, 'Spreekvaardigheid', [
+                { question: 'Kan de student Arabische woorden naar het Nederlands vertalen?', answer: data.previousExperience.canTranslateToNL },
+                { question: 'Kan de student ja/nee vragen in het Arabisch beantwoorden?', answer: data.previousExperience.canAnswerYesNo },
+                { question: 'Kan de student open vragen in het Arabisch beantwoorden?', answer: data.previousExperience.canAnswerQuestions },
+                { question: 'Kan de student zichzelf voorstellen in het Arabisch?', answer: data.previousExperience.canIntroduceInArabic },
+                { question: 'Kan de student een spreekbeurt geven in het Arabisch?', answer: data.previousExperience.canGivePresentationInArabic }
+            ]);
 
-                { label: 'Spreekvaardigheid', isSubheading: true },
-                { label: 'Vertalen naar NL', value: data.previousExperience.canTranslateToNL ? 'Ja' : 'Nee' },
-                { label: 'Ja/Nee vragen', value: data.previousExperience.canAnswerYesNo ? 'Ja' : 'Nee' },
-                { label: 'Vragen beantwoorden', value: data.previousExperience.canAnswerQuestions ? 'Ja' : 'Nee' },
-                { label: 'Zichzelf voorstellen', value: data.previousExperience.canIntroduceInArabic ? 'Ja' : 'Nee' },
-                { label: 'Spreekbeurt', value: data.previousExperience.canGivePresentationInArabic ? 'Ja' : 'Nee' },
-
-                { label: 'Koran', isSubheading: true },
-                { label: 'Zelfstandig lezen', value: data.previousExperience.canReadQuranIndependently ? 'Ja' : 'Nee' },
-                { label: 'Juiste regels', value: data.previousExperience.canReadQuranWithRules ? 'Ja' : 'Nee' },
-                { label: 'Aantal ahzaab', value: data.previousExperience.numberOfAhzaab || 'Niet opgegeven' },
-                { label: 'Laatste soerah', value: data.previousExperience.lastKnownSurah || 'Niet opgegeven' },
-                { label: '3-jaar doel', value: data.previousExperience.threeYearGoal || 'Niet opgegeven' }
+            // Quran Section
+            addSection(doc, 'Koran', [
+                { question: 'Kan de student de Koran zelfstandig lezen?', answer: data.previousExperience.canReadQuranIndependently },
+                { question: 'Kan de student de Koran lezen met de juiste regels?', answer: data.previousExperience.canReadQuranWithRules },
+                { question: 'Hoeveel ahzaab kent de student?', value: data.previousExperience.numberOfAhzaab || 'Niet opgegeven' },
+                { question: 'Wat is de laatste soerah die de student heeft geleerd?', value: data.previousExperience.lastKnownSurah || 'Niet opgegeven' },
+                { question: 'Wat is het doel van de student voor de komende 3 jaar?', value: data.previousExperience.threeYearGoal || 'Niet opgegeven' }
             ]);
         }
-
-        // Parents Info
-        if (data.father.firstName) {
-            addSection(doc, 'Vader', [
-                { label: 'Naam', value: `${data.father.firstName} ${data.father.lastName}` },
-                { label: 'E-mail', value: data.father.email || 'Niet opgegeven' },
-                { label: 'Telefoon', value: data.father.phone || 'Niet opgegeven' }
-            ]);
-        }
-
-        if (data.mother.firstName) {
-            addSection(doc, 'Moeder', [
-                { label: 'Naam', value: `${data.mother.firstName} ${data.mother.lastName}` },
-                { label: 'E-mail', value: data.mother.email || 'Niet opgegeven' },
-                { label: 'Telefoon', value: data.mother.phone || 'Niet opgegeven' }
-            ]);
-        }
-
-        // Address
-        addSection(doc, 'Adres', [
-            { label: 'Straat en nummer', value: `${data.street} ${data.houseNumber}` },
-            { label: 'Gemeente', value: data.city }
-        ]);
-
-        // Extra Info
-        const pickupMethods = {
-            ALONE: 'Mag alleen naar huis',
-            PARENTS: 'Wordt opgehaald door ouders',
-            SIBLINGS: 'Wordt opgehaald door broer of zus'
-        };
-
-        addSection(doc, 'Extra Informatie', [
-            { label: 'Ophaalmethode', value: pickupMethods[data.pickupMethod] },
-            { label: 'Leerstoornissen', value: data.learningDisorders || 'Geen' },
-            { label: 'Allergieën', value: data.allergies || 'Geen' },
-            { label: 'Extra bericht', value: data.message || 'Geen' }
-        ]);
-
-        // Footer
-        doc.moveDown(2)
-            .fontSize(8)
-            .text('Dit document werd automatisch gegenereerd via het online inschrijvingsformulier van kidskroon.be', {
-                align: 'center',
-                lineGap: 0
-            });
 
         doc.end();
     });
 }
 
-function addSection(doc: typeof PDFDocument, title: string, items: Array<{ label: string, value?: string, isSubheading?: boolean }>) {
+function addSection(doc: typeof PDFDocument, title: string, items: Array<{ question: string, answer?: boolean, value?: string }>) {
     doc.moveDown()
         .fontSize(14)
         .font('Poppins-Bold')
         .text(title)
-        .moveDown(0.5);
+        .moveDown();
 
     items.forEach(item => {
-        if (item.isSubheading) {
-            doc.moveDown(0.5)
-                .fontSize(12)
-                .font('Poppins-Bold')
-                .text(item.label)
-                .moveDown(0.5);
-        } else {
-            doc.fontSize(10)
-                .font('Poppins')
-                .text(`${item.label}: ${item.value}`, {
-                    continued: false,
-                    indent: 20
-                });
+        doc.fontSize(10)
+            .font('Poppins-Bold')
+            .text(item.question)
+            .font('Poppins');
+
+        if (typeof item.answer === 'boolean') {
+            doc.text(item.answer ? '✓ Ja' : '✗ Nee', {
+                indent: 20,
+                continued: false
+            });
+        } else if (item.value) {
+            doc.text(item.value, {
+                indent: 20,
+                continued: false
+            });
         }
+
+        doc.moveDown(0.5);
     });
 } 
