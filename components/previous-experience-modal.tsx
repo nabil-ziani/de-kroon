@@ -55,7 +55,7 @@ const categories: Category[] = [
         description: 'Beoordeel de spreekvaardigheid van het kind',
         questions: [
             { key: 'canTranslateToNL', question: 'Het kind kan een Arabische tekst mondeling vertalen naar het Nederlands met behulp van een woordenschatlijst', type: 'boolean', required: true },
-            { key: 'canAnswerYesNo', question: 'Het kind kan op Ja-NEEN vragen antwoorden', type: 'boolean', required: true },
+            { key: 'canAnswerYesNo', question: 'Het kind kan op ja-neevragen antwoorden', type: 'boolean', required: true },
             { key: 'canAnswerQuestions', question: 'Het kind kan op vragen (vanuit een gelezen tekst) antwoorden in het Arabisch', type: 'boolean', required: true },
             { key: 'canIntroduceInArabic', question: 'Het kind kan zich in het Arabisch voorstellen', type: 'boolean', required: true },
             { key: 'canGivePresentationInArabic', question: 'Het kind kan een spreekbeurt geven van 5 minuten in het Arabisch', type: 'boolean', required: true },
