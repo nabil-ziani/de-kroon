@@ -12,8 +12,16 @@ export async function generateEnrollmentPDF(data: EnrollmentFormData): Promise<B
                 left: 50,
                 right: 50
             },
-            font: 'Times-Roman'
+            autoFirstPage: true,
+            font: undefined
         });
+
+        // Register Poppins fonts
+        doc.registerFont('Poppins', path.join(process.cwd(), 'public/fonts/Poppins-Regular.ttf'));
+        doc.registerFont('Poppins-Bold', path.join(process.cwd(), 'public/fonts/Poppins-Bold.ttf'));
+
+        // Set default font immediately after registration
+        doc.font('Poppins').fontSize(10);
 
         // Collect the PDF chunks
         const chunks: Buffer[] = [];
@@ -31,7 +39,7 @@ export async function generateEnrollmentPDF(data: EnrollmentFormData): Promise<B
 
         // Title
         doc.fontSize(20)
-            .font('Times-Bold')
+            .font('Poppins-Bold')
             .text('Inschrijvingsformulier', { align: 'center' });
 
         doc.moveDown(2);
@@ -135,7 +143,7 @@ export async function generateEnrollmentPDF(data: EnrollmentFormData): Promise<B
 function addSection(doc: typeof PDFDocument, title: string, items: Array<{ label: string, value?: string, isSubheading?: boolean }>) {
     doc.moveDown()
         .fontSize(14)
-        .font('Times-Bold')
+        .font('Poppins-Bold')
         .text(title)
         .moveDown(0.5);
 
@@ -143,12 +151,12 @@ function addSection(doc: typeof PDFDocument, title: string, items: Array<{ label
         if (item.isSubheading) {
             doc.moveDown(0.5)
                 .fontSize(12)
-                .font('Times-Bold')
+                .font('Poppins-Bold')
                 .text(item.label)
                 .moveDown(0.5);
         } else {
             doc.fontSize(10)
-                .font('Times-Roman')
+                .font('Poppins')
                 .text(`${item.label}: ${item.value}`, {
                     continued: false,
                     indent: 20

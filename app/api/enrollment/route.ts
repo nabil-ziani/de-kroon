@@ -6,11 +6,9 @@ import { sendEnrollmentEmail } from '@/lib/email';
 export async function POST(request: Request) {
     try {
         const data = await request.json();
-        console.log('Received data:', data);
 
         // Validate the data
         const validatedData = enrollmentFormSchema.parse(data);
-        console.log('Validated data:', validatedData);
 
         try {
             // Create the enrollment
@@ -73,7 +71,7 @@ export async function POST(request: Request) {
                 console.error('Error stack:', error.stack);
             }
             return NextResponse.json(
-                { 
+                {
                     success: false,
                     message: 'Er is iets misgegaan bij het verwerken van de inschrijving in de database.',
                     error: error instanceof Error ? error.message : 'Unknown error',
@@ -85,7 +83,7 @@ export async function POST(request: Request) {
     } catch (error) {
         console.error('Validation error:', error);
         return NextResponse.json(
-            { 
+            {
                 success: false,
                 message: 'De ingevoerde gegevens zijn niet geldig.',
                 error: error instanceof Error ? error.message : 'Unknown error',
