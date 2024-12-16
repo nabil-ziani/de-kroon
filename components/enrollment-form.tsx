@@ -319,8 +319,7 @@ export default function EnrollmentForm({ onSuccess, defaultValues }: Props) {
                         </Dialog.Title>
                         <div className="overflow-y-auto flex-1 mb-6">
                             <p className="text-gray-600">
-                                U heeft aangegeven dat uw kind eerder les heeft gevolgd. Om het niveau van uw kind beter te kunnen inschatten
-                                en in de juiste groep te kunnen plaatsen, vragen we u om een korte vragenlijst in te vullen.
+                                Om het niveau van uw kind beter te kunnen inschatten en in de juiste groep te kunnen plaatsen, vragen we u om een korte vragenlijst in te vullen.
                             </p>
                             <div className="mt-4 p-4 bg-amber-50 rounded-xl border border-amber-200">
                                 <p className="text-amber-700 text-sm">

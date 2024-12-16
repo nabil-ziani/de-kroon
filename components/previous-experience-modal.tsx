@@ -2,6 +2,7 @@ import { Fragment, useState } from 'react';
 import { Dialog, Transition, Tab } from '@headlessui/react';
 import { FaTimes, FaCheck, FaTimes as FaCross } from 'react-icons/fa';
 import { PreviousExperience } from '@prisma/client';
+import toast from 'react-hot-toast';
 
 interface Props {
     isOpen: boolean;
@@ -16,6 +17,7 @@ type Category = {
         key: keyof PreviousExperience;
         question: string;
         type: 'boolean' | 'number' | 'text';
+        required?: boolean;
     }[];
 };
 
@@ -24,50 +26,50 @@ const categories: Category[] = [
         title: 'Leesvaardigheid',
         description: 'Beoordeel de leesvaardigheid van het kind',
         questions: [
-            { key: 'canRecognizeLetters', question: 'Het kind kan de letters losstaand herkennen', type: 'boolean' },
-            { key: 'canRecognizeLetterForms', question: 'Het kind kan de letters in begin-, midden- en eindvorm herkennen', type: 'boolean' },
-            { key: 'canReadDiacritics', question: 'Het kind kan de letters met de leestekens lezen', type: 'boolean' },
-            { key: 'canReadExtensions', question: 'Het kind kan de letters lezen met de verleningen', type: 'boolean' },
-            { key: 'canReadThreeLetterWords', question: 'Het kind kan woordjes lezen bestaand uit 3 letters', type: 'boolean' },
-            { key: 'canReadFourLetterWords', question: 'Het kind kan woordjes lezen bestaand uit meer dan 4 letters', type: 'boolean' },
-            { key: 'canReadShadda', question: 'Het kind kan de "shadda" (verdubbeling) correct lezen', type: 'boolean' },
-            { key: 'canReadSokoun', question: 'Het kind kan de "sokoun" correct lezen', type: 'boolean' },
-            { key: 'canReadThreeWordSentence', question: 'Het kind kan een zin lezen bestaand uit 3 woordjes', type: 'boolean' },
-            { key: 'canReadFourWordSentence', question: 'Het kind kan een zin lezen bestaand uit meer dan 4 woordjes', type: 'boolean' },
-            { key: 'canStopAtEndOfSentence', question: 'Het kind kan op het juiste leesteken stoppen op het einde van de zin', type: 'boolean' },
+            { key: 'canRecognizeLetters', question: 'Het kind kan de letters losstaand herkennen', type: 'boolean', required: true },
+            { key: 'canRecognizeLetterForms', question: 'Het kind kan de letters in begin-, midden- en eindvorm herkennen', type: 'boolean', required: true },
+            { key: 'canReadDiacritics', question: 'Het kind kan de letters met de leestekens lezen', type: 'boolean', required: true },
+            { key: 'canReadExtensions', question: 'Het kind kan de letters lezen met de verleningen', type: 'boolean', required: true },
+            { key: 'canReadThreeLetterWords', question: 'Het kind kan woordjes lezen bestaand uit 3 letters', type: 'boolean', required: true },
+            { key: 'canReadFourLetterWords', question: 'Het kind kan woordjes lezen bestaand uit meer dan 4 letters', type: 'boolean', required: true },
+            { key: 'canReadShadda', question: 'Het kind kan de "shadda" (verdubbeling) correct lezen', type: 'boolean', required: true },
+            { key: 'canReadSokoun', question: 'Het kind kan de "sokoun" correct lezen', type: 'boolean', required: true },
+            { key: 'canReadThreeWordSentence', question: 'Het kind kan een zin lezen bestaand uit 3 woordjes', type: 'boolean', required: true },
+            { key: 'canReadFourWordSentence', question: 'Het kind kan een zin lezen bestaand uit meer dan 4 woordjes', type: 'boolean', required: true },
+            { key: 'canStopAtEndOfSentence', question: 'Het kind kan op het juiste leesteken stoppen op het einde van de zin', type: 'boolean', required: true },
         ],
     },
     {
         title: 'Schrijfvaardigheid',
         description: 'Beoordeel de schrijfvaardigheid van het kind',
         questions: [
-            { key: 'canWriteLetters', question: 'Het kind kan de letters losstaand schrijven', type: 'boolean' },
-            { key: 'canWriteLetterForms', question: 'Het kind kan de letters in begin-, midden-, en eindvorm schrijven', type: 'boolean' },
-            { key: 'canConnectLetters', question: 'Het kind kan de letters correct met elkaar verbinden', type: 'boolean' },
-            { key: 'knowsSunAndMoonLetters', question: 'Het kind kent de zon- en maanletters en kan dit toepassen', type: 'boolean' },
-            { key: 'canWriteDictation', question: 'Het kind is in staat om gedicteerde (gekende) woordjes correct op te schrijven', type: 'boolean' },
+            { key: 'canWriteLetters', question: 'Het kind kan de letters losstaand schrijven', type: 'boolean', required: true },
+            { key: 'canWriteLetterForms', question: 'Het kind kan de letters in begin-, midden-, en eindvorm schrijven', type: 'boolean', required: true },
+            { key: 'canConnectLetters', question: 'Het kind kan de letters correct met elkaar verbinden', type: 'boolean', required: true },
+            { key: 'knowsSunAndMoonLetters', question: 'Het kind kent de zon- en maanletters en kan dit toepassen', type: 'boolean', required: true },
+            { key: 'canWriteDictation', question: 'Het kind is in staat om gedicteerde (gekende) woordjes correct op te schrijven', type: 'boolean', required: true },
         ],
     },
     {
         title: 'Spreekvaardigheid',
         description: 'Beoordeel de spreekvaardigheid van het kind',
         questions: [
-            { key: 'canTranslateToNL', question: 'Het kind kan een Arabische tekst mondeling vertalen naar het Nederlands met behulp van een woordenschatlijst', type: 'boolean' },
-            { key: 'canAnswerYesNo', question: 'Het kind kan op Ja-NEEN vragen antwoorden', type: 'boolean' },
-            { key: 'canAnswerQuestions', question: 'Het kind kan op vragen (vanuit een gelezen tekst) antwoorden in het Arabisch', type: 'boolean' },
-            { key: 'canIntroduceInArabic', question: 'Het kind kan zich in het Arabisch voorstellen', type: 'boolean' },
-            { key: 'canGivePresentationInArabic', question: 'Het kind kan een spreekbeurt geven van 5 minuten in het Arabisch', type: 'boolean' },
+            { key: 'canTranslateToNL', question: 'Het kind kan een Arabische tekst mondeling vertalen naar het Nederlands met behulp van een woordenschatlijst', type: 'boolean', required: true },
+            { key: 'canAnswerYesNo', question: 'Het kind kan op Ja-NEEN vragen antwoorden', type: 'boolean', required: true },
+            { key: 'canAnswerQuestions', question: 'Het kind kan op vragen (vanuit een gelezen tekst) antwoorden in het Arabisch', type: 'boolean', required: true },
+            { key: 'canIntroduceInArabic', question: 'Het kind kan zich in het Arabisch voorstellen', type: 'boolean', required: true },
+            { key: 'canGivePresentationInArabic', question: 'Het kind kan een spreekbeurt geven van 5 minuten in het Arabisch', type: 'boolean', required: true },
         ],
     },
     {
         title: 'Koran',
         description: 'Beoordeel de Koran kennis van het kind',
         questions: [
-            { key: 'canReadQuranIndependently', question: 'Het kind kan zelfstandig koran lezen', type: 'boolean' },
-            { key: 'canReadQuranWithRules', question: 'Het kind leest de koran met de juiste regels', type: 'boolean' },
-            { key: 'numberOfAhzaab', question: 'Hoeveel ahzaab kent het kind?', type: 'number' },
-            { key: 'lastKnownSurah', question: 'Indien het kind minder dan 3 ahzaab kent, tot welke soerah kent hij of zij?', type: 'text' },
-            { key: 'threeYearGoal', question: 'Wat is jullie doel (kind en ouders) binnen 3 jaar – of hoeveel ahzaab wil je leren in 3 jaar tijd?', type: 'text' },
+            { key: 'canReadQuranIndependently', question: 'Het kind kan zelfstandig koran lezen', type: 'boolean', required: true },
+            { key: 'canReadQuranWithRules', question: 'Het kind leest de koran met de juiste regels', type: 'boolean', required: true },
+            { key: 'numberOfAhzaab', question: 'Hoeveel ahzaab kent het kind?', type: 'text', required: true },
+            { key: 'lastKnownSurah', question: 'Indien het kind minder dan 3 ahzaab kent, tot welke soerah kent hij of zij?', type: 'text', required: false },
+            { key: 'threeYearGoal', question: 'Wat is jullie doel (kind en ouders) binnen 3 jaar – of hoeveel ahzaab wil je leren in 3 jaar tijd?', type: 'text', required: true },
         ],
     },
 ];
@@ -84,25 +86,36 @@ export default function PreviousExperienceModal({ isOpen, onClose, onSubmit }: P
         const currentQuestions = categories[currentCategoryIndex].questions;
         return currentQuestions.every(q => {
             const answer = answers[q.key];
+            if (q.key === 'lastKnownSurah') {
+                const ahzaabAnswer = (answers.numberOfAhzaab || '') as string;
+                if (ahzaabAnswer.includes('3')) {
+                    return true;
+                }
+            }
+            if (!q.required) return true;
             if (q.type === 'boolean') return typeof answer === 'boolean';
-            if (q.type === 'number') return typeof answer === 'number' && !isNaN(answer);
             return typeof answer === 'string' && answer.trim() !== '';
         });
     };
 
     const handleSubmit = () => {
-        // Controleer of alle categorieën zijn ingevuld
         const allQuestionsAnswered = categories.every(category =>
             category.questions.every(q => {
                 const answer = answers[q.key];
+                if (q.key === 'lastKnownSurah') {
+                    const ahzaabAnswer = (answers.numberOfAhzaab || '') as string;
+                    if (ahzaabAnswer.includes('3')) {
+                        return true;
+                    }
+                }
+                if (!q.required) return true;
                 if (q.type === 'boolean') return typeof answer === 'boolean';
-                if (q.type === 'number') return typeof answer === 'number' && !isNaN(answer);
                 return typeof answer === 'string' && answer.trim() !== '';
             })
         );
 
         if (!allQuestionsAnswered) {
-            alert('Vul alstublieft alle vragen in voordat u de test voltooit.');
+            toast.error('Vul alstublieft alle verplichte vragen in voordat u de test voltooit.');
             return;
         }
 
@@ -112,7 +125,7 @@ export default function PreviousExperienceModal({ isOpen, onClose, onSubmit }: P
 
     const nextCategory = () => {
         if (!isCurrentCategoryComplete()) {
-            alert('Beantwoord alstublieft alle vragen in deze categorie voordat u verder gaat.');
+            toast.error('Beantwoord alstublieft alle vragen in deze categorie voordat u verder gaat.');
             return;
         }
 
@@ -199,7 +212,10 @@ export default function PreviousExperienceModal({ isOpen, onClose, onSubmit }: P
                                             <div className="space-y-6">
                                                 {categories[currentCategoryIndex].questions.map((q) => (
                                                     <div key={q.key} className="bg-gray-50 rounded-xl p-6">
-                                                        <p className="text-gray-800 font-medium mb-4">{q.question}</p>
+                                                        <p className="text-gray-800 font-medium mb-4">
+                                                            {q.question}
+                                                            {q.required && <span className="text-red-500 ml-1">*</span>}
+                                                        </p>
                                                         {q.type === 'boolean' ? (
                                                             <div className="flex gap-4">
                                                                 <button
@@ -223,20 +239,13 @@ export default function PreviousExperienceModal({ isOpen, onClose, onSubmit }: P
                                                                     Nee
                                                                 </button>
                                                             </div>
-                                                        ) : q.type === 'number' ? (
-                                                            <input
-                                                                type="number"
-                                                                value={answers[q.key] as number || ''}
-                                                                onChange={(e) => handleAnswer(q.key, parseInt(e.target.value) || 0)}
-                                                                className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-crown/50"
-                                                                min="0"
-                                                            />
                                                         ) : (
                                                             <input
                                                                 type="text"
                                                                 value={answers[q.key] as string || ''}
                                                                 onChange={(e) => handleAnswer(q.key, e.target.value)}
-                                                                className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-crown/50"
+                                                                className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-crown/50 text-gray-800"
+                                                                placeholder="Typ hier uw antwoord..."
                                                             />
                                                         )}
                                                     </div>

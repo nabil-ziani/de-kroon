@@ -107,7 +107,7 @@ model PreviousExperience {
     // Koran
     canReadQuranIndependently Boolean?
     canReadQuranWithRules Boolean?
-    numberOfAhzaab Int?
+    numberOfAhzaab String?
     lastKnownSurah String?
     threeYearGoal String?
 }
