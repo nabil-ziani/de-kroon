@@ -16,6 +16,7 @@ interface Field {
     className?: string;
     labelPosition?: 'left' | 'right';
     hint?: string;
+    disabled?: boolean;
 }
 
 interface Section {
@@ -85,7 +86,8 @@ export function Form<T extends z.ZodType>({
             onChange,
             className = '',
             labelPosition = 'left',
-            hint
+            hint,
+            disabled
         } = field;
 
         // Get nested error (for parent fields)
@@ -115,7 +117,8 @@ export function Form<T extends z.ZodType>({
                     onChange?.(e);
                     onFieldChange?.(name, e.target.checked);
                 }}
-                className="w-5 h-5 rounded border-gray-300 focus:ring-0"
+                disabled={disabled}
+                className="w-5 h-5 rounded border-gray-300 focus:ring-0 disabled:cursor-not-allowed"
             />
         ) : type === 'select' ? (
             <div className="relative">

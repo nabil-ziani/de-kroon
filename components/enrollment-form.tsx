@@ -2,7 +2,7 @@ import { Form } from '@/components/ui/form';
 import { enrollmentFormSchema, type EnrollmentFormData } from '@/utils/validation';
 import { FaArrowRight } from 'react-icons/fa';
 import toast from 'react-hot-toast';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PreviousExperienceModal from './previous-experience-modal';
 import { Dialog } from '@headlessui/react';
 
@@ -14,36 +14,21 @@ type Props = {
 export default function EnrollmentForm({ onSuccess, defaultValues }: Props) {
     const [showPreviousExperienceModal, setShowPreviousExperienceModal] = useState(false);
     const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
-    const [formData, setFormData] = useState<EnrollmentFormData | null>(null);
-    const [currentFormState, setCurrentFormState] = useState<Partial<EnrollmentFormData>>({});
     const [formRef, setFormRef] = useState<any>(null);
+    const [isDisabled, setIsDisabled] = useState(false);
+
+    useEffect(() => {
+        if (formRef) {
+            const subscription = formRef.watch((value: any) => {
+                console.log("previousExperience", !!value.previousExperience);
+                setIsDisabled(!!value.previousExperience);
+                console.log("isDisabled", isDisabled);
+            });
+            return () => subscription.unsubscribe();
+        }
+    }, [formRef]);
 
     const handleSubmit = async (data: EnrollmentFormData) => {
-        // Als het kind eerdere ervaring heeft, sla de data op
-        if (data.hadPreviousClasses) {
-            if (!data.previousExperience) {
-                setFormData(data);
-                setShowConfirmationDialog(true);
-                return;
-            }
-            await submitForm(data);
-            return;
-        }
-
-        // Anders direct versturen
-        await submitForm(data);
-    };
-
-    const handleFieldChange = (name: string, value: any) => {
-        setCurrentFormState(prev => ({ ...prev, [name]: value }));
-
-        // Als de checkbox voor eerdere lessen wordt aangevinkt
-        if (name === 'hadPreviousClasses' && value === true) {
-            setShowConfirmationDialog(true);
-        }
-    };
-
-    const submitForm = async (data: EnrollmentFormData) => {
         try {
             const response = await fetch('/api/enrollment', {
                 method: 'POST',
@@ -73,19 +58,9 @@ export default function EnrollmentForm({ onSuccess, defaultValues }: Props) {
         }
     };
 
-    const handlePreviousExperience = async (experienceData: any) => {
-        // Sla de test resultaten op in de form state
-        setCurrentFormState(prev => ({
-            ...prev,
-            previousExperience: experienceData
-        }));
-        
-        // Als er een formRef is, update dan ook de form data
-        if (formRef) {
-            formRef.setValue('previousExperience', experienceData);
-        }
-
-        // Toon succesmelding en sluit modal
+    const handlePreviousExperience = (experienceData: any) => {
+        formRef.setValue('previousExperience', experienceData);
+        formRef.setValue('hadPreviousClasses', true);
         toast.success('Test succesvol voltooid!');
         setShowPreviousExperienceModal(false);
     };
@@ -93,22 +68,16 @@ export default function EnrollmentForm({ onSuccess, defaultValues }: Props) {
     const handlePreviousExperienceClose = () => {
         if (showPreviousExperienceModal) {
             setShowPreviousExperienceModal(false);
-            // Reset checkbox alleen als er geen test resultaten zijn
-            if (!currentFormState.previousExperience) {
-                setCurrentFormState(prev => ({ ...prev, hadPreviousClasses: false }));
-                if (formRef) {
-                    formRef.setValue('hadPreviousClasses', false);
-                }
+            // Reset alleen als er geen test resultaten zijn
+            if (!formRef.getValues('previousExperience')) {
+                formRef.setValue('hadPreviousClasses', false);
             }
         }
     };
 
     const handleConfirmationCancel = () => {
         setShowConfirmationDialog(false);
-        handleFieldChange('hadPreviousClasses', false);
-        if (formRef) {
-            formRef.setValue('hadPreviousClasses', false);
-        }
+        formRef.setValue('hadPreviousClasses', false);
     };
 
     // Kind gegevens
@@ -135,8 +104,14 @@ export default function EnrollmentForm({ onSuccess, defaultValues }: Props) {
             gridCols: 3,
             className: 'flex items-center h-[42px]',
             labelPosition: 'right' as const,
-            value: currentFormState.hadPreviousClasses,
-            onChange: (e: React.ChangeEvent<HTMLInputElement>) => handleFieldChange('hadPreviousClasses', e.target.checked),
+            onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                const checked = e.target.checked;
+                formRef.setValue('hadPreviousClasses', checked);
+                if (checked && !formRef.getValues('previousExperience')) {
+                    setShowConfirmationDialog(true);
+                }
+            },
+            disabled: isDisabled,
         }
     ];
 
@@ -299,7 +274,6 @@ export default function EnrollmentForm({ onSuccess, defaultValues }: Props) {
                 schema={enrollmentFormSchema}
                 onSubmit={handleSubmit}
                 defaultValues={defaultValues}
-                onFieldChange={handleFieldChange}
                 formRef={setFormRef}
                 submitLabel={
                     <div className="flex items-center justify-center">

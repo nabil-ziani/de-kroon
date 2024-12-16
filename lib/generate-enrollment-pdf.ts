@@ -1,5 +1,6 @@
 import PDFDocument from 'pdfkit';
 import { EnrollmentFormData } from '@/utils/validation';
+import path from 'path';
 
 export async function generateEnrollmentPDF(data: EnrollmentFormData): Promise<Buffer> {
     return new Promise((resolve) => {
@@ -10,7 +11,8 @@ export async function generateEnrollmentPDF(data: EnrollmentFormData): Promise<B
                 bottom: 50,
                 left: 50,
                 right: 50
-            }
+            },
+            font: 'Times-Roman'
         });
 
         // Collect the PDF chunks
@@ -18,8 +20,9 @@ export async function generateEnrollmentPDF(data: EnrollmentFormData): Promise<B
         doc.on('data', (chunk: Buffer) => chunks.push(chunk));
         doc.on('end', () => resolve(Buffer.concat(chunks)));
 
-        // Add logo
-        doc.image('public/logo-2.png', {
+        // Add logo - use absolute path
+        const logoPath = path.join(process.cwd(), 'public', 'logo-2.png');
+        doc.image(logoPath, {
             fit: [200, 100],
             align: 'center'
         });
@@ -28,7 +31,7 @@ export async function generateEnrollmentPDF(data: EnrollmentFormData): Promise<B
 
         // Title
         doc.fontSize(20)
-            .font('Helvetica-Bold')
+            .font('Times-Bold')
             .text('Inschrijvingsformulier', { align: 'center' });
 
         doc.moveDown(2);
@@ -132,7 +135,7 @@ export async function generateEnrollmentPDF(data: EnrollmentFormData): Promise<B
 function addSection(doc: typeof PDFDocument, title: string, items: Array<{ label: string, value?: string, isSubheading?: boolean }>) {
     doc.moveDown()
         .fontSize(14)
-        .font('Helvetica-Bold')
+        .font('Times-Bold')
         .text(title)
         .moveDown(0.5);
 
@@ -140,12 +143,12 @@ function addSection(doc: typeof PDFDocument, title: string, items: Array<{ label
         if (item.isSubheading) {
             doc.moveDown(0.5)
                 .fontSize(12)
-                .font('Helvetica-Bold')
+                .font('Times-Bold')
                 .text(item.label)
                 .moveDown(0.5);
         } else {
             doc.fontSize(10)
-                .font('Helvetica')
+                .font('Times-Roman')
                 .text(`${item.label}: ${item.value}`, {
                     continued: false,
                     indent: 20
