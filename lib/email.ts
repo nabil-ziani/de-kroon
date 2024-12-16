@@ -78,6 +78,8 @@ export async function sendEnrollmentEmail(data: EnrollmentFormData) {
         }
     } catch (error) {
         console.error('Error sending enrollment email:', error);
-        throw new Error('Er is iets misgegaan bij het versturen van de email.');
+        // Niet de error throwen, zodat de inschrijving wel wordt opgeslagen
+        // maar de email later handmatig kan worden verstuurd
+        console.warn('Email sending failed, but enrollment was saved');
     }
 }

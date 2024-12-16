@@ -45,53 +45,67 @@ export default function EnrollmentForm({ onSuccess, defaultValues }: Props) {
 
     const submitForm = async (data: EnrollmentFormData) => {
         try {
-            const promise = fetch('/api/enrollment', {
+            const response = await fetch('/api/enrollment', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(data),
-            }).then(async (res) => {
-                if (!res.ok) {
-                    const error = await res.json();
-                    throw new Error(error.message || 'Er is iets misgegaan bij het versturen van de inschrijving.');
-                }
-                const result = await res.json();
-                if (result.success) {
-                    onSuccess?.();
-                }
-                return result;
             });
 
-            await toast.promise(
-                promise,
-                {
-                    loading: 'Inschrijving wordt verwerkt...',
-                    success: 'Uw inschrijving is succesvol verzonden! We nemen zo snel mogelijk contact met u op.',
-                    error: (err) => err.message || 'Er is iets misgegaan bij het versturen van de inschrijving.',
-                }
-            );
+            const responseData = await response.json();
+
+            if (!response.ok) {
+                console.error('Server error:', responseData);
+                throw new Error(responseData.message || 'Er is iets misgegaan bij het versturen van de inschrijving.');
+            }
+
+            if (responseData.success) {
+                toast.success('Uw inschrijving is succesvol verzonden! We nemen zo snel mogelijk contact met u op.');
+                onSuccess?.();
+            }
+
+            return responseData;
         } catch (error) {
             console.error('Error submitting form:', error);
-            toast.error('Er is iets misgegaan bij het versturen van de inschrijving.');
+            toast.error(error instanceof Error ? error.message : 'Er is iets misgegaan bij het versturen van de inschrijving.');
+            throw error;
         }
     };
 
-    const handlePreviousExperience = (experienceData: any) => {
-        if (formData) {
-            const updatedData = {
-                ...formData,
-                previousExperience: experienceData
-            };
-            submitForm(updatedData);
-            setShowPreviousExperienceModal(false);
+    const handlePreviousExperience = async (experienceData: any) => {
+        // Sla de test resultaten op in de form state
+        setCurrentFormState(prev => ({
+            ...prev,
+            previousExperience: experienceData
+        }));
+        
+        // Als er een formRef is, update dan ook de form data
+        if (formRef) {
+            formRef.setValue('previousExperience', experienceData);
         }
+
+        // Toon succesmelding en sluit modal
+        toast.success('Test succesvol voltooid!');
+        setShowPreviousExperienceModal(false);
     };
 
     const handlePreviousExperienceClose = () => {
-        setShowPreviousExperienceModal(false);
-        // Reset de checkbox en form states
-        setCurrentFormState(prev => ({ ...prev, hadPreviousClasses: false }));
+        if (showPreviousExperienceModal) {
+            setShowPreviousExperienceModal(false);
+            // Reset checkbox alleen als er geen test resultaten zijn
+            if (!currentFormState.previousExperience) {
+                setCurrentFormState(prev => ({ ...prev, hadPreviousClasses: false }));
+                if (formRef) {
+                    formRef.setValue('hadPreviousClasses', false);
+                }
+            }
+        }
+    };
+
+    const handleConfirmationCancel = () => {
+        setShowConfirmationDialog(false);
+        handleFieldChange('hadPreviousClasses', false);
         if (formRef) {
             formRef.setValue('hadPreviousClasses', false);
         }
@@ -330,15 +344,8 @@ export default function EnrollmentForm({ onSuccess, defaultValues }: Props) {
                         </div>
                         <div className="flex justify-end gap-4 pt-4 border-t border-gray-100">
                             <button
-                                onClick={() => {
-                                    setShowConfirmationDialog(false);
-                                    // Reset beide states
-                                    handleFieldChange('hadPreviousClasses', false);
-                                    if (formRef) {
-                                        formRef.setValue('hadPreviousClasses', false);
-                                    }
-                                }}
-                                className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
+                                onClick={handleConfirmationCancel}
+                                className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-crown/50"
                             >
                                 Annuleren
                             </button>
@@ -347,7 +354,7 @@ export default function EnrollmentForm({ onSuccess, defaultValues }: Props) {
                                     setShowConfirmationDialog(false);
                                     setShowPreviousExperienceModal(true);
                                 }}
-                                className="bg-crown text-white px-6 py-2 rounded-xl font-medium hover:bg-opacity-90 transition-colors"
+                                className="bg-crown text-white px-6 py-2 rounded-xl font-medium hover:bg-opacity-90 transition-colors focus:outline-none focus:ring-2 focus:ring-crown/50"
                             >
                                 Start test
                             </button>

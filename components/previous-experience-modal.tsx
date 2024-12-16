@@ -220,7 +220,7 @@ export default function PreviousExperienceModal({ isOpen, onClose, onSubmit }: P
                                                             <div className="flex gap-4">
                                                                 <button
                                                                     onClick={() => handleAnswer(q.key, true)}
-                                                                    className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors
+                                                                    className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-crown/50
                                                                         ${answers[q.key] === true
                                                                             ? 'bg-green-500 text-white'
                                                                             : 'bg-white text-gray-600 hover:bg-green-50'}`}
@@ -230,7 +230,7 @@ export default function PreviousExperienceModal({ isOpen, onClose, onSubmit }: P
                                                                 </button>
                                                                 <button
                                                                     onClick={() => handleAnswer(q.key, false)}
-                                                                    className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors
+                                                                    className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-crown/50
                                                                         ${answers[q.key] === false
                                                                             ? 'bg-red-500 text-white'
                                                                             : 'bg-white text-gray-600 hover:bg-red-50'}`}
@@ -259,7 +259,7 @@ export default function PreviousExperienceModal({ isOpen, onClose, onSubmit }: P
                                         <div className="flex justify-between">
                                             <button
                                                 onClick={previousCategory}
-                                                className={`px-6 py-3 rounded-xl font-medium transition-colors
+                                                className={`px-6 py-3 rounded-xl font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-crown/50
                                                     ${currentCategoryIndex === 0
                                                         ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                                                         : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
@@ -270,14 +270,14 @@ export default function PreviousExperienceModal({ isOpen, onClose, onSubmit }: P
                                             {currentCategoryIndex === categories.length - 1 ? (
                                                 <button
                                                     onClick={handleSubmit}
-                                                    className="bg-crown text-white px-6 py-3 rounded-xl font-medium hover:bg-opacity-90 transition-colors"
+                                                    className="bg-crown text-white px-6 py-3 rounded-xl font-medium hover:bg-opacity-90 transition-colors focus:outline-none focus:ring-2 focus:ring-crown/50"
                                                 >
                                                     Voltooien
                                                 </button>
                                             ) : (
                                                 <button
                                                     onClick={nextCategory}
-                                                    className="bg-crown text-white px-6 py-3 rounded-xl font-medium hover:bg-opacity-90 transition-colors"
+                                                    className="bg-crown text-white px-6 py-3 rounded-xl font-medium hover:bg-opacity-90 transition-colors focus:outline-none focus:ring-2 focus:ring-crown/50"
                                                 >
                                                     Volgende
                                                 </button>
