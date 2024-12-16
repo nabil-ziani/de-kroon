@@ -7,6 +7,8 @@ import ContactConfirmationEmail from '@/emails/contact-confirmation-email';
 import EnrollmentEmail from '@/emails/enrollment-email';
 import EnrollmentConfirmationEmail from '@/emails/enrollment-confirmation-email';
 
+import { generateEnrollmentPDF } from './generate-enrollment-pdf';
+
 if (!process.env.RESEND_API_KEY) {
     throw new Error('Missing RESEND_API_KEY environment variable');
 }
@@ -40,12 +42,21 @@ export async function sendContactEmail(data: ContactFormData) {
 
 export async function sendEnrollmentEmail(data: EnrollmentFormData) {
     try {
-        // Email naar bestuur
+        // Generate PDF
+        const pdfBuffer = await generateEnrollmentPDF(data);
+
+        // Send email to admin
         await resend.emails.send({
             from: `De Kroon <${FROM_EMAIL}>`,
             to: ADMIN_EMAIL,
             subject: `Nieuwe inschrijving voor ${data.courseName}`,
-            react: EnrollmentEmail({ data })
+            react: EnrollmentEmail({ data }),
+            attachments: [
+                {
+                    filename: `inschrijving-${data.childName.toLowerCase().replace(/\s+/g, '-')}.pdf`,
+                    content: pdfBuffer
+                }
+            ]
         });
 
         // Bevestigingsmail naar beide ouders

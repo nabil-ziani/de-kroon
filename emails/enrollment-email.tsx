@@ -57,11 +57,6 @@ export default function EnrollmentEmail({ data }: Props) {
                             <Text style={detailText}>
                                 <strong style={labelStyle}>Eerdere lessen gevolgd:</strong> {data.hadPreviousClasses ? 'Ja' : 'Nee'}
                             </Text>
-                            {data.previousLevel && (
-                                <Text style={detailText}>
-                                    <strong style={labelStyle}>Vorig niveau:</strong> {data.previousLevel}
-                                </Text>
-                            )}
                             <Text style={detailText}>
                                 <strong style={labelStyle}>Cursus:</strong> {data.courseName}
                             </Text>
@@ -127,7 +122,7 @@ export default function EnrollmentEmail({ data }: Props) {
                         {data.hadPreviousClasses && data.previousExperience && (
                             <Section style={messageBox}>
                                 <Heading style={h2}>Eerdere Ervaring</Heading>
-                                
+
                                 {/* Leesvaardigheid */}
                                 <Text style={subheading}>Leesvaardigheid</Text>
                                 <Text style={detailText}>

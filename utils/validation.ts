@@ -139,7 +139,7 @@ const previousExperienceSchema = z.object({
     // Koran
     canReadQuranIndependently: z.boolean().optional(),
     canReadQuranWithRules: z.boolean().optional(),
-    numberOfAhzaab: z.number().min(0).optional(),
+    numberOfAhzaab: z.string().optional(),
     lastKnownSurah: z.string().optional(),
     threeYearGoal: z.string().optional(),
 });
