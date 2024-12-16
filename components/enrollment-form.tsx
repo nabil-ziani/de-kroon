@@ -319,7 +319,7 @@ export default function EnrollmentForm({ onSuccess, defaultValues }: Props) {
                         <div className="flex justify-end gap-4 pt-4 border-t border-gray-100">
                             <button
                                 onClick={handleConfirmationCancel}
-                                className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-crown/50"
+                                className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors focus:outline-none"
                             >
                                 Annuleren
                             </button>
@@ -328,7 +328,7 @@ export default function EnrollmentForm({ onSuccess, defaultValues }: Props) {
                                     setShowConfirmationDialog(false);
                                     setShowPreviousExperienceModal(true);
                                 }}
-                                className="bg-crown text-white px-6 py-2 rounded-xl font-medium hover:bg-opacity-90 transition-colors focus:outline-none focus:ring-2 focus:ring-crown/50"
+                                className="bg-crown text-white px-6 py-2 rounded-xl font-medium hover:bg-opacity-90 transition-colors focus:outline-none"
                             >
                                 Start test
                             </button>

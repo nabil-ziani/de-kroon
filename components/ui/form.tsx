@@ -3,6 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import React, { ReactNode, useState } from 'react';
 import { Listbox } from '@headlessui/react';
+import { FaSpinner } from 'react-icons/fa';
 
 interface Field {
     label: string;
@@ -67,12 +68,23 @@ export function Form<T extends z.ZodType>({
         defaultValues: defaultValues as any,
     });
 
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     // Expose form methods to parent
     React.useEffect(() => {
         if (formRef) {
             formRef(form);
         }
     }, [form, formRef]);
+
+    const handleSubmit = async (data: z.infer<T>) => {
+        setIsSubmitting(true);
+        try {
+            await onSubmit(data);
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
 
     const renderField = (field: Field) => {
         const {
@@ -220,7 +232,7 @@ export function Form<T extends z.ZodType>({
     );
 
     return (
-        <form onSubmit={form.handleSubmit(onSubmit)} className={className} noValidate>
+        <form onSubmit={form.handleSubmit(handleSubmit)} className={className} noValidate>
             {sections ? (
                 sections.map((section, index) => {
                     // Get root error for parent sections
@@ -247,8 +259,19 @@ export function Form<T extends z.ZodType>({
                 fields && renderFields(fields)
             )}
 
-            <button type="submit" className={submitClassName}>
-                {submitLabel}
+            <button
+                type="submit"
+                className={submitClassName}
+                disabled={isSubmitting}
+            >
+                <span className={`flex items-center justify-center ${isSubmitting ? 'opacity-0' : 'opacity-100'}`}>
+                    {submitLabel}
+                </span>
+                {isSubmitting && (
+                    <span className="absolute inset-0 flex items-center justify-center">
+                        <FaSpinner className="w-5 h-5 animate-spin" color="white" />
+                    </span>
+                )}
             </button>
         </form>
     );
