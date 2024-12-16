@@ -107,13 +107,50 @@ const parentSchema = z.object({
     }
 });
 
+// Previous Experience schema
+const previousExperienceSchema = z.object({
+    // Leesvaardigheid
+    canRecognizeLetters: z.boolean().optional(),
+    canRecognizeLetterForms: z.boolean().optional(),
+    canReadDiacritics: z.boolean().optional(),
+    canReadExtensions: z.boolean().optional(),
+    canReadThreeLetterWords: z.boolean().optional(),
+    canReadFourLetterWords: z.boolean().optional(),
+    canReadShadda: z.boolean().optional(),
+    canReadSokoun: z.boolean().optional(),
+    canReadThreeWordSentence: z.boolean().optional(),
+    canReadFourWordSentence: z.boolean().optional(),
+    canStopAtEndOfSentence: z.boolean().optional(),
+
+    // Schrijfvaardigheid
+    canWriteLetters: z.boolean().optional(),
+    canWriteLetterForms: z.boolean().optional(),
+    canConnectLetters: z.boolean().optional(),
+    knowsSunAndMoonLetters: z.boolean().optional(),
+    canWriteDictation: z.boolean().optional(),
+
+    // Spreekvaardigheid
+    canTranslateToNL: z.boolean().optional(),
+    canAnswerYesNo: z.boolean().optional(),
+    canAnswerQuestions: z.boolean().optional(),
+    canIntroduceInArabic: z.boolean().optional(),
+    canGivePresentationInArabic: z.boolean().optional(),
+
+    // Koran
+    canReadQuranIndependently: z.boolean().optional(),
+    canReadQuranWithRules: z.boolean().optional(),
+    numberOfAhzaab: z.number().min(0).optional(),
+    lastKnownSurah: z.string().optional(),
+    threeYearGoal: z.string().optional(),
+});
+
 // Enrollment form schema
 export const enrollmentFormSchema = z.object({
     // Kind gegevens
     childName: nameSchema.min(1, 'Vul de naam van het kind in'),
     birthDate: z.string().min(1, 'Selecteer een geboortedatum'),
     hadPreviousClasses: z.boolean().default(false),
-    previousLevel: z.string().optional(),
+    previousExperience: previousExperienceSchema.optional(),
 
     // Ouder gegevens
     father: parentSchema,

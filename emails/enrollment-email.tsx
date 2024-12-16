@@ -123,6 +123,109 @@ export default function EnrollmentEmail({ data }: Props) {
                             </Text>
                         </Section>
 
+                        {/* Previous Experience */}
+                        {data.hadPreviousClasses && data.previousExperience && (
+                            <Section style={messageBox}>
+                                <Heading style={h2}>Eerdere Ervaring</Heading>
+                                
+                                {/* Leesvaardigheid */}
+                                <Text style={subheading}>Leesvaardigheid</Text>
+                                <Text style={detailText}>
+                                    <strong style={labelStyle}>Letters losstaand:</strong> {data.previousExperience.canRecognizeLetters ? 'Ja' : 'Nee'}
+                                </Text>
+                                <Text style={detailText}>
+                                    <strong style={labelStyle}>Letters in vormen:</strong> {data.previousExperience.canRecognizeLetterForms ? 'Ja' : 'Nee'}
+                                </Text>
+                                <Text style={detailText}>
+                                    <strong style={labelStyle}>Leestekens:</strong> {data.previousExperience.canReadDiacritics ? 'Ja' : 'Nee'}
+                                </Text>
+                                <Text style={detailText}>
+                                    <strong style={labelStyle}>Verlengingen:</strong> {data.previousExperience.canReadExtensions ? 'Ja' : 'Nee'}
+                                </Text>
+                                <Text style={detailText}>
+                                    <strong style={labelStyle}>3-letter woorden:</strong> {data.previousExperience.canReadThreeLetterWords ? 'Ja' : 'Nee'}
+                                </Text>
+                                <Text style={detailText}>
+                                    <strong style={labelStyle}>4+ letter woorden:</strong> {data.previousExperience.canReadFourLetterWords ? 'Ja' : 'Nee'}
+                                </Text>
+                                <Text style={detailText}>
+                                    <strong style={labelStyle}>Shadda:</strong> {data.previousExperience.canReadShadda ? 'Ja' : 'Nee'}
+                                </Text>
+                                <Text style={detailText}>
+                                    <strong style={labelStyle}>Sokoun:</strong> {data.previousExperience.canReadSokoun ? 'Ja' : 'Nee'}
+                                </Text>
+                                <Text style={detailText}>
+                                    <strong style={labelStyle}>3-woord zinnen:</strong> {data.previousExperience.canReadThreeWordSentence ? 'Ja' : 'Nee'}
+                                </Text>
+                                <Text style={detailText}>
+                                    <strong style={labelStyle}>4+ woord zinnen:</strong> {data.previousExperience.canReadFourWordSentence ? 'Ja' : 'Nee'}
+                                </Text>
+                                <Text style={detailText}>
+                                    <strong style={labelStyle}>Leestekens einde zin:</strong> {data.previousExperience.canStopAtEndOfSentence ? 'Ja' : 'Nee'}
+                                </Text>
+
+                                {/* Schrijfvaardigheid */}
+                                <Text style={subheading}>Schrijfvaardigheid</Text>
+                                <Text style={detailText}>
+                                    <strong style={labelStyle}>Letters schrijven:</strong> {data.previousExperience.canWriteLetters ? 'Ja' : 'Nee'}
+                                </Text>
+                                <Text style={detailText}>
+                                    <strong style={labelStyle}>Letters in vormen:</strong> {data.previousExperience.canWriteLetterForms ? 'Ja' : 'Nee'}
+                                </Text>
+                                <Text style={detailText}>
+                                    <strong style={labelStyle}>Letters verbinden:</strong> {data.previousExperience.canConnectLetters ? 'Ja' : 'Nee'}
+                                </Text>
+                                <Text style={detailText}>
+                                    <strong style={labelStyle}>Zon- en maanletters:</strong> {data.previousExperience.knowsSunAndMoonLetters ? 'Ja' : 'Nee'}
+                                </Text>
+                                <Text style={detailText}>
+                                    <strong style={labelStyle}>Dictee:</strong> {data.previousExperience.canWriteDictation ? 'Ja' : 'Nee'}
+                                </Text>
+
+                                {/* Spreekvaardigheid */}
+                                <Text style={subheading}>Spreekvaardigheid</Text>
+                                <Text style={detailText}>
+                                    <strong style={labelStyle}>Vertalen naar NL:</strong> {data.previousExperience.canTranslateToNL ? 'Ja' : 'Nee'}
+                                </Text>
+                                <Text style={detailText}>
+                                    <strong style={labelStyle}>Ja/Nee vragen:</strong> {data.previousExperience.canAnswerYesNo ? 'Ja' : 'Nee'}
+                                </Text>
+                                <Text style={detailText}>
+                                    <strong style={labelStyle}>Vragen beantwoorden:</strong> {data.previousExperience.canAnswerQuestions ? 'Ja' : 'Nee'}
+                                </Text>
+                                <Text style={detailText}>
+                                    <strong style={labelStyle}>Zichzelf voorstellen:</strong> {data.previousExperience.canIntroduceInArabic ? 'Ja' : 'Nee'}
+                                </Text>
+                                <Text style={detailText}>
+                                    <strong style={labelStyle}>Spreekbeurt:</strong> {data.previousExperience.canGivePresentationInArabic ? 'Ja' : 'Nee'}
+                                </Text>
+
+                                {/* Koran */}
+                                <Text style={subheading}>Koran</Text>
+                                <Text style={detailText}>
+                                    <strong style={labelStyle}>Zelfstandig lezen:</strong> {data.previousExperience.canReadQuranIndependently ? 'Ja' : 'Nee'}
+                                </Text>
+                                <Text style={detailText}>
+                                    <strong style={labelStyle}>Juiste regels:</strong> {data.previousExperience.canReadQuranWithRules ? 'Ja' : 'Nee'}
+                                </Text>
+                                {data.previousExperience.numberOfAhzaab && (
+                                    <Text style={detailText}>
+                                        <strong style={labelStyle}>Aantal ahzaab:</strong> {data.previousExperience.numberOfAhzaab}
+                                    </Text>
+                                )}
+                                {data.previousExperience.lastKnownSurah && (
+                                    <Text style={detailText}>
+                                        <strong style={labelStyle}>Laatste soerah:</strong> {data.previousExperience.lastKnownSurah}
+                                    </Text>
+                                )}
+                                {data.previousExperience.threeYearGoal && (
+                                    <Text style={detailText}>
+                                        <strong style={labelStyle}>3-jaar doel:</strong> {data.previousExperience.threeYearGoal}
+                                    </Text>
+                                )}
+                            </Section>
+                        )}
+
                         <Hr style={hr} />
 
                         <Text style={footer}>
@@ -216,4 +319,12 @@ const footer = {
     fontSize: '12px',
     lineHeight: '16px',
     textAlign: 'center' as const,
-}; 
+};
+
+const subheading = {
+    color: '#374151',
+    fontSize: '16px',
+    fontWeight: '700',
+    marginTop: '24px',
+    marginBottom: '12px',
+};

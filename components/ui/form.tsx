@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { ReactNode, useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { Listbox } from '@headlessui/react';
 
 interface Field {
@@ -27,6 +27,8 @@ interface Section {
 interface Props<T extends z.ZodType> {
     schema: T;
     onSubmit: (data: z.infer<T>) => void;
+    onFieldChange?: (name: string, value: any) => void;
+    formRef?: (ref: any) => void;
     sections?: Section[];
     fields?: Field[];
     defaultValues?: Partial<z.infer<T>>;
@@ -44,6 +46,8 @@ interface Props<T extends z.ZodType> {
 export function Form<T extends z.ZodType>({
     schema,
     onSubmit,
+    onFieldChange,
+    formRef,
     sections,
     fields,
     defaultValues,
@@ -61,6 +65,13 @@ export function Form<T extends z.ZodType>({
         resolver: zodResolver(schema),
         defaultValues: defaultValues as any,
     });
+
+    // Expose form methods to parent
+    React.useEffect(() => {
+        if (formRef) {
+            formRef(form);
+        }
+    }, [form, formRef]);
 
     const renderField = (field: Field) => {
         const {
@@ -102,6 +113,7 @@ export function Form<T extends z.ZodType>({
                 onChange={(e) => {
                     form.register(name).onChange(e);
                     onChange?.(e);
+                    onFieldChange?.(name, e.target.checked);
                 }}
                 className="w-5 h-5 rounded border-gray-300 focus:ring-0"
             />
@@ -112,6 +124,7 @@ export function Form<T extends z.ZodType>({
                     onChange={(value) => {
                         form.setValue(name, value, { shouldValidate: true });
                         form.trigger(name);
+                        onFieldChange?.(name, value);
                     }}
                 >
                     <Listbox.Button className={`${baseInputClasses} w-full text-left flex items-center justify-between`}>
@@ -150,6 +163,10 @@ export function Form<T extends z.ZodType>({
                 type={type}
                 {...form.register(name)}
                 placeholder={placeholder}
+                onChange={(e) => {
+                    form.register(name).onChange(e);
+                    onFieldChange?.(name, e.target.value);
+                }}
                 className={baseInputClasses}
             />
         );

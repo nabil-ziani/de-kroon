@@ -19,15 +19,13 @@ model Enrollment {
     childName       String
     birthDate       DateTime
     hadPreviousClasses Boolean @default(false)
-    previousLevel   String?
+    previousExperience PreviousExperience?
     
     // Ouder gegevens
-    fatherName      String?
-    fatherPhone     String?
-    fatherEmail     String?
-    motherName      String?
-    motherPhone     String?
-    motherEmail     String?
+    father          Parent?  @relation("FatherRelation", fields: [fatherId], references: [id])
+    fatherId        String?
+    mother          Parent?  @relation("MotherRelation", fields: [motherId], references: [id])
+    motherId        String?
     
     // Adres
     street          String
@@ -62,4 +60,54 @@ model Donation {
     donorName     String?
     transactionId String?  @unique
     buckarooKey   String?  @unique
+}
+
+model Parent {
+    id            String     @id @default(cuid())
+    firstName     String?
+    lastName      String?
+    phone         String?
+    email         String?
+    fatherOf      Enrollment[] @relation("FatherRelation")
+    motherOf      Enrollment[] @relation("MotherRelation")
+}
+
+model PreviousExperience {
+    id              String     @id @default(cuid())
+    enrollment      Enrollment @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
+    enrollmentId    String     @unique
+
+    // Leesvaardigheid
+    canRecognizeLetters Boolean?
+    canRecognizeLetterForms Boolean?
+    canReadDiacritics Boolean?
+    canReadExtensions Boolean?
+    canReadThreeLetterWords Boolean?
+    canReadFourLetterWords Boolean?
+    canReadShadda Boolean?
+    canReadSokoun Boolean?
+    canReadThreeWordSentence Boolean?
+    canReadFourWordSentence Boolean?
+    canStopAtEndOfSentence Boolean?
+
+    // Schrijfvaardigheid
+    canWriteLetters Boolean?
+    canWriteLetterForms Boolean?
+    canConnectLetters Boolean?
+    knowsSunAndMoonLetters Boolean?
+    canWriteDictation Boolean?
+
+    // Spreekvaardigheid
+    canTranslateToNL Boolean?
+    canAnswerYesNo Boolean?
+    canAnswerQuestions Boolean?
+    canIntroduceInArabic Boolean?
+    canGivePresentationInArabic Boolean?
+
+    // Koran
+    canReadQuranIndependently Boolean?
+    canReadQuranWithRules Boolean?
+    numberOfAhzaab Int?
+    lastKnownSurah String?
+    threeYearGoal String?
 }

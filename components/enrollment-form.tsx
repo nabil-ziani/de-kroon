@@ -3,6 +3,8 @@ import { enrollmentFormSchema, type EnrollmentFormData } from '@/utils/validatio
 import { FaArrowRight } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
+import PreviousExperienceModal from './previous-experience-modal';
+import { Dialog } from '@headlessui/react';
 
 type Props = {
     onSuccess?: () => void;
@@ -10,35 +12,89 @@ type Props = {
 };
 
 export default function EnrollmentForm({ onSuccess, defaultValues }: Props) {
-    const [showPreviousLevel, setShowPreviousLevel] = useState(false);
+    const [showPreviousExperienceModal, setShowPreviousExperienceModal] = useState(false);
+    const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
+    const [formData, setFormData] = useState<EnrollmentFormData | null>(null);
+    const [currentFormState, setCurrentFormState] = useState<Partial<EnrollmentFormData>>({});
+    const [formRef, setFormRef] = useState<any>(null);
 
     const handleSubmit = async (data: EnrollmentFormData) => {
-        const promise = fetch('/api/enrollment', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        }).then(async (res) => {
-            if (!res.ok) {
-                const error = await res.json();
-                throw new Error(error.message || 'Er is iets misgegaan bij het versturen van de inschrijving.');
+        // Als het kind eerdere ervaring heeft, sla de data op
+        if (data.hadPreviousClasses) {
+            if (!data.previousExperience) {
+                setFormData(data);
+                setShowConfirmationDialog(true);
+                return;
             }
-            const result = await res.json();
-            if (result.success) {
-                onSuccess?.();
-            }
-            return result;
-        });
+            await submitForm(data);
+            return;
+        }
 
-        await toast.promise(
-            promise,
-            {
-                loading: 'Inschrijving wordt verwerkt...',
-                success: 'Uw inschrijving is succesvol verzonden! We nemen zo snel mogelijk contact met u op.',
-                error: (err) => err.message || 'Er is iets misgegaan bij het versturen van de inschrijving.',
-            }
-        );
+        // Anders direct versturen
+        await submitForm(data);
+    };
+
+    const handleFieldChange = (name: string, value: any) => {
+        setCurrentFormState(prev => ({ ...prev, [name]: value }));
+
+        // Als de checkbox voor eerdere lessen wordt aangevinkt
+        if (name === 'hadPreviousClasses' && value === true) {
+            setShowConfirmationDialog(true);
+        }
+    };
+
+    const submitForm = async (data: EnrollmentFormData) => {
+        try {
+            const promise = fetch('/api/enrollment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            }).then(async (res) => {
+                if (!res.ok) {
+                    const error = await res.json();
+                    throw new Error(error.message || 'Er is iets misgegaan bij het versturen van de inschrijving.');
+                }
+                const result = await res.json();
+                if (result.success) {
+                    onSuccess?.();
+                }
+                return result;
+            });
+
+            await toast.promise(
+                promise,
+                {
+                    loading: 'Inschrijving wordt verwerkt...',
+                    success: 'Uw inschrijving is succesvol verzonden! We nemen zo snel mogelijk contact met u op.',
+                    error: (err) => err.message || 'Er is iets misgegaan bij het versturen van de inschrijving.',
+                }
+            );
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            toast.error('Er is iets misgegaan bij het versturen van de inschrijving.');
+        }
+    };
+
+    const handlePreviousExperience = (experienceData: any) => {
+        if (formData) {
+            const updatedData = {
+                ...formData,
+                previousExperience: experienceData
+            };
+            submitForm(updatedData);
+            setShowPreviousExperienceModal(false);
+        }
+    };
+
+    const handlePreviousExperienceClose = () => {
+        setShowPreviousExperienceModal(false);
+        // Reset de checkbox en form states
+        setCurrentFormState(prev => ({ ...prev, hadPreviousClasses: false }));
+        if (formRef) {
+            formRef.setValue('hadPreviousClasses', false);
+        }
     };
 
     // Kind gegevens
@@ -62,18 +118,11 @@ export default function EnrollmentForm({ onSuccess, defaultValues }: Props) {
             label: 'Eerder les gevolgd?',
             name: 'hadPreviousClasses',
             type: 'checkbox' as const,
-            onChange: (e: React.ChangeEvent<HTMLInputElement>) => setShowPreviousLevel(e.target.checked),
             gridCols: 3,
             className: 'flex items-center h-[42px]',
             labelPosition: 'right' as const,
-        },
-        {
-            label: 'Niveau en ervaring',
-            name: 'previousLevel',
-            type: 'textarea' as const,
-            placeholder: 'Beschrijf het niveau en ervaring van het kind...',
-            gridCols: 3,
-            className: showPreviousLevel ? 'opacity-100 transition-opacity duration-200' : 'hidden',
+            value: currentFormState.hadPreviousClasses,
+            onChange: (e: React.ChangeEvent<HTMLInputElement>) => handleFieldChange('hadPreviousClasses', e.target.checked),
         }
     ];
 
@@ -231,25 +280,89 @@ export default function EnrollmentForm({ onSuccess, defaultValues }: Props) {
     ];
 
     return (
-        <Form
-            schema={enrollmentFormSchema}
-            onSubmit={handleSubmit}
-            defaultValues={defaultValues}
-            submitLabel={
-                <div className="flex items-center justify-center">
-                    <span>Inschrijven</span>
-                    <FaArrowRight className="ml-2 transform transition-all duration-300 group-hover:translate-x-2 group-hover:scale-110" />
+        <>
+            <Form
+                schema={enrollmentFormSchema}
+                onSubmit={handleSubmit}
+                defaultValues={defaultValues}
+                onFieldChange={handleFieldChange}
+                formRef={setFormRef}
+                submitLabel={
+                    <div className="flex items-center justify-center">
+                        <span>Inschrijven</span>
+                        <FaArrowRight className="ml-2 transform transition-all duration-300 group-hover:translate-x-2 group-hover:scale-110" />
+                    </div>
+                }
+                className="space-y-8"
+                sections={fields}
+                inputClassName="w-full px-4 py-3 rounded-xl bg-gray-50 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-crown/50 transition-all duration-300"
+                labelClassName="block text-gray-700 font-medium mb-2"
+                submitClassName="w-full bg-crown text-white px-6 py-3.5 rounded-xl font-semibold hover:bg-opacity-90 transition-colors text-sm uppercase tracking-wide flex items-center justify-center group"
+                gridClassName="grid md:grid-cols-3 gap-4"
+                sectionClassName="bg-white p-6 rounded-2xl shadow-sm border border-gray-100"
+                sectionTitleClassName="text-xl font-bold text-gray-800 mb-2"
+                hintClassName="text-sm text-gray-500"
+            />
+
+            {/* Confirmation Dialog */}
+            <Dialog
+                open={showConfirmationDialog}
+                onClose={() => setShowConfirmationDialog(false)}
+                className="relative z-[200]"
+            >
+                <div className="fixed inset-0 bg-black/30 backdrop-blur-sm" aria-hidden="true" />
+
+                <div className="fixed inset-0 flex items-center justify-center p-4">
+                    <Dialog.Panel className="mx-auto max-w-lg bg-white rounded-2xl p-8 relative z-[200] max-h-[90vh] flex flex-col">
+                        <Dialog.Title className="text-2xl font-bold text-gray-800 mb-4">
+                            Niveau test
+                        </Dialog.Title>
+                        <div className="overflow-y-auto flex-1 mb-6">
+                            <p className="text-gray-600">
+                                U heeft aangegeven dat uw kind eerder les heeft gevolgd. Om het niveau van uw kind beter te kunnen inschatten
+                                en in de juiste groep te kunnen plaatsen, vragen we u om een korte vragenlijst in te vullen.
+                            </p>
+                            <div className="mt-4 p-4 bg-amber-50 rounded-xl border border-amber-200">
+                                <p className="text-amber-700 text-sm">
+                                    <strong>Let op:</strong> Deze test is verplicht voor leerlingen die eerder les hebben gevolgd.
+                                    Zonder deze informatie kunnen we de inschrijving niet verwerken.
+                                </p>
+                            </div>
+                        </div>
+                        <div className="flex justify-end gap-4 pt-4 border-t border-gray-100">
+                            <button
+                                onClick={() => {
+                                    setShowConfirmationDialog(false);
+                                    // Reset beide states
+                                    handleFieldChange('hadPreviousClasses', false);
+                                    if (formRef) {
+                                        formRef.setValue('hadPreviousClasses', false);
+                                    }
+                                }}
+                                className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
+                            >
+                                Annuleren
+                            </button>
+                            <button
+                                onClick={() => {
+                                    setShowConfirmationDialog(false);
+                                    setShowPreviousExperienceModal(true);
+                                }}
+                                className="bg-crown text-white px-6 py-2 rounded-xl font-medium hover:bg-opacity-90 transition-colors"
+                            >
+                                Start test
+                            </button>
+                        </div>
+                    </Dialog.Panel>
                 </div>
-            }
-            className="space-y-8"
-            sections={fields}
-            inputClassName="w-full px-4 py-3 rounded-xl bg-gray-50 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-crown/50 transition-all duration-300"
-            labelClassName="block text-gray-700 font-medium mb-2"
-            submitClassName="w-full bg-crown text-white px-6 py-3.5 rounded-xl font-semibold hover:bg-opacity-90 transition-colors text-sm uppercase tracking-wide flex items-center justify-center group"
-            gridClassName="grid md:grid-cols-3 gap-4"
-            sectionClassName="bg-white p-6 rounded-2xl shadow-sm border border-gray-100"
-            sectionTitleClassName="text-xl font-bold text-gray-800 mb-2"
-            hintClassName="text-sm text-gray-500"
-        />
+            </Dialog>
+
+            {/* Previous Experience Modal */}
+            <PreviousExperienceModal
+                isOpen={showPreviousExperienceModal}
+                onClose={handlePreviousExperienceClose}
+                onSubmit={handlePreviousExperience}
+            />
+        </>
     );
-} 
+}
