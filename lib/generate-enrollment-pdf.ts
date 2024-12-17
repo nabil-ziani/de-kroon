@@ -28,28 +28,32 @@ export async function generateEnrollmentPDF(data: EnrollmentFormData): Promise<B
         doc.on('data', (chunk: Buffer) => chunks.push(chunk));
         doc.on('end', () => resolve(Buffer.concat(chunks)));
 
+        // Calculate center position for logo
+        const pageWidth = doc.page.width - doc.page.margins.left - doc.page.margins.right;
+        const logoWidth = 200;
+        const logoX = doc.page.margins.left + (pageWidth - logoWidth) / 2;
+
         // Add logo
         const logoPath = path.join(process.cwd(), 'public', 'logo-2.png');
-        doc.image(logoPath, {
-            fit: [200, 100],
-            align: 'center'
+        doc.image(logoPath, logoX, doc.page.margins.top, {
+            fit: [200, 100]
         });
 
-        doc.moveDown(5);
+        doc.moveDown(4);
 
         // Title and student info
         doc.fontSize(20)
             .font('Poppins-Bold')
             .text('Resultaten Instaptest', { align: 'center' });
 
-        doc.moveDown();
+        doc.moveDown(1);
 
         doc.fontSize(12)
             .font('Poppins')
             .text(`Student: ${data.childName}`, { align: 'center' })
             .text(`Datum: ${new Date().toLocaleDateString('nl-BE')}`, { align: 'center' });
 
-        doc.moveDown(2);
+        doc.moveDown(1);
 
         if (data.previousExperience) {
             // Reading Skills Section
@@ -66,6 +70,9 @@ export async function generateEnrollmentPDF(data: EnrollmentFormData): Promise<B
                 { question: 'Kan de student zinnen van vier of meer woorden lezen?', answer: data.previousExperience.canReadFourWordSentence },
                 { question: 'Stopt de student correct bij leestekens aan het einde van een zin?', answer: data.previousExperience.canStopAtEndOfSentence }
             ]);
+
+            // Start new page for remaining sections
+            doc.addPage();
 
             // Writing Skills Section
             addSection(doc, 'Schrijfvaardigheid', [
@@ -85,6 +92,8 @@ export async function generateEnrollmentPDF(data: EnrollmentFormData): Promise<B
                 { question: 'Kan de student een spreekbeurt geven in het Arabisch?', answer: data.previousExperience.canGivePresentationInArabic }
             ]);
 
+            doc.addPage();
+
             // Quran Section
             addSection(doc, 'Koran', [
                 { question: 'Kan de student de Koran zelfstandig lezen?', answer: data.previousExperience.canReadQuranIndependently },
@@ -101,7 +110,7 @@ export async function generateEnrollmentPDF(data: EnrollmentFormData): Promise<B
 
 function addSection(doc: typeof PDFDocument, title: string, items: Array<{ question: string, answer?: boolean, value?: string }>) {
     doc.moveDown()
-        .fontSize(14)
+        .fontSize(15)
         .font('Poppins-Bold')
         .text(title)
         .moveDown();
@@ -112,14 +121,49 @@ function addSection(doc: typeof PDFDocument, title: string, items: Array<{ quest
             .text(item.question)
             .font('Poppins');
 
+        doc.moveDown(0.5);
+
         if (typeof item.answer === 'boolean') {
-            doc.text(item.answer ? '✓ Ja' : '✗ Nee', {
-                indent: 20,
+            const currentY = doc.y;
+
+            // Save current graphics state
+            doc.save();
+
+            if (item.answer) {
+                // Green circle with checkmark
+                doc.circle(doc.page.margins.left + 7, currentY + 7, 7)
+                    .fillAndStroke('#22c55e', '#22c55e');
+
+                // White checkmark
+                doc.path('M' + (doc.page.margins.left + 4) + ' ' + (currentY + 7) +
+                    ' L' + (doc.page.margins.left + 6) + ' ' + (currentY + 9) +
+                    ' L' + (doc.page.margins.left + 10) + ' ' + (currentY + 5))
+                    .lineWidth(1.5)
+                    .stroke('white');
+            } else {
+                // Red circle with X
+                doc.circle(doc.page.margins.left + 7, currentY + 7, 7)
+                    .fillAndStroke('#ef4444', '#ef4444');
+
+                // White X
+                doc.path('M' + (doc.page.margins.left + 4) + ' ' + (currentY + 4) +
+                    ' L' + (doc.page.margins.left + 10) + ' ' + (currentY + 10) +
+                    ' M' + (doc.page.margins.left + 10) + ' ' + (currentY + 4) +
+                    ' L' + (doc.page.margins.left + 4) + ' ' + (currentY + 10))
+                    .lineWidth(1.5)
+                    .stroke('white');
+            }
+
+            // Restore graphics state
+            doc.restore();
+
+            // Add text after icon
+            doc.text('  ' + (item.answer ? 'Ja' : 'Nee'), {
+                indent: 15,
                 continued: false
             });
         } else if (item.value) {
             doc.text(item.value, {
-                indent: 20,
                 continued: false
             });
         }
