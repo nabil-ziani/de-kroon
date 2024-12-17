@@ -39,21 +39,21 @@ export async function generateEnrollmentPDF(data: EnrollmentFormData): Promise<B
             fit: [200, 100]
         });
 
-        doc.moveDown(4);
+        doc.moveDown(5);
 
         // Title and student info
         doc.fontSize(20)
             .font('Poppins-Bold')
             .text('Resultaten Instaptest', { align: 'center' });
 
-        doc.moveDown(1);
+        doc.moveDown();
 
         doc.fontSize(12)
             .font('Poppins')
             .text(`Student: ${data.childName}`, { align: 'center' })
             .text(`Datum: ${new Date().toLocaleDateString('nl-BE')}`, { align: 'center' });
 
-        doc.moveDown(1);
+        doc.moveDown();
 
         if (data.previousExperience) {
             // Reading Skills Section
