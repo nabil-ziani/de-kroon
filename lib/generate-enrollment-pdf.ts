@@ -24,9 +24,9 @@ export async function generateEnrollmentPDF(data: EnrollmentFormData): Promise<B
         doc.font('Poppins').fontSize(10);
 
         // Collect the PDF chunks
-        const chunks: Buffer[] = [];
-        doc.on('data', (chunk: Buffer) => chunks.push(chunk));
-        doc.on('end', () => resolve(Buffer.concat(chunks)));
+        const chunks: Uint8Array[] = [];
+        doc.on('data', (chunk: Uint8Array) => chunks.push(chunk));
+        doc.on('end', () => resolve(Buffer.from(Buffer.concat(chunks))));
 
         // Calculate center position for logo
         const pageWidth = doc.page.width - doc.page.margins.left - doc.page.margins.right;

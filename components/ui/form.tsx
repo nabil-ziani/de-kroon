@@ -261,7 +261,7 @@ export function Form<T extends z.ZodType>({
 
             <button
                 type="submit"
-                className={submitClassName}
+                className={`${submitClassName} relative`}
                 disabled={isSubmitting}
             >
                 <span className={`flex items-center justify-center ${isSubmitting ? 'opacity-0' : 'opacity-100'}`}>
@@ -269,7 +269,7 @@ export function Form<T extends z.ZodType>({
                 </span>
                 {isSubmitting && (
                     <span className="absolute inset-0 flex items-center justify-center">
-                        <FaSpinner className="w-5 h-5 animate-spin" color="white" />
+                        <FaSpinner className="w-5 h-5 animate-spin text-white" />
                     </span>
                 )}
             </button>

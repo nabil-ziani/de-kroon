@@ -30,6 +30,7 @@ export default function EnrollmentForm({ onSuccess, defaultValues }: Props) {
 
     const handleSubmit = async (data: EnrollmentFormData) => {
         try {
+            const loadingToast = toast.loading('Inschrijving verwerken...');
             const response = await fetch('/api/enrollment', {
                 method: 'POST',
                 headers: {
@@ -42,10 +43,12 @@ export default function EnrollmentForm({ onSuccess, defaultValues }: Props) {
 
             if (!response.ok) {
                 console.error('Server error:', responseData);
+                toast.dismiss(loadingToast);
                 throw new Error(responseData.message || 'Er is iets misgegaan bij het versturen van de inschrijving.');
             }
 
             if (responseData.success) {
+                toast.dismiss(loadingToast);
                 toast.success('Uw inschrijving is succesvol verzonden! We nemen zo snel mogelijk contact met u op.');
                 onSuccess?.();
             }

@@ -170,7 +170,7 @@ export const enrollmentFormSchema = z.object({
 
     // Cursus info
     courseName: z.string().min(1, 'Selecteer een cursus'),
-    message: messageSchema.optional(),
+    message: z.string().optional(),
 }).refine((data) => {
     const fatherComplete = Object.values(data.father).every(value => value && value.length > 0);
     const motherComplete = Object.values(data.mother).every(value => value && value.length > 0);
