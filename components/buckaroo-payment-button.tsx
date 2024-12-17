@@ -28,6 +28,8 @@ export default function BuckarooPaymentButton({
         try {
             setIsLoading(true);
 
+            const returnUrl = new URL('/api/buckaroo/return', window.location.origin).toString();
+
             const response = await fetch('/api/buckaroo', {
                 method: 'POST',
                 headers: {
@@ -38,7 +40,10 @@ export default function BuckarooPaymentButton({
                     description,
                     isRecurring,
                     interval,
-                    returnUrl: `${window.location.origin}/donatie/bedankt`,
+                    returnUrl,
+                    returnUrlCancel: returnUrl,
+                    returnUrlError: returnUrl,
+                    returnUrlReject: returnUrl,
                     currency: 'EUR'
                 }),
             });
@@ -50,9 +55,12 @@ export default function BuckarooPaymentButton({
             }
 
             // Redirect naar Buckaroo checkout
-            window.location.href = data.redirectUrl;
-            
-            onSuccess?.();
+            if (data.redirectUrl) {
+                window.location.href = data.redirectUrl;
+                onSuccess?.();
+            } else {
+                throw new Error('No redirect URL received');
+            }
         } catch (error) {
             console.error('Payment error:', error);
             onError?.(error as Error);

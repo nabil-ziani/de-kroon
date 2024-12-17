@@ -20,6 +20,9 @@ interface PaymentRequest {
     currency?: string;
     description: string;
     returnUrl: string;
+    returnUrlCancel?: string;
+    returnUrlError?: string;
+    returnUrlReject?: string;
     isRecurring?: boolean;
     interval?: 'monthly' | 'yearly';
 }
@@ -36,8 +39,6 @@ export class BuckarooService {
     }
 
     async createPayment(request: PaymentRequest) {
-        console.log('Creating Buckaroo payment with request:', request);
-
         // Basic payment data
         const payload = {
             currency: request.currency || 'EUR',
@@ -45,9 +46,9 @@ export class BuckarooService {
             invoice: crypto.randomUUID(),
             description: request.description,
             returnURL: request.returnUrl,
-            returnURLCancel: request.returnUrl,
-            returnURLError: request.returnUrl,
-            returnURLReject: request.returnUrl,
+            returnURLCancel: request.returnUrlCancel || request.returnUrl,
+            returnURLError: request.returnUrlError || request.returnUrl,
+            returnURLReject: request.returnUrlReject || request.returnUrl,
             serviceList: [{
                 name: 'ideal',
                 action: 'Pay'
@@ -74,7 +75,7 @@ export class BuckarooService {
         const nonce = crypto.randomBytes(16).toString('hex');
         const timestamp = Math.floor(Date.now() / 1000);
         const httpMethod = 'POST';
-        
+
         // Remove protocol and host, then encode
         const requestUri = 'testcheckout.buckaroo.nl/json/transaction';
         const encodedUri = encodeURIComponent(requestUri).toLowerCase();
@@ -85,7 +86,7 @@ export class BuckarooService {
         const contentBase64 = contentMD5.toString('base64');
 
         // Create signature string (concatenate as raw data)
-        const signatureString = 
+        const signatureString =
             this.config.websiteKey +
             httpMethod +
             encodedUri +
@@ -97,16 +98,6 @@ export class BuckarooService {
         const hmac = crypto.createHmac('sha256', this.config.secretKey);
         hmac.update(signatureString, 'utf8');
         const signature = hmac.digest('base64');
-
-        console.log('Debug info:', {
-            websiteKey: this.config.websiteKey,
-            httpMethod,
-            encodedUri,
-            timestamp,
-            nonce,
-            contentBase64,
-            signatureString
-        });
 
         try {
             const response = await fetch(`${this.baseUrl}/Transaction`, {
