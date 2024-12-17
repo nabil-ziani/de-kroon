@@ -24,11 +24,8 @@ export default function ThankYouPage() {
                 <div className="relative z-10 container mx-auto px-4 pt-24">
                     <div className="max-w-4xl">
                         <h1 className="text-6xl font-bold text-white mb-6">
-                            Jazaak Allahoe ghairan
+                            JazaakAllahoe khairan
                         </h1>
-                        <p className="text-xl text-white/90">
-                            Je bent nu een Steunpilaar van Jeugdwerking De Kroon. Samen bouwen we aan een betere toekomst voor onze kinderen.
-                        </p>
                     </div>
                 </div>
             </section>

@@ -22,7 +22,12 @@ export default function DonatePage() {
     const handleCustomAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value.replace(/[^0-9]/g, '');
         setCustomAmount(value);
-        setSelectedAmount({ amount: parseInt(value) || 0, isCustom: true });
+        if (value) {
+            setSelectedAmount({ amount: parseInt(value) || 0, isCustom: true });
+        } else {
+            // Reset to default amount when custom input is cleared
+            setSelectedAmount({ amount: 10, isCustom: false });
+        }
     };
 
     const handlePaymentSuccess = () => {
@@ -142,7 +147,10 @@ export default function DonatePage() {
                                     {SUGGESTED_AMOUNTS.map((amount) => (
                                         <button
                                             key={amount}
-                                            onClick={() => setSelectedAmount({ amount, isCustom: false })}
+                                            onClick={() => {
+                                                setSelectedAmount({ amount, isCustom: false });
+                                                setCustomAmount(''); // Clear custom amount when selecting a preset
+                                            }}
                                             className={`p-4 rounded-xl border-2 transition-all duration-300 flex items-center justify-center gap-2
                                                 ${selectedAmount.amount === amount && !selectedAmount.isCustom
                                                     ? 'border-crown bg-crown/10 text-crown'
@@ -169,7 +177,7 @@ export default function DonatePage() {
                                             value={customAmount}
                                             onChange={handleCustomAmountChange}
                                             placeholder="Voer bedrag in"
-                                            className="w-full pl-8 pr-4 py-3 rounded-xl border-2 border-gray-200 focus:border-crown focus:ring-0 transition-all duration-300 outline-none"
+                                            className="w-full pl-8 pr-4 py-3 rounded-xl border-2 text-gray-800 border-gray-200 focus:border-crown focus:ring-0 transition-all duration-300 outline-none"
                                         />
                                     </div>
                                 </div>
