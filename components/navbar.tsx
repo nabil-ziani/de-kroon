@@ -19,7 +19,7 @@ export default function Navbar() {
 
     const menuItems = [
         { name: 'Over ons', href: '/over-ons' },
-        { name: 'Onderwijs', href: '/onderwijs' },
+        { name: 'Vorming', href: '/vorming' },
         { name: 'Activiteiten', href: '/activiteiten' },
         { name: 'Live', href: '/live' },
         { name: 'Contact', href: '/contact' },

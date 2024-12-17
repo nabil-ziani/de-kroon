@@ -31,7 +31,7 @@ export default function CourseSection() {
                                 <p className="text-gray-700 line-clamp-3">{course.description}</p>
                             </div>
                             <Link
-                                href={`/onderwijs/${course.slug}`}
+                                href={`/vorming/${course.slug}`}
                                 className="mt-6 inline-block bg-crown text-white px-6 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors uppercase tracking-wide text-sm text-center w-full"
                             >
                                 Meer informatie
@@ -43,7 +43,7 @@ export default function CourseSection() {
 
             <div className="text-center mt-16">
                 <Link
-                    href="/onderwijs#courses"
+                    href="/vorming#courses"
                     className="inline-flex items-center justify-center bg-crown/90 hover:bg-crown text-white px-10 py-4 rounded-xl font-semibold transition-colors uppercase tracking-wide text-base group"
                 >
                     Bekijk alle cursussen

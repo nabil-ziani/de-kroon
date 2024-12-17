@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { FaEnvelope, FaFacebook, FaPhone, FaYoutube, FaMapMarkerAlt, FaInstagram } from 'react-icons/fa';
+import { FaEnvelope, FaFacebook, FaPhone, FaYoutube, FaMapMarkerAlt, FaClock } from 'react-icons/fa';
 
 export default function Footer() {
     return (
@@ -74,7 +74,7 @@ export default function Footer() {
                         <h3 className="text-xl font-bold mb-6">Volg Ons</h3>
                         <div className="flex gap-4">
                             <a
-                                href="https://www.facebook.com/p/Moskee-Ennassr-Borgerhout-100066575117579"
+                                href="https://www.facebook.com/profile.php?id=61570247316924"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-gray-400 hover:text-crown transition-colors"
@@ -86,14 +86,14 @@ export default function Footer() {
                             </a>
 
                             <a
-                                href="#"
+                                href="https://mawaqit.net/en/moskee-ennassr-borgerhout-2140-belgium"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-gray-400 hover:text-crown transition-colors"
                                 aria-label="Instagram"
                             >
                                 <div className="flex-shrink-0 w-10 h-10 bg-crown/10 rounded-full flex items-center justify-center">
-                                    <FaInstagram className="w-5 h-5 text-crown" />
+                                    <FaClock className="w-5 h-5 text-crown" />
                                 </div>
                             </a>
 

@@ -3,7 +3,7 @@
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { FaTimes } from 'react-icons/fa';
-import EnrollmentForm from './enrollment-form';
+import EnrollmentForm from '@/components/forms/enrollment-form';
 
 type Props = {
     isOpen: boolean;

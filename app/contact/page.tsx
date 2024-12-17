@@ -1,7 +1,7 @@
 'use client';
 
 import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaWhatsapp } from 'react-icons/fa';
-import ContactForm from '@/components/contact-form';
+import ContactForm from '@/components/forms/contact-form';
 
 export default function ContactPage() {
     return (

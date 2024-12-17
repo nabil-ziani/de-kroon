@@ -3,7 +3,7 @@ import { enrollmentFormSchema, type EnrollmentFormData } from '@/utils/validatio
 import { FaArrowRight } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 import { useState, useEffect } from 'react';
-import PreviousExperienceModal from './previous-experience-modal';
+import PreviousExperienceModal from '@/components/dialogs/previous-experience-modal';
 import { Dialog } from '@headlessui/react';
 
 type Props = {
@@ -306,7 +306,7 @@ export default function EnrollmentForm({ onSuccess, defaultValues }: Props) {
                 <div className="fixed inset-0 flex items-center justify-center p-4">
                     <Dialog.Panel className="mx-auto max-w-lg bg-white rounded-2xl p-8 relative z-[200] max-h-[90vh] flex flex-col">
                         <Dialog.Title className="text-2xl font-bold text-gray-800 mb-4">
-                            Niveau test
+                            Vragenlijst
                         </Dialog.Title>
                         <div className="overflow-y-auto flex-1 mb-6">
                             <p className="text-gray-600">
@@ -333,7 +333,7 @@ export default function EnrollmentForm({ onSuccess, defaultValues }: Props) {
                                 }}
                                 className="bg-crown text-white px-6 py-2 rounded-xl font-medium hover:bg-opacity-90 transition-colors focus:outline-none"
                             >
-                                Start test
+                                Start
                             </button>
                         </div>
                     </Dialog.Panel>
@@ -341,11 +341,7 @@ export default function EnrollmentForm({ onSuccess, defaultValues }: Props) {
             </Dialog>
 
             {/* Previous Experience Modal */}
-            <PreviousExperienceModal
-                isOpen={showPreviousExperienceModal}
-                onClose={handlePreviousExperienceClose}
-                onSubmit={handlePreviousExperience}
-            />
+            <PreviousExperienceModal isOpen={showPreviousExperienceModal} onClose={handlePreviousExperienceClose} onSubmit={handlePreviousExperience} />
         </>
     );
 }

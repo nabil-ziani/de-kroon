@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { FaClock, FaCalendarAlt, FaUsers, FaGraduationCap } from 'react-icons/fa';
 import { useState } from 'react';
-import EnrollmentModal from '@/components/enrollment-modal';
+import EnrollmentModal from '@/components/dialogs/enrollment-modal';
 
 type CourseDetailProps = {
     course: {
@@ -110,7 +110,7 @@ export default function CourseDetail({ course }: CourseDetailProps) {
                 </div>
             </section>
 
-            <EnrollmentModal 
+            <EnrollmentModal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
                 courseName={course.title}

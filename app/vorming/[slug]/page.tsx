@@ -3,46 +3,8 @@ import CourseDetail from './course-detail';
 
 // Dit zou later uit een database of CMS komen
 const courseDetails = {
-    'arabische-taal': {
-        title: 'Arabische Taal',
-        level: 'Beginners tot Gevorderd',
-        description: 'Leer de Arabische taal van ervaren docenten.',
-        image: '/images/arabisch.png',
-        schedule: {
-            days: 'Zaterdag en Zondag',
-            time: '10:00 - 12:00',
-            duration: '2 uur per les'
-        },
-        content: [
-            'Basis Arabische grammatica',
-            'Uitspraak en fonetiek',
-            'Lezen en schrijven',
-            'Conversatie oefeningen'
-        ],
-        requirements: 'Geen voorkennis vereist voor beginners',
-        maxStudents: 15
-    },
-    'koran-recitatie': {
-        title: 'Koran Recitatie',
-        level: 'Alle Niveaus',
-        description: 'Verbeter je Koran recitatie met professionele begeleiding.',
-        image: '/images/koran.png',
-        schedule: {
-            days: 'Woensdag en Vrijdag',
-            time: '18:00 - 20:00',
-            duration: '2 uur per les'
-        },
-        content: [
-            'Tajweed regels',
-            'Correcte uitspraak',
-            'Memorisatie technieken',
-            'Praktijk oefeningen'
-        ],
-        requirements: 'Basis kennis van het Arabisch alfabet',
-        maxStudents: 12
-    },
-    'weekend-school': {
-        title: 'Weekend School',
+    'weekend-lessen': {
+        title: 'Weekend Lessen',
         level: 'Kinderen',
         description: 'Islamitisch onderwijs voor kinderen in het weekend.',
         image: '/images/weekend.png',

@@ -3,11 +3,11 @@
 import { FaArrowRight } from 'react-icons/fa';
 import Image from 'next/image';
 import { useState } from 'react';
-import EnrollmentModal from '@/components/enrollment-modal';
+import EnrollmentModal from '@/components/dialogs/enrollment-modal';
 import Link from 'next/link';
 import { COURSES } from '@/constants';
 
-export default function OnderwijsPage() {
+export default function VormingPage() {
     const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
 
     return (
@@ -25,7 +25,7 @@ export default function OnderwijsPage() {
                 <div className="relative z-10 container mx-auto px-4 pt-24">
                     <div className="max-w-4xl">
                         <h1 className="text-6xl font-bold text-white mb-6">
-                            Onderwijs
+                            Vorming & Groei
                         </h1>
                     </div>
                 </div>
@@ -86,7 +86,7 @@ export default function OnderwijsPage() {
                             {COURSES.map((course) => (
                                 <div key={course.title} className="group relative bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
                                     <Link
-                                        href={`/onderwijs/${course.slug}`}
+                                        href={`/vorming/${course.slug}`}
                                         className="absolute inset-0 z-10"
                                         aria-label={`Meer informatie over ${course.title}`}
                                     />
