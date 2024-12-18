@@ -67,10 +67,10 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mb-16">
             <h2 className="text-5xl mb-4 text-gray-800">
-              <span className="text-6xl font-bold">Cursussen</span>
+              <span className="text-6xl font-bold">Vorming & Groei</span>
             </h2>
             <p className="text-xl text-gray-500">
-              We bieden verschillende cursussen aan voor iedereen.
+              Wij helpen kinderen van 6 tot 15 jaar groeien door toegankelijke en kwalitatieve vorming.
             </p>
           </div>
           <CourseSection />

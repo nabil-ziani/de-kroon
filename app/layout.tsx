@@ -3,11 +3,10 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
-import Favicon from './favicon';
 import { Toaster } from 'react-hot-toast';
 import DonationWidget from "@/components/donation-widget";
 
-const poppins = Poppins({ 
+const poppins = Poppins({
   weight: ['400', '500', '600', '700', '800', '900'],
   subsets: ["latin"],
   variable: '--font-poppins'
@@ -16,7 +15,6 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "De Kroon",
   description: "Een plek voor educatie",
-  ...Favicon(),
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -29,7 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </div>
         <Footer />
         <DonationWidget />
-        <Toaster 
+        <Toaster
           position="top-right"
           toastOptions={{
             duration: 4000,

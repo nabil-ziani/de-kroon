@@ -111,3 +111,23 @@ model PreviousExperience {
     lastKnownSurah String?
     threeYearGoal String?
 }
+
+model Course {
+    id          String   @id @default(cuid())
+    title       String
+    description String
+    slug        String   @unique
+    image       String
+    level       String
+    dayOfWeek   String   // 'saturday' | 'sunday'
+    timeSlot    String   // 'morning' | 'afternoon'
+    startTime   String
+    endTime     String
+    subject     String   // 'quran' | 'arabic' | 'islam'
+    ageRange    String   // e.g. "6-15"
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+
+    @@index([dayOfWeek])
+    @@index([subject])
+}
