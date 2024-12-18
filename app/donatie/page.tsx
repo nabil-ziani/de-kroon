@@ -17,7 +17,6 @@ export default function DonatePage() {
     const [selectedAmount, setSelectedAmount] = useState<DonationAmount>({ amount: 10, isCustom: false });
     const [customAmount, setCustomAmount] = useState<string>('');
     const [isRecurring, setIsRecurring] = useState<boolean>(true);
-    const [showQR, setShowQR] = useState<boolean>(false);
 
     const handleCustomAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value.replace(/[^0-9]/g, '');
@@ -183,7 +182,7 @@ export default function DonatePage() {
                                 </div>
 
                                 {/* Donation Buttons */}
-                                <div className="grid md:grid-cols-2 gap-4">
+                                <div className="grid md:grid-cols-1 gap-4">
                                     <BuckarooPaymentButton
                                         amount={selectedAmount.amount}
                                         description={`${isRecurring ? 'Maandelijkse' : 'Eenmalige'} donatie aan De Kroon`}
@@ -196,13 +195,6 @@ export default function DonatePage() {
                                         <span>{isRecurring ? 'Word Steunpilaar' : 'Doneer nu'}</span>
                                         <FaArrowRight className="ml-2 transform transition-transform duration-300 group-hover:translate-x-1" />
                                     </BuckarooPaymentButton>
-                                    <button
-                                        onClick={() => setShowQR(true)}
-                                        className="bg-gray-800 text-white px-6 py-4 rounded-xl font-semibold hover:bg-opacity-90 transition-all duration-300 flex items-center justify-center group"
-                                    >
-                                        <FaQrcode className="mr-2" />
-                                        <span>Toon QR-code</span>
-                                    </button>
                                 </div>
                             </div>
 
@@ -254,35 +246,6 @@ export default function DonatePage() {
                     </div>
                 </div>
             </section>
-
-            {/* QR Code Modal */}
-            {showQR && (
-                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                    <div className="bg-white rounded-3xl p-8 max-w-md w-full mx-4">
-                        <h3 className="text-2xl font-bold text-gray-800 mb-4">
-                            Scan QR-code om te doneren
-                        </h3>
-                        <div className="aspect-square bg-gray-100 rounded-xl mb-4 flex items-center justify-center">
-                            <img
-                                src={`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(
-                                    `https://de-kroon.vercel.app/donatie?amount=${selectedAmount.amount}&recurring=${isRecurring}`
-                                )}`}
-                                alt="QR Code voor donatie"
-                                className="w-full h-full object-contain p-4"
-                            />
-                        </div>
-                        <p className="text-gray-600 mb-6">
-                            Scan deze code met uw bank app om {isRecurring ? 'maandelijks' : ''} €{selectedAmount.amount} te doneren
-                        </p>
-                        <button
-                            onClick={() => setShowQR(false)}
-                            className="w-full bg-gray-800 text-white px-6 py-3 rounded-xl font-semibold hover:bg-opacity-90 transition-all duration-300"
-                        >
-                            Sluiten
-                        </button>
-                    </div>
-                </div>
-            )}
         </main>
     );
 } 
