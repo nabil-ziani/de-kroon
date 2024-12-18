@@ -9,7 +9,8 @@ import DonationWidget from "@/components/ui/donation-widget";
 const poppins = Poppins({
   weight: ['400', '500', '600', '700', '800', '900'],
   subsets: ["latin"],
-  variable: '--font-poppins'
+  variable: '--font-poppins',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="nl">
+    <html lang="nl" className={poppins.variable}>
       <body className={`${poppins.className}`}>
         <Navbar />
         <div>

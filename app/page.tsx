@@ -16,7 +16,7 @@ export default async function Home() {
   });
 
   return (
-    <main className="font-sans">
+    <main>
       <Hero />
 
       {/* Prayer Times Section */}

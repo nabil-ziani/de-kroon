@@ -28,7 +28,7 @@ export default function Hero() {
                     {/* Text Content */}
                     <div className="text-white max-w-3xl">
                         <h1 className="text-6xl mb-6">
-                            <span className="block mb-2 font-extralight">Welkom bij</span>
+                            <span className="block mb-2 font-thin">Welkom bij</span>
                             <span className="text-8xl font-bold">De Kroon</span>
                         </h1>
                         <p className="text-xl mb-12 text-white/90">
