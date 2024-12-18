@@ -17,6 +17,7 @@ export default function DonatePage() {
     const [selectedAmount, setSelectedAmount] = useState<DonationAmount>({ amount: 10, isCustom: false });
     const [customAmount, setCustomAmount] = useState<string>('');
     const [isRecurring, setIsRecurring] = useState<boolean>(true);
+    const [showQR, setShowQR] = useState<boolean>(false);
 
     const handleCustomAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value.replace(/[^0-9]/g, '');
@@ -182,7 +183,7 @@ export default function DonatePage() {
                                 </div>
 
                                 {/* Donation Buttons */}
-                                <div className="grid md:grid-cols-1 gap-4">
+                                <div className="grid gap-4">
                                     <BuckarooPaymentButton
                                         amount={selectedAmount.amount}
                                         description={`${isRecurring ? 'Maandelijkse' : 'Eenmalige'} donatie aan De Kroon`}

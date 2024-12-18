@@ -1,35 +1,45 @@
 import { NextRequest, NextResponse } from 'next/server';
+import prisma from '@/lib/prisma';
+import crypto from 'crypto';
 
 export async function POST(request: NextRequest) {
     try {
         const data = await request.formData();
 
-        // Extract status from Buckaroo's response
+        // Extract data from Buckaroo's response
         const transactionKey = data.get('brq_transactions') as string;
         const statusCode = data.get('brq_statuscode') as string;
         const statusMessage = data.get('brq_statusmessage') as string;
+        const donorName = data.get('brq_customer_name') as string;
+        const amount = parseFloat(data.get('brq_amount') as string);
+        const description = data.get('brq_description') as string;
+        const isRecurring = description?.toLowerCase().includes('maandelijkse') || false;
 
         console.log('Buckaroo return data:', {
             transactionKey,
             statusCode,
             statusMessage,
+            donorName,
+            amount,
+            description,
+            isRecurring,
             allData: Object.fromEntries(data.entries())
         });
 
-        // Map Buckaroo status codes to our status types
+        // Map Buckaroo status codes to our status
         let status = 'error'; // Default to error for unknown status codes
-
         switch (statusCode) {
             case '190':
-                status = 'success';
+            case '191':
+                status = 'completed';
                 break;
             case '490':
             case '491':
             case '492':
-                status = 'error';
+                status = 'failed';
                 break;
             case '690':
-                status = 'reject';
+                status = 'failed';
                 break;
             case '790':
             case '791':
@@ -39,8 +49,29 @@ export async function POST(request: NextRequest) {
                 break;
             case '890':
             case '891':
-                status = 'cancel';
+                status = 'failed';
                 break;
+        }
+
+        // Create or update donation record
+        if (transactionKey) {
+            await prisma.donation.upsert({
+                where: {
+                    buckarooKey: transactionKey
+                },
+                update: {
+                    status,
+                    donorName
+                },
+                create: {
+                    buckarooKey: transactionKey,
+                    transactionId: crypto.randomUUID(),
+                    amount,
+                    isRecurring,
+                    status,
+                    donorName
+                }
+            });
         }
 
         // Use a relative URL for the redirect
@@ -60,10 +91,10 @@ export async function POST(request: NextRequest) {
 export async function GET(request: NextRequest) {
     try {
         const url = new URL(request.url);
-        const status = url.searchParams.get('status') || 'success';
+        const status = url.searchParams.get('status') || 'completed';
 
         // Validate status to prevent unknown values
-        if (!['success', 'error', 'reject', 'pending', 'cancel'].includes(status)) {
+        if (!['completed', 'error', 'failed', 'pending'].includes(status)) {
             return NextResponse.redirect(`${process.env.NEXT_PUBLIC_BASE_URL || ''}/donatie/bevestiging?status=error`, {
                 status: 303
             });

@@ -15,14 +15,14 @@ type StatusConfig = {
 
 export default function ConfirmationContent() {
     const searchParams = useSearchParams();
-    const status = searchParams.get('status') || 'success';
+    const status = searchParams.get('status') || 'completed';
 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
 
     const statusConfig: Record<string, StatusConfig> = useMemo(() => ({
-        success: {
+        completed: {
             title: 'JazaakAllahoe khairan',
             description: 'Met jouw bijdrage kunnen we blijven investeren in de ontwikkeling van onze jeugd.',
             icon: FaCheckCircle,
@@ -35,17 +35,11 @@ export default function ConfirmationContent() {
             icon: FaTimesCircle,
             iconColor: 'text-red-500'
         },
-        cancel: {
-            title: 'Donatie geannuleerd',
-            description: 'Je hebt de donatie geannuleerd. Mocht je later alsnog willen doneren, dan kan dat altijd.',
-            icon: FaTimesCircle,
-            iconColor: 'text-gray-500'
-        },
-        reject: {
+        failed: {
             title: 'Donatie niet gelukt',
             description: 'De betaling is helaas niet gelukt. Controleer je gegevens en probeer het opnieuw.',
-            icon: FaExclamationCircle,
-            iconColor: 'text-amber-500'
+            icon: FaTimesCircle,
+            iconColor: 'text-red-500'
         },
         pending: {
             title: 'Donatie in behandeling',
@@ -88,7 +82,7 @@ export default function ConfirmationContent() {
                                 <StatusIcon className={`w-20 h-20 ${currentStatus.iconColor} mx-auto`} />
                             </div>
                             <h2 className="text-4xl font-bold text-gray-800 mb-6">
-                                {status === 'success' ? 'Bedankt voor je steun' : 'Donatie status'}
+                                {status === 'completed' ? 'Bedankt voor je steun' : 'Donatie status'}
                             </h2>
                             <p className="text-xl text-gray-600">
                                 {currentStatus.description}

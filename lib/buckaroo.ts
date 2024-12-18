@@ -77,7 +77,9 @@ export class BuckarooService {
         const httpMethod = 'POST';
 
         // Remove protocol and host, then encode
-        const requestUri = 'testcheckout.buckaroo.nl/json/transaction';
+        const requestUri = this.config.mode === 'test'
+            ? 'testcheckout.buckaroo.nl/json/transaction'
+            : 'checkout.buckaroo.nl/json/transaction';
         const encodedUri = encodeURIComponent(requestUri).toLowerCase();
 
         // Create content MD5 hash and convert to base64
