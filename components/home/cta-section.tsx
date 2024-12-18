@@ -94,7 +94,7 @@ export default function CTASection() {
                                 </div>
                                 <div className="mt-auto">
                                     <Link
-                                        href="/vrijwilliger-worden"
+                                        href="/contact"
                                         className="inline-flex items-center bg-white text-boy px-8 py-4 rounded-xl font-semibold hover:bg-opacity-90 uppercase tracking-wide text-sm group-hover:scale-105 transform transition-transform duration-300"
                                     >
                                         Word Vrijwilliger
