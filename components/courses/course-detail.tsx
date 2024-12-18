@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { FaClock, FaGraduationCap, FaBook, FaQuran, FaMosque } from 'react-icons/fa';
+import { FaClock, FaGraduationCap, FaBook } from 'react-icons/fa';
 import EnrollmentButton from '@/components/courses/enrollment-button';
 import { Course, Schedule } from '@prisma/client';
 
@@ -45,92 +45,110 @@ export default function CourseDetail({ course }: CourseDetailProps) {
             {/* Content Section */}
             <div className="py-24">
                 <div className="container mx-auto px-4">
-                    <div className="max-w-7xl mx-auto">
-                        <div className="grid md:grid-cols-2 gap-16 items-start">
-                            {/* Left Column */}
-                            <div className="space-y-12">
-                                {/* Course Image */}
-                                <div className="relative h-[500px] rounded-3xl overflow-hidden shadow-xl">
-                                    <Image
-                                        src={course.image}
-                                        alt={course.title}
-                                        fill
-                                        className="object-cover"
-                                    />
-                                </div>
-
-                                {/* Schedule */}
-                                <div className="grid gap-6">
-                                    <div className="bg-gray-50 p-6 rounded-xl">
-                                        <div className="flex items-center gap-3 mb-4">
-                                            <FaClock className="w-5 h-5 text-crown" />
-                                            <h3 className="text-lg font-semibold">Zaterdag: Koranlessen</h3>
+                    <div className="max-w-7xl mx-auto space-y-12">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            {/* Left Column - Schedule */}
+                            <div className="grid gap-8">
+                                {/* Saturday Schedule */}
+                                <div className="bg-gradient-to-br from-crown/5 to-crown/10 p-8 rounded-2xl border border-crown/10">
+                                    <div className="flex items-center gap-3 mb-6">
+                                        <div className="bg-crown/10 p-3 rounded-xl">
+                                            <FaClock className="w-6 h-6 text-crown" />
                                         </div>
-                                        <div className="space-y-3 ml-8">
-                                            {saturdaySchedules.map((schedule) => (
-                                                <div key={schedule.id} className="flex justify-between items-center">
-                                                    <span className="text-gray-600 capitalize">{schedule.period}</span>
-                                                    <span className="font-medium">{schedule.startTime} - {schedule.endTime}</span>
-                                                </div>
-                                            ))}
+                                        <div>
+                                            <h3 className="text-xl font-bold text-gray-900">Zaterdag</h3>
+                                            <p className="text-crown font-medium">Koranlessen</p>
                                         </div>
                                     </div>
-
-                                    <div className="bg-gray-50 p-6 rounded-xl">
-                                        <div className="flex items-center gap-3 mb-4">
-                                            <FaClock className="w-5 h-5 text-crown" />
-                                            <h3 className="text-lg font-semibold">Zondag: Arabisch en Islam</h3>
-                                        </div>
-                                        <div className="space-y-3 ml-8">
-                                            {sundaySchedules.map((schedule) => (
-                                                <div key={schedule.id} className="flex justify-between items-center">
-                                                    <span className="text-gray-600 capitalize">{schedule.period}</span>
-                                                    <span className="font-medium">{schedule.startTime} - {schedule.endTime}</span>
+                                    <div className="space-y-4">
+                                        {saturdaySchedules.map((schedule) => (
+                                            <div
+                                                key={schedule.id}
+                                                className="bg-white p-4 rounded-xl shadow-sm border border-crown/5 hover:shadow-md transition-shadow duration-200"
+                                            >
+                                                <div className="flex justify-between items-center">
+                                                    <span className="text-gray-900 font-medium capitalize">
+                                                        {schedule.period}
+                                                    </span>
+                                                    <span className="text-crown font-semibold">
+                                                        {schedule.startTime} - {schedule.endTime}
+                                                    </span>
                                                 </div>
-                                            ))}
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Sunday Schedule */}
+                                <div className="bg-gradient-to-br from-boy/5 to-boy/10 p-8 rounded-2xl border border-boy/10">
+                                    <div className="flex items-center gap-3 mb-6">
+                                        <div className="bg-boy/10 p-3 rounded-xl">
+                                            <FaClock className="w-6 h-6 text-boy" />
                                         </div>
+                                        <div>
+                                            <h3 className="text-xl font-bold text-gray-900">Zondag</h3>
+                                            <p className="text-boy font-medium">Arabisch en Islam</p>
+                                        </div>
+                                    </div>
+                                    <div className="space-y-4">
+                                        {sundaySchedules.map((schedule) => (
+                                            <div
+                                                key={schedule.id}
+                                                className="bg-white p-4 rounded-xl shadow-sm border border-boy/5 hover:shadow-md transition-shadow duration-200"
+                                            >
+                                                <div className="flex justify-between items-center">
+                                                    <span className="text-gray-900 font-medium capitalize">
+                                                        {schedule.period}
+                                                    </span>
+                                                    <span className="text-boy font-semibold">
+                                                        {schedule.startTime} - {schedule.endTime}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
                             </div>
 
-                            {/* Right Column */}
-                            <div className="space-y-12">
+                            {/* Right Column - Info */}
+                            <div className="grid gap-8">
                                 {/* Description */}
-                                <div>
-                                    <h2 className="text-2xl font-bold text-gray-800 mb-4">Beschrijving</h2>
+                                <div className="bg-gradient-to-br from-gray-50 to-gray-100/50 p-8 rounded-2xl border border-gray-200">
+                                    <div className="flex items-center gap-3 mb-6">
+                                        <div className="bg-gray-200/50 p-3 rounded-xl">
+                                            <FaBook className="w-6 h-6 text-gray-600" />
+                                        </div>
+                                        <h2 className="text-xl font-bold text-gray-900">Beschrijving</h2>
+                                    </div>
                                     <div className="prose prose-lg max-w-none">
-                                        <p className="text-xl text-gray-600 leading-relaxed">
+                                        <p className="text-gray-600 leading-relaxed">
                                             {course.description}
                                         </p>
                                     </div>
                                 </div>
 
                                 {/* Subjects */}
-                                <div>
-                                    <h2 className="text-2xl font-bold text-gray-800 mb-6">Inhoud</h2>
-                                    <ul className="space-y-4">
+                                <div className="bg-gradient-to-br from-gray-50 to-gray-100/50 p-8 rounded-2xl border border-gray-200">
+                                    <div className="flex items-center gap-3 mb-6">
+                                        <div className="bg-gray-200/50 p-3 rounded-xl">
+                                            <FaGraduationCap className="w-6 h-6 text-gray-600" />
+                                        </div>
+                                        <h2 className="text-xl font-bold text-gray-900">Inhoud</h2>
+                                    </div>
+                                    <ul className="list-disc pl-5 space-y-2">
                                         {course.subjects.map((subject, index) => (
-                                            <li key={index} className="flex items-center gap-4 bg-gray-50 p-4 rounded-xl">
-                                                {subject === 'Arabische taal' && (
-                                                    <FaBook className="w-6 h-6 text-crown" />
-                                                )}
-                                                {subject === 'Koran recitatie' && (
-                                                    <FaQuran className="w-6 h-6 text-crown" />
-                                                )}
-                                                {subject === 'Islamitische studies' && (
-                                                    <FaMosque className="w-6 h-6 text-crown" />
-                                                )}
-                                                <span className="text-lg font-medium text-gray-800">{subject}</span>
+                                            <li key={index} className="text-lg text-gray-600">
+                                                {subject}
                                             </li>
                                         ))}
                                     </ul>
                                 </div>
-
-                                {/* Enrollment Button */}
-                                <div className="pt-4">
-                                    <EnrollmentButton courseName={course.title} />
-                                </div>
                             </div>
+                        </div>
+
+                        {/* Enrollment Button */}
+                        <div className="max-w-md mx-auto">
+                            <EnrollmentButton courseName={course.title} />
                         </div>
                     </div>
                 </div>
