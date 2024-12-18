@@ -23,7 +23,7 @@ export default function CourseList({ initialCourses }: CourseListProps) {
         <>
             <div className="grid md:grid-cols-2 gap-8">
                 {initialCourses.map((course) => (
-                    <div key={course.id} className="group relative bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div key={course.id} className="group relative bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
                         <Link
                             href={`/vorming/${course.slug}`}
                             className="absolute inset-0 z-10"
@@ -43,7 +43,7 @@ export default function CourseList({ initialCourses }: CourseListProps) {
                                 <div className="inline-block px-3 py-1 rounded-full bg-crown/10 text-crown text-sm font-medium mb-4 self-start">
                                     {course.level}
                                 </div>
-                                <h3 className="text-2xl font-bold text-gray-800 mb-3 group-hover:text-crown transition-colors">
+                                <h3 className="text-2xl font-bold text-gray-800 mb-3">
                                     {course.title}
                                 </h3>
                                 <p className="text-gray-600 mb-6 line-clamp-3">
@@ -57,7 +57,7 @@ export default function CourseList({ initialCourses }: CourseListProps) {
                                         }}
                                         className="relative z-20 w-full bg-crown text-white px-6 py-3 rounded-xl font-semibold hover:bg-opacity-90 transition-colors flex items-center justify-center group/btn"
                                     >
-                                        <span>Direct Inschrijven</span>
+                                        <span className="uppercase tracking-wide text-sm">Direct Inschrijven</span>
                                         <FaArrowRight className="ml-2 transform transition-transform duration-300 group-hover/btn:translate-x-1" />
                                     </button>
                                 </div>
