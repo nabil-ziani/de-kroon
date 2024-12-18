@@ -1,8 +1,8 @@
-import Hero from "@/components/hero";
-import PrayerTimes from "@/components/prayer-times";
-import CourseSection from "@/components/course-section";
-import LiveSection from "@/components/live-section";
-import CTASection from "@/components/cta-section";
+import Hero from "@/components/home/hero";
+import PrayerTimes from "@/components/gebedstijden/prayer-times";
+import CourseSection from "@/components/home/course-section";
+import LiveSection from "@/components/home/live-section";
+import CTASection from "@/components/home/cta-section";
 import { nlBE } from "date-fns/locale";
 import { format } from 'date-fns';
 import { FaExternalLinkAlt } from 'react-icons/fa';

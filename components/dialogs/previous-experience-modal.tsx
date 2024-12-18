@@ -1,5 +1,5 @@
 import { Fragment, useState } from 'react';
-import { Dialog, Transition, Tab } from '@headlessui/react';
+import { Dialog, Transition } from '@headlessui/react';
 import { FaTimes, FaCheck, FaTimes as FaCross } from 'react-icons/fa';
 import { PreviousExperience } from '@prisma/client';
 import toast from 'react-hot-toast';

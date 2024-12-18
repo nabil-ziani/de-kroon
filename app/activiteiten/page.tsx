@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import { format } from 'date-fns';
 import { nl } from 'date-fns/locale';
-import { FaMars, FaVenus, FaUsers, FaTimes, FaMapMarkerAlt, FaUserFriends, FaClock } from 'react-icons/fa';
-import Calendar from '@/components/calendar';
+import { FaTimes } from 'react-icons/fa';
+import Calendar from '@/components/activiteiten/calendar';
 
 type Event = {
     id: string;
@@ -87,7 +87,7 @@ const events: Event[] = [
 
 // Event Modal Component
 function EventModal({ event, onClose, allEvents }: { event: Event; onClose: () => void; allEvents?: Event[] }) {
-    const sameTimeEvents = allEvents?.filter(e => 
+    const sameTimeEvents = allEvents?.filter(e =>
         format(e.start, 'yyyy-MM-dd') === format(event.start, 'yyyy-MM-dd')
     ) || [event];
 
@@ -103,13 +103,13 @@ function EventModal({ event, onClose, allEvents }: { event: Event; onClose: () =
             >
                 {/* Header */}
                 <div className="relative h-32 bg-gradient-to-br from-gray-900 to-gray-800 flex items-center px-8 md:px-12">
-                    <button 
-                        onClick={onClose} 
+                    <button
+                        onClick={onClose}
                         className="absolute right-4 top-4 p-2 rounded-xl text-white/60 hover:text-white hover:bg-white/10 transition-colors"
                     >
                         <FaTimes className="w-5 h-5" />
                     </button>
-                    
+
                     <div>
                         <h3 className="text-white/80 text-sm font-medium mb-1">
                             {format(event.start, 'EEEE', { locale: nl })}

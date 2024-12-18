@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import ConfirmationContent from './confirmation-content';
+import ConfirmationContent from '@/components/donation/confirmation-content';
 
 export default function ConfirmationPage() {
     return (

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { FaHandHoldingHeart, FaArrowRight, FaCreditCard, FaQrcode, FaEuroSign, FaRegClock, FaGraduationCap, FaUsers } from 'react-icons/fa';
-import BuckarooPaymentButton from '@/components/buckaroo-payment-button';
+import BuckarooPaymentButton from '@/components/donation/buckaroo-payment-button';
 import toast from 'react-hot-toast';
 
 // Voorgestelde donatiebedragen
