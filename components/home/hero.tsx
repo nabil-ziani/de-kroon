@@ -24,26 +24,26 @@ export default function Hero() {
 
             {/* Content */}
             <div className="relative z-10 container mx-auto px-4 h-full">
-                <div className="flex items-center justify-between min-h-screen pt-32">
+                <div className="flex flex-col lg:flex-row items-center justify-center min-h-screen pt-20 md:pt-32 pb-24">
                     {/* Text Content */}
-                    <div className="text-white max-w-3xl">
-                        <h1 className="text-6xl mb-6">
+                    <div className="text-white max-w-3xl text-center lg:text-left">
+                        <h1 className="text-4xl md:text-6xl mb-4 md:mb-6">
                             <span className="block mb-2 font-thin">Welkom bij</span>
-                            <span className="text-8xl font-bold">De Kroon</span>
+                            <span className="text-5xl md:text-8xl font-bold">De Kroon</span>
                         </h1>
-                        <p className="text-xl mb-12 text-white/90">
+                        <p className="text-md sm:text-lg md:text-xl mb-8 md:mb-12 text-white/90">
                             Educatief jeugdcentrum waar we samen bouwen aan de toekomst
                         </p>
-                        <div className="flex flex-wrap gap-4">
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                             <Link
                                 href="/vorming#courses"
-                                className="bg-crown text-white px-6 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors uppercase tracking-wide text-sm"
+                                className="bg-crown text-white px-6 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors uppercase tracking-wide text-sm w-full sm:w-auto text-center"
                             >
                                 Bekijk onze cursussen
                             </Link>
                             <Link
                                 href="/over-ons"
-                                className="bg-white/10 text-white px-6 py-3 rounded-lg font-semibold hover:bg-white/20 transition-colors uppercase tracking-wide text-sm"
+                                className="bg-white/10 text-white px-6 py-3 rounded-lg font-semibold hover:bg-white/20 transition-colors uppercase tracking-wide text-sm w-full sm:w-auto text-center"
                             >
                                 Meer over ons
                             </Link>

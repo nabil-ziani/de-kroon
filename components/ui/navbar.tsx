@@ -17,6 +17,17 @@ export default function Navbar() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [isOpen]);
+
     const menuItems = [
         { name: 'Over ons', href: '/over-ons' },
         { name: 'Vorming', href: '/vorming' },
@@ -28,7 +39,7 @@ export default function Navbar() {
     return (
         <nav className={`fixed w-full z-50 transition-all duration-300 
             ${isScrolled ? 'bg-white/70 backdrop-blur-md shadow-sm' : ''}`}>
-            <div className="max-w-[1800px] mx-auto px-2">
+            <div className="max-w-[1800px] mx-auto px-4">
                 <div className="flex justify-between items-center h-20">
                     {/* Logo */}
                     <Link href="/" className="flex items-center space-x-3">
@@ -65,12 +76,12 @@ export default function Navbar() {
 
                     {/* Mobile Menu Button */}
                     <button
-                        className="md:hidden"
+                        className="md:hidden p-2 rounded-lg"
                         onClick={() => setIsOpen(!isOpen)}
                         aria-label="Toggle menu"
                     >
                         <svg
-                            className="w-6 h-6 text-gray-600"
+                            className={`w-6 h-6 transition-colors ${isScrolled || isOpen ? 'text-gray-600' : 'text-white'}`}
                             fill="none"
                             strokeLinecap="round"
                             strokeLinejoin="round"
@@ -89,13 +100,13 @@ export default function Navbar() {
 
                 {/* Mobile Menu */}
                 {isOpen && (
-                    <div className="md:hidden py-4">
-                        <div className="flex flex-col space-y-4">
+                    <div className="md:hidden fixed inset-0 top-20 bg-white/95 backdrop-blur-md z-50 overflow-y-auto">
+                        <div className="flex flex-col space-y-6 p-6">
                             {menuItems.map((item) => (
                                 <Link
                                     key={item.name}
                                     href={item.href}
-                                    className="relative text-gray-600 group inline-block"
+                                    className="relative text-gray-800 text-lg font-medium group"
                                     onClick={() => setIsOpen(false)}
                                 >
                                     {item.name}
@@ -104,7 +115,7 @@ export default function Navbar() {
                             ))}
                             <Link
                                 href="/donatie"
-                                className="bg-accent text-white px-4 py-2 rounded-lg font-semibold hover:opacity-90 transition-colors inline-block text-center"
+                                className="bg-crown text-white px-6 py-3 rounded-xl font-semibold transition-colors text-center text-lg mt-4"
                                 onClick={() => setIsOpen(false)}
                             >
                                 Doneer

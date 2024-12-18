@@ -20,11 +20,11 @@ export default function PrayerTimes() {
         try {
             setError(null);
             const times = await getPrayerTimes();
-            
+
             // Calculate next prayer
             const now = new Date();
             const currentTime = now.getHours() * 60 + now.getMinutes();
-            
+
             const prayers = [
                 { name: 'Fajr', time: times.fajr },
                 { name: 'Dhuhr', time: times.dhuhr },
@@ -32,13 +32,13 @@ export default function PrayerTimes() {
                 { name: 'Maghrib', time: times.maghrib },
                 { name: 'Isha', time: times.isha }
             ];
-            
+
             const prayerTimes = prayers.map(p => {
                 const [hours, minutes] = p.time.split(':').map(Number);
                 const prayerMinutes = hours * 60 + minutes;
                 return { ...p, minutes: prayerMinutes };
             });
-            
+
             let nextPrayer = prayerTimes[0].name.toLowerCase();
             for (let i = 0; i < prayerTimes.length; i++) {
                 if (prayerTimes[i].minutes > currentTime) {
@@ -66,7 +66,7 @@ export default function PrayerTimes() {
 
     useEffect(() => {
         fetchPrayerTimes();
-        
+
         // Update every minute
         const interval = setInterval(() => {
             fetchPrayerTimes();
@@ -76,7 +76,7 @@ export default function PrayerTimes() {
     }, [fetchPrayerTimes]);
 
     const PrayerIcon = ({ name }: { name: string }) => {
-        const iconClass = "w-16 h-16 mx-auto";
+        const iconClass = "w-12 h-12 md:w-16 md:h-16 mx-auto";
 
         switch (name) {
             case 'Fajr':
@@ -97,14 +97,14 @@ export default function PrayerTimes() {
     if (loading) {
         return (
             <div className="max-w-6xl mx-auto">
-                <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 md:gap-8">
                     {[...Array(5)].map((_, i) => (
-                        <div key={i} className="bg-white rounded-xl p-8 animate-pulse">
+                        <div key={i} className="bg-white rounded-xl p-4 md:p-8 animate-pulse">
                             <div className="flex flex-col items-center">
-                                <div className="w-16 h-16 bg-gray-200 rounded-full mb-6" />
-                                <div className="h-6 w-24 bg-gray-200 rounded mb-2" />
-                                <div className="h-4 w-16 bg-gray-200 rounded mb-4" />
-                                <div className="h-8 w-20 bg-gray-200 rounded" />
+                                <div className="w-12 h-12 md:w-16 md:h-16 bg-gray-200 rounded-full mb-4 md:mb-6" />
+                                <div className="h-5 md:h-6 w-20 md:w-24 bg-gray-200 rounded mb-2" />
+                                <div className="h-4 w-14 md:w-16 bg-gray-200 rounded mb-3 md:mb-4" />
+                                <div className="h-7 md:h-8 w-16 md:w-20 bg-gray-200 rounded" />
                             </div>
                         </div>
                     ))}
@@ -115,9 +115,9 @@ export default function PrayerTimes() {
 
     if (error) {
         return (
-            <div className="max-w-6xl mx-auto text-center py-12">
-                <p className="text-red-600">{error}</p>
-                <button 
+            <div className="max-w-6xl mx-auto text-center py-8 md:py-12">
+                <p className="text-red-600 px-4">{error}</p>
+                <button
                     onClick={fetchPrayerTimes}
                     className="mt-4 px-4 py-2 bg-crown text-white rounded-lg hover:bg-opacity-90 transition-colors"
                 >
@@ -130,25 +130,25 @@ export default function PrayerTimes() {
     return (
         <div className="max-w-6xl mx-auto">
             {/* Prayer Times Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 md:gap-8">
                 {prayerTimes.map((prayer) => (
                     <div
                         key={prayer.name}
-                        className={"bg-white rounded-xl p-8 transition-all duration-300 " +
-                            (prayer.isNext ? "shadow-lg ring-2 ring-crown transform hover:scale-105 hover:shadow-xl" : "")}
+                        className={`bg-white rounded-xl p-4 md:p-8 transition-all duration-300 
+                            ${prayer.isNext ? "shadow-lg ring-2 ring-crown transform hover:scale-105 hover:shadow-xl" : ""}`}
                     >
                         <div className="text-center">
-                            <div className={"mb-6 " + (prayer.isNext ? "text-crown" : "text-gray-400")}>
+                            <div className={"mb-4 md:mb-6 " + (prayer.isNext ? "text-crown" : "text-gray-400")}>
                                 <PrayerIcon name={prayer.name} />
                             </div>
-                            <div className="space-y-2">
-                                <h3 className="text-xl font-bold text-gray-800">
+                            <div className="space-y-1 md:space-y-2">
+                                <h3 className="text-lg md:text-xl font-bold text-gray-800">
                                     {prayer.name}
                                 </h3>
-                                <p className="text-base text-gray-500 font-medium">
+                                <p className="text-sm md:text-base text-gray-500 font-medium">
                                     {prayer.arabicName}
                                 </p>
-                                <p className={"text-3xl font-bold mt-4 " + (prayer.isNext ? "text-crown" : "text-gray-800")}>
+                                <p className={`text-2xl md:text-3xl font-bold mt-2 md:mt-4 ${prayer.isNext ? "text-crown" : "text-gray-800"}`}>
                                     {prayer.time}
                                 </p>
                             </div>

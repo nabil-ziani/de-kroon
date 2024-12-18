@@ -62,4 +62,62 @@
 body {
     color: var(--foreground);
     background: var(--background);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Responsive text sizes */
+@layer base {
+    h1 {
+        @apply text-3xl md:text-5xl lg:text-6xl;
+    }
+    h2 {
+        @apply text-2xl md:text-4xl lg:text-5xl;
+    }
+    h3 {
+        @apply text-xl md:text-3xl lg:text-4xl;
+    }
+    h4 {
+        @apply text-lg md:text-2xl;
+    }
+}
+
+/* Modal scrolling fixes */
+.modal-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+}
+
+/* Ensure modals are scrollable on mobile */
+@media (max-width: 768px) {
+    .modal-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .modal-content {
+        margin: 1rem auto;
+        width: calc(100% - 2rem);
+        max-height: none;
+    }
+}
+
+/* Improve touch scrolling on mobile */
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+@media (max-width: 768px) {
+    .overflow-scroll,
+    .overflow-auto,
+    .overflow-y-auto,
+    .overflow-x-auto {
+        -webkit-overflow-scrolling: touch;
+    }
 }

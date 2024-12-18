@@ -110,8 +110,8 @@ export function Form<T extends z.ZodType>({
         }
         const errorMessage = (error as { message?: string })?.message;
 
-        const baseInputClasses = `${inputClassName} ${errorMessage ? 'border-red-500' : ''}`;
-        const gridColClass = gridCols ? `md:col-span-${gridCols}` : '';
+        const baseInputClasses = `w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-crown focus:ring-0 transition-colors outline-none text-sm md:text-base ${inputClassName} ${errorMessage ? 'border-red-500' : ''}`;
+        const gridColClass = gridCols ? `col-span-full md:col-span-${gridCols}` : '';
         const fieldClassName = `${gridColClass} ${className}`;
 
         const inputElement = type === 'textarea' ? (
@@ -160,7 +160,7 @@ export function Form<T extends z.ZodType>({
                                 key={option.value}
                                 value={option.value}
                                 className={({ active }) =>
-                                    `relative cursor-pointer select-none py-3 px-4 ${active ? 'bg-crown/5 text-crown' : 'text-gray-800'}`
+                                    `relative cursor-pointer select-none py-3 px-4 text-sm md:text-base ${active ? 'bg-crown/5 text-crown' : 'text-gray-800'}`
                                 }
                             >
                                 {({ selected, active }) => (
@@ -191,14 +191,14 @@ export function Form<T extends z.ZodType>({
                 {type === 'checkbox' ? (
                     <label className="flex items-center gap-2 cursor-pointer">
                         {labelPosition === 'left' && (
-                            <span className="text-gray-700 font-medium">
+                            <span className="text-sm md:text-base text-gray-700 font-medium">
                                 {label}
                                 {required && <span className="text-red-500 ml-1">*</span>}
                             </span>
                         )}
                         {inputElement}
                         {labelPosition === 'right' && (
-                            <span className="text-gray-700 font-medium">
+                            <span className="text-sm md:text-base text-gray-700 font-medium">
                                 {label}
                                 {required && <span className="text-red-500 ml-1">*</span>}
                             </span>
@@ -206,7 +206,7 @@ export function Form<T extends z.ZodType>({
                     </label>
                 ) : (
                     <>
-                        <label className={labelClassName}>
+                        <label className={`block text-sm md:text-base font-medium text-gray-700 mb-1.5 ${labelClassName}`}>
                             {label}
                             {required && <span className="text-red-500 ml-1">*</span>}
                         </label>
@@ -215,24 +215,24 @@ export function Form<T extends z.ZodType>({
                 )}
 
                 {hint && !errorMessage && (
-                    <p className={hintClassName}>{hint}</p>
+                    <p className={`text-xs md:text-sm text-gray-500 mt-1 ${hintClassName}`}>{hint}</p>
                 )}
 
                 {errorMessage && (
-                    <p className="mt-1 text-sm text-red-500">{String(errorMessage)}</p>
+                    <p className="mt-1 text-xs md:text-sm text-red-500">{String(errorMessage)}</p>
                 )}
             </div>
         );
     };
 
     const renderFields = (fields: Field[]) => (
-        <div className={gridClassName}>
+        <div className={`grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 ${gridClassName}`}>
             {fields.map(renderField)}
         </div>
     );
 
     return (
-        <form onSubmit={form.handleSubmit(handleSubmit)} className={className} noValidate>
+        <form onSubmit={form.handleSubmit(handleSubmit)} className={`space-y-8 md:space-y-12 ${className}`} noValidate>
             {sections ? (
                 sections.map((section, index) => {
                     // Get root error for parent sections
@@ -240,39 +240,33 @@ export function Form<T extends z.ZodType>({
                     const rootError = sectionName ? form.formState.errors[sectionName]?.root?.message : undefined;
 
                     return (
-                        <div key={index} className={sectionClassName}>
-                            <div className="mb-6">
-                                <div className="space-y-0.5">
-                                    <h3 className={sectionTitleClassName}>{section.title}</h3>
-                                    {rootError ? (
-                                        <p className="text-sm text-red-500">{String(rootError)}</p>
-                                    ) : section.hint && (
-                                        <p className={hintClassName}>{section.hint}</p>
-                                    )}
-                                </div>
+                        <div key={index} className={`space-y-6 md:space-y-8 ${sectionClassName}`}>
+                            <div className="space-y-2">
+                                <h3 className={`text-lg md:text-xl font-bold text-gray-800 ${sectionTitleClassName}`}>{section.title}</h3>
+                                {rootError ? (
+                                    <p className="text-xs md:text-sm text-red-500">{String(rootError)}</p>
+                                ) : section.hint && (
+                                    <p className={`text-xs md:text-sm text-gray-500 ${hintClassName}`}>{section.hint}</p>
+                                )}
                             </div>
                             {renderFields(section.fields)}
                         </div>
                     );
                 })
-            ) : (
-                fields && renderFields(fields)
-            )}
+            ) : fields ? (
+                renderFields(fields)
+            ) : null}
 
-            <button
-                type="submit"
-                className={`${submitClassName} relative`}
-                disabled={isSubmitting}
-            >
-                <span className={`flex items-center justify-center ${isSubmitting ? 'opacity-0' : 'opacity-100'}`}>
+            <div className="flex justify-end">
+                <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className={`relative bg-crown text-white px-6 py-3 rounded-xl font-semibold hover:bg-opacity-90 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed ${submitClassName}`}
+                >
+                    {isSubmitting && <FaSpinner className="w-4 h-4 animate-spin" />}
                     {submitLabel}
-                </span>
-                {isSubmitting && (
-                    <span className="absolute inset-0 flex items-center justify-center">
-                        <FaSpinner className="w-5 h-5 animate-spin text-white" />
-                    </span>
-                )}
-            </button>
+                </button>
+            </div>
         </form>
     );
 }

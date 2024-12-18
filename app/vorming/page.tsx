@@ -13,7 +13,7 @@ export default async function VormingPage() {
     return (
         <main className="min-h-screen bg-white">
             {/* Hero Section */}
-            <section className="relative py-24">
+            <section className="relative py-6 md:py-24">
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-900 to-boy">
                     <div className="absolute inset-0 opacity-30 mix-blend-soft-light bg-[radial-gradient(at_top_right,_#1dbffe_0%,_transparent_50%)]" />
                 </div>
@@ -24,7 +24,7 @@ export default async function VormingPage() {
                 </div>
                 <div className="relative z-10 container mx-auto px-4 pt-24">
                     <div className="max-w-4xl">
-                        <h1 className="text-6xl font-bold text-white mb-6">
+                        <h1 className="text-center md:text-left text-4xl md:text-6xl font-bold text-white mb-6">
                             Vorming & Groei
                         </h1>
                     </div>
@@ -32,11 +32,11 @@ export default async function VormingPage() {
             </section>
 
             {/* Intro Section */}
-            <section className="py-24 bg-gradient-to-b from-white to-gray-50/30">
+            <section className="py-16 md:py-24 bg-gradient-to-b from-white to-gray-50/30">
                 <div className="container mx-auto px-4">
                     <div className="max-w-7xl mx-auto">
-                        <div className="grid md:grid-cols-2 gap-16 items-center">
-                            <div className="relative h-[500px] rounded-3xl overflow-hidden shadow-xl order-last">
+                        <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
+                            <div className="relative h-[300px] sm:h-[400px] md:h-[500px] rounded-3xl overflow-hidden shadow-xl md:order-last order-first">
                                 <div className="absolute inset-0 bg-gradient-to-br from-boy/20 to-transparent" />
                                 <Image
                                     src="/images/placeholder.png"
@@ -46,25 +46,25 @@ export default async function VormingPage() {
                                 />
                             </div>
                             <div className="relative">
-                                <div className="relative">
-                                    <h2 className="text-5xl font-bold text-gray-800 mb-6">
+                                <div className="relative text-center md:text-left">
+                                    <h2 className="text-3xl md:text-5xl font-bold text-gray-800 mb-4 md:mb-6">
                                         Islamitisch Onderwijs
                                     </h2>
-                                    <p className="text-xl text-gray-600 mb-8">
+                                    <p className="text-base md:text-xl text-gray-600 mb-6 md:mb-8">
                                         Bij De Kroon bieden we kwalitatief islamitisch onderwijs aan voor alle leeftijden.
                                         Onze lessen worden gegeven door gekwalificeerde docenten die de kennis op een
                                         moderne en toegankelijke manier overbrengen.
                                     </p>
-                                    <div className="space-y-4">
+                                    <div className="hidden md:block space-y-3 md:space-y-4">
                                         {[
                                             'Arabische taal',
                                             'Koran recitatie',
                                             'Islamitische studies',
                                             'Weekend lessen'
                                         ].map((item) => (
-                                            <div key={item} className="flex items-start gap-4">
-                                                <div className="w-2 h-2 rounded-full bg-crown mt-2.5" />
-                                                <p className="text-gray-700 leading-relaxed">{item}</p>
+                                            <div key={item} className="flex items-start gap-3 md:gap-4">
+                                                <div className="w-2 h-2 rounded-full bg-crown mt-2" />
+                                                <p className="text-sm md:text-base text-gray-700 leading-relaxed">{item}</p>
                                             </div>
                                         ))}
                                     </div>
@@ -76,13 +76,17 @@ export default async function VormingPage() {
             </section>
 
             {/* Courses Grid */}
-            <section id="courses" className="py-24 bg-gradient-to-b from-white to-gray-50/30">
+            <section id="courses" className="py-16 md:py-24 bg-gradient-to-b from-white to-gray-50/30">
                 <div className="container mx-auto px-4">
                     <div className="max-w-7xl mx-auto">
-                        <h2 className="text-5xl font-bold text-gray-800 mb-16">
+                        <h2 className="text-center md:text-left text-3xl md:text-5xl font-bold text-gray-800 mb-8 md:mb-16">
                             Onze Lessen
                         </h2>
-                        <Suspense fallback={<div>Loading...</div>}>
+                        <Suspense fallback={
+                            <div className="flex items-center justify-center min-h-[200px]">
+                                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-crown"></div>
+                            </div>
+                        }>
                             <CourseList initialCourses={courses} />
                         </Suspense>
                     </div>

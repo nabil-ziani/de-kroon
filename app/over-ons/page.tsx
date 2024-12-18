@@ -7,7 +7,7 @@ export default function AboutPage() {
     return (
         <main className="min-h-screen bg-white">
             {/* Hero Section */}
-            <section className="relative py-24">
+            <section className="relative py-6 md:py-24">
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-900 to-boy">
                     <div className="absolute inset-0 opacity-30 mix-blend-soft-light bg-[radial-gradient(at_top_right,_#1dbffe_0%,_transparent_50%)]" />
                 </div>
@@ -18,7 +18,7 @@ export default function AboutPage() {
                 </div>
                 <div className="relative z-10 container mx-auto px-4 pt-24">
                     <div className="max-w-4xl">
-                        <h1 className="text-6xl font-bold text-white mb-6">
+                        <h1 className="text-center md:text-left text-4xl md:text-6xl font-bold text-white mb-6">
                             Wie zijn wij?
                         </h1>
                     </div>
@@ -26,21 +26,21 @@ export default function AboutPage() {
             </section>
 
             {/* Introduction Section - Centered */}
-            <section className="py-24">
+            <section className="py-16 md:py-24">
                 <div className="container mx-auto px-4">
-                    <div className="max-w-3xl mx-auto text-center mb-16">
-                        <span className="text-crown font-semibold mb-2 block">Sinds 2022</span>
-                        <h2 className="text-5xl font-bold text-gray-800 mb-6">
+                    <div className="max-w-3xl mx-auto text-center mb-8 md:mb-16">
+                        <span className="text-crown font-semibold mb-2 block text-sm md:text-base">Sinds 2022</span>
+                        <h2 className="text-3xl md:text-5xl font-bold text-gray-800 mb-4 md:mb-6">
                             Educatief Jeugdcentrum
                         </h2>
-                        <p className="text-xl text-gray-600 leading-relaxed">
+                        <p className="text-base md:text-xl text-gray-600 leading-relaxed">
                             De Kroon is een vereniging gevestigd in het hart van Borgerhout. We zetten ons in voor de ontwikkeling en vorming van jongeren, met als doel hen te helpen een actieve rol in de samenleving te vervullen.
                         </p>
                     </div>
                     <div className="max-w-4xl mx-auto relative">
-                        <div className="absolute -top-8 -left-8 w-32 h-32 bg-gradient-to-br from-crown/30 to-crown/0 rounded-full blur-2xl" />
-                        <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-gradient-to-br from-boy/30 to-boy/0 rounded-full blur-2xl" />
-                        <div className="relative h-[500px] rounded-3xl overflow-hidden shadow-xl">
+                        <div className="absolute -top-8 -left-8 w-24 md:w-32 h-24 md:h-32 bg-gradient-to-br from-crown/30 to-crown/0 rounded-full blur-2xl" />
+                        <div className="absolute -bottom-8 -right-8 w-24 md:w-32 h-24 md:h-32 bg-gradient-to-br from-boy/30 to-boy/0 rounded-full blur-2xl" />
+                        <div className="relative h-[300px] sm:h-[400px] md:h-[500px] rounded-3xl overflow-hidden shadow-xl">
                             <div className="absolute inset-0 bg-gradient-to-br from-crown/20 to-transparent" />
                             <Image
                                 src="/images/placeholder.png"
@@ -54,11 +54,11 @@ export default function AboutPage() {
             </section>
 
             {/* Mission & Vision */}
-            <section className="py-24 bg-gradient-to-b from-white to-gray-50/30">
+            <section className="py-16 md:py-24 bg-gradient-to-b from-white to-gray-50/30">
                 <div className="container mx-auto px-4">
                     <div className="max-w-7xl mx-auto">
-                        <div className="grid md:grid-cols-2 gap-16 items-center">
-                            <div className="relative h-[500px] rounded-3xl overflow-hidden shadow-xl order-last">
+                        <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
+                            <div className="hidden md:block relative h-[300px] sm:h-[400px] md:h-[500px] rounded-3xl overflow-hidden shadow-xl md:order-last order-first">
                                 <div className="absolute inset-0 bg-gradient-to-br from-boy/20 to-transparent" />
                                 <Image
                                     src="/images/placeholder.png"
@@ -67,30 +67,28 @@ export default function AboutPage() {
                                     className="object-cover"
                                 />
                             </div>
-                            <div className="relative">
-                                <div className="relative">
-                                    <span className="text-boy font-semibold mb-2 block">Onze Missie</span>
-                                    <h2 className="text-5xl font-bold text-gray-800 mb-6">
-                                        Ontwikkeling & Vorming
-                                    </h2>
-                                    <p className="text-xl text-gray-600 mb-8">
-                                        Bij De Kroon streven we ernaar om een inspirerende leeromgeving te creëren waar jongeren zich kunnen ontwikkelen op alle vlakken.
-                                    </p>
-                                    <div className="space-y-4">
-                                        {[
-                                            'Een vormingsaanbod van hoge kwaliteit organiseren en waarborgen',
-                                            'Jongeren pedagogisch begeleiden in hun ontwikkeling',
-                                            'Een aangename omgeving creëren voor samen leren en spelen',
-                                            'Culturele en ontspanningsactiviteiten organiseren voor alle sociale klassen',
-                                            'Ruimte bieden voor schoolactiviteiten en huiswerkbegeleiding',
-                                            'Samenwerken met lokale organisaties en instanties'
-                                        ].map((item) => (
-                                            <div key={item} className="flex items-start gap-4">
-                                                <div className="w-2 h-2 rounded-full bg-boy mt-2.5" />
-                                                <p className="text-gray-700 leading-relaxed">{item}</p>
-                                            </div>
-                                        ))}
-                                    </div>
+                            <div className="relative text-center md:text-left">
+                                <span className="text-boy font-semibold mb-2 block text-sm md:text-base">Onze Missie</span>
+                                <h2 className="text-3xl md:text-5xl font-bold text-gray-800 mb-4 md:mb-6">
+                                    Ontwikkeling & Vorming
+                                </h2>
+                                <p className="text-base md:text-xl text-gray-600 mb-6 md:mb-8">
+                                    Bij De Kroon streven we ernaar om een inspirerende leeromgeving te creëren waar jongeren zich kunnen ontwikkelen op alle vlakken.
+                                </p>
+                                <div className="text-left space-y-3 md:space-y-4">
+                                    {[
+                                        'Een vormingsaanbod van hoge kwaliteit organiseren en waarborgen',
+                                        'Jongeren pedagogisch begeleiden in hun ontwikkeling',
+                                        'Een aangename omgeving creëren voor samen leren en spelen',
+                                        'Culturele en ontspanningsactiviteiten organiseren voor alle sociale klassen',
+                                        'Ruimte bieden voor schoolactiviteiten en huiswerkbegeleiding',
+                                        'Samenwerken met lokale organisaties en instanties'
+                                    ].map((item) => (
+                                        <div key={item} className="flex items-start gap-3 md:gap-4">
+                                            <div className="w-2 h-2 rounded-full bg-boy mt-2" />
+                                            <p className="text-sm md:text-base text-gray-700 leading-relaxed">{item}</p>
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
                         </div>
@@ -99,15 +97,15 @@ export default function AboutPage() {
             </section>
 
             {/* Values */}
-            <section className="py-24 bg-gradient-to-b from-white to-gray-50/30">
+            <section className="py-16 md:py-24 bg-gradient-to-b from-white to-gray-50/30">
                 <div className="container mx-auto px-4">
                     <div className="max-w-7xl mx-auto">
-                        <h2 className="text-5xl font-bold text-gray-800 mb-16">
+                        <h2 className="text-center md:text-left text-3xl md:text-5xl font-bold text-gray-800 mb-8 md:mb-16">
                             Kernwaarden
                         </h2>
-                        <div className="grid gap-8">
+                        <div className="grid gap-4 md:gap-8">
                             {/* Top row - 3 equal cards */}
-                            <div className="grid md:grid-cols-3 gap-8">
+                            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
                                 {[
                                     {
                                         icon: FaGraduationCap,
@@ -129,15 +127,15 @@ export default function AboutPage() {
                                     }
                                 ].map((value) => (
                                     <div key={value.title}
-                                        className={`bg-gradient-to-br ${value.bgColor} p-10 rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300`}
+                                        className={`bg-gradient-to-br ${value.bgColor} p-6 md:p-10 rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300`}
                                     >
-                                        <div className="flex-shrink-0 w-16 h-16 bg-white/10 rounded-xl flex items-center justify-center mb-6">
-                                            <value.icon className="w-8 h-8 text-white" />
+                                        <div className="flex-shrink-0 w-12 h-12 md:w-16 md:h-16 bg-white/10 rounded-xl flex items-center justify-center mb-4 md:mb-6">
+                                            <value.icon className="w-6 h-6 md:w-8 md:h-8 text-white" />
                                         </div>
-                                        <h3 className="text-xl font-bold text-white mb-4">
+                                        <h3 className="text-lg md:text-xl font-bold text-white mb-3 md:mb-4">
                                             {value.title}
                                         </h3>
-                                        <p className="text-white/80">
+                                        <p className="text-sm md:text-base text-white/80">
                                             {value.description}
                                         </p>
                                     </div>
@@ -145,21 +143,21 @@ export default function AboutPage() {
                             </div>
 
                             {/* Bottom row - Full width card */}
-                            <div className="bg-gradient-to-br from-gray-800/90 to-gray-900 p-10 rounded-3xl shadow-lg mt-8">
+                            <div className="bg-gradient-to-br from-gray-800/90 to-gray-900 p-6 md:p-10 rounded-3xl shadow-lg mt-4 md:mt-8">
                                 <div className="flex flex-col items-center text-center">
-                                    <div className="flex-shrink-0 w-16 h-16 bg-white/10 rounded-xl flex items-center justify-center mb-6">
-                                        <FaEnvelope className="w-8 h-8 text-white" />
+                                    <div className="flex-shrink-0 w-12 h-12 md:w-16 md:h-16 bg-white/10 rounded-xl flex items-center justify-center mb-4 md:mb-6">
+                                        <FaEnvelope className="w-6 h-6 md:w-8 md:h-8 text-white" />
                                     </div>
-                                    <h2 className="text-3xl font-bold text-white mb-6">
+                                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-4 md:mb-6">
                                         Wil je meer weten over De Kroon?
                                     </h2>
-                                    <p className="text-lg text-white/90 mb-8 max-w-3xl">
+                                    <p className="text-base md:text-lg text-white/90 mb-6 md:mb-8 max-w-3xl">
                                         Bezoek ons op de Kroonstraat 72 in Borgerhout of neem contact met ons op.
-                                        Samen bouwen we aan een inspirerende toekomst voor jongeren.
+                                        <span className="hidden md:inline">Samen bouwen we aan een inspirerende toekomst voor jongeren.</span>
                                     </p>
                                     <a
                                         href="/contact"
-                                        className="group inline-flex items-center bg-white text-gray-900 px-6 py-3 rounded-xl font-semibold hover:bg-opacity-90 transition-colors uppercase tracking-wide text-sm"
+                                        className="group inline-flex items-center bg-white text-gray-900 px-4 sm:px-6 py-3 rounded-xl font-semibold hover:bg-opacity-90 transition-colors uppercase tracking-wide text-sm"
                                     >
                                         Contact opnemen
                                         <FaArrowRight className="ml-2 transform transition-transform duration-300 group-hover:translate-x-1" />

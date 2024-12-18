@@ -30,7 +30,7 @@ export default function EnrollmentModal({ isOpen, onClose, courseName }: Props) 
 
                 {/* Modal */}
                 <div className="fixed inset-0 overflow-y-auto">
-                    <div className="flex min-h-full items-center justify-center p-4">
+                    <div className="flex min-h-full items-center justify-center p-2 sm:p-4">
                         <Transition.Child
                             as={Fragment}
                             enter="ease-out duration-300"
@@ -41,26 +41,26 @@ export default function EnrollmentModal({ isOpen, onClose, courseName }: Props) 
                             leaveTo="opacity-0 scale-95"
                         >
                             <Dialog.Panel className="relative w-full max-w-6xl transform transition-all">
-                                <div className="relative bg-white rounded-2xl shadow-xl max-h-[85vh] overflow-hidden">
+                                <div className="relative bg-white rounded-2xl shadow-xl max-h-[90vh] sm:max-h-[85vh] overflow-hidden">
                                     {/* Header - Fixed */}
-                                    <div className="sticky top-0 bg-white px-8 py-6 border-b border-gray-100 z-10">
+                                    <div className="sticky top-0 bg-white px-4 sm:px-8 py-4 sm:py-6 border-b border-gray-100 z-10">
                                         <button
                                             onClick={onClose}
-                                            className="absolute right-6 top-6 text-gray-400 hover:text-gray-600 transition-colors rounded-lg p-2 hover:bg-gray-100"
+                                            className="absolute right-3 sm:right-6 top-3 sm:top-6 text-gray-400 hover:text-gray-600 transition-colors rounded-lg p-2 hover:bg-gray-100"
                                         >
                                             <FaTimes className="w-5 h-5" />
                                         </button>
 
-                                        <Dialog.Title className="text-3xl font-bold text-gray-800 mb-2">
+                                        <Dialog.Title className="text-2xl sm:text-3xl font-bold text-gray-800 mb-1 sm:mb-2 pr-12">
                                             Inschrijven voor {courseName}
                                         </Dialog.Title>
-                                        <p className="text-gray-500">
+                                        <p className="text-sm sm:text-base text-gray-500">
                                             Vul het formulier in en we nemen zo snel mogelijk contact met u op.
                                         </p>
                                     </div>
 
                                     {/* Scrollable Content */}
-                                    <div className="overflow-y-auto px-8 py-6" style={{ maxHeight: 'calc(85vh - 120px)' }}>
+                                    <div className="overflow-y-auto px-4 sm:px-8 py-4 sm:py-6" style={{ maxHeight: 'calc(90vh - 100px)' }}>
                                         <EnrollmentForm
                                             onSuccess={onClose}
                                             defaultValues={{ courseName }}
