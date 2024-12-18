@@ -1,10 +1,7 @@
-import { FaArrowRight } from 'react-icons/fa';
 import Image from 'next/image';
 import { Suspense } from 'react';
-import EnrollmentModal from '@/components/dialogs/enrollment-modal';
-import Link from 'next/link';
 import prisma from '@/lib/prisma';
-import CourseList from './course-list';
+import CourseList from '@/components/courses/course-list';
 
 export default async function VormingPage() {
     const courses = await prisma.course.findMany({
