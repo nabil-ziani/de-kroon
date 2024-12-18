@@ -8,6 +8,9 @@ const nextConfig = {
       __dirname: true
     }
     return config
+  },
+  images: {
+    domains: ['knwrbdsefflxgrvtgfrc.supabase.co']
   }
 }
 

@@ -1,14 +1,17 @@
-'use client';
-
 import { FaArrowRight } from 'react-icons/fa';
 import Image from 'next/image';
-import { useState } from 'react';
+import { Suspense } from 'react';
 import EnrollmentModal from '@/components/dialogs/enrollment-modal';
 import Link from 'next/link';
-import { COURSES } from '@/constants';
+import prisma from '@/lib/prisma';
+import CourseList from './course-list';
 
-export default function VormingPage() {
-    const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
+export default async function VormingPage() {
+    const courses = await prisma.course.findMany({
+        orderBy: {
+            createdAt: 'desc'
+        }
+    });
 
     return (
         <main className="min-h-screen bg-white">
@@ -82,57 +85,12 @@ export default function VormingPage() {
                         <h2 className="text-5xl font-bold text-gray-800 mb-16">
                             Onze Lessen
                         </h2>
-                        <div className="grid md:grid-cols-2 gap-16">
-                            {COURSES.map((course) => (
-                                <div key={course.title} className="group relative bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
-                                    <Link
-                                        href={`/vorming/${course.slug}`}
-                                        className="absolute inset-0 z-10"
-                                        aria-label={`Meer informatie over ${course.title}`}
-                                    />
-                                    <div className="flex flex-col md:flex-row h-full">
-                                        <div className="relative w-full md:w-2/5 h-64 md:h-auto">
-                                            <div className="absolute inset-0 bg-gradient-to-br from-black/60 to-black/20 group-hover:opacity-70 transition-opacity duration-300" />
-                                            <Image
-                                                src={course.image}
-                                                alt={course.title}
-                                                fill
-                                                className="object-cover"
-                                            />
-                                        </div>
-                                        <div className="w-full md:w-3/5 p-8 md:p-10">
-                                            <div className="inline-block px-3 py-1 rounded-full bg-crown/10 text-crown text-sm font-medium mb-6">
-                                                {course.level}
-                                            </div>
-                                            <h3 className="text-2xl font-bold text-gray-800 mb-4">
-                                                {course.title}
-                                            </h3>
-                                            <p className="text-gray-600 mb-8 text-lg">
-                                                {course.description}
-                                            </p>
-                                            <div className="mt-auto">
-                                                <button
-                                                    onClick={() => setSelectedCourse(course.title)}
-                                                    className="relative z-20 w-full bg-crown text-white px-6 py-4 rounded-xl font-semibold hover:bg-opacity-90 transition-colors text-sm uppercase tracking-wide flex items-center justify-center group"
-                                                >
-                                                    <span>Inschrijven</span>
-                                                    <FaArrowRight className="ml-2 transform transition-transform duration-300 group-hover:translate-x-1" />
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+                        <Suspense fallback={<div>Loading...</div>}>
+                            <CourseList initialCourses={courses} />
+                        </Suspense>
                     </div>
                 </div>
             </section>
-
-            <EnrollmentModal
-                isOpen={!!selectedCourse}
-                onClose={() => setSelectedCourse(null)}
-                courseName={selectedCourse || ''}
-            />
         </main>
     );
 }
