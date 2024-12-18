@@ -18,6 +18,7 @@ export default function PrayerTimes() {
 
     const fetchPrayerTimes = useCallback(async () => {
         try {
+            setError(null);
             const times = await getPrayerTimes();
             
             // Calculate next prayer
@@ -57,8 +58,9 @@ export default function PrayerTimes() {
             setPrayerTimes(formattedPrayers);
             setLoading(false);
         } catch (err) {
-            setError('Er is een fout opgetreden bij het ophalen van de gebedstijden.');
+            setError('Er is een fout opgetreden bij het ophalen van de gebedstijden. Probeer het later opnieuw.');
             setLoading(false);
+            console.error('Error fetching prayer times:', err);
         }
     }, []);
 
@@ -115,6 +117,12 @@ export default function PrayerTimes() {
         return (
             <div className="max-w-6xl mx-auto text-center py-12">
                 <p className="text-red-600">{error}</p>
+                <button 
+                    onClick={fetchPrayerTimes}
+                    className="mt-4 px-4 py-2 bg-crown text-white rounded-lg hover:bg-opacity-90 transition-colors"
+                >
+                    Probeer opnieuw
+                </button>
             </div>
         );
     }
