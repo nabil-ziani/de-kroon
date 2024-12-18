@@ -17,7 +17,6 @@ export default function DonatePage() {
     const [selectedAmount, setSelectedAmount] = useState<DonationAmount>({ amount: 10, isCustom: false });
     const [customAmount, setCustomAmount] = useState<string>('');
     const [isRecurring, setIsRecurring] = useState<boolean>(true);
-    const [showQR, setShowQR] = useState<boolean>(false);
 
     const handleCustomAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value.replace(/[^0-9]/g, '');
@@ -25,7 +24,6 @@ export default function DonatePage() {
         if (value) {
             setSelectedAmount({ amount: parseInt(value) || 0, isCustom: true });
         } else {
-            // Reset to default amount when custom input is cleared
             setSelectedAmount({ amount: 10, isCustom: false });
         }
     };
@@ -41,7 +39,7 @@ export default function DonatePage() {
     return (
         <main className="min-h-screen bg-white">
             {/* Hero Section */}
-            <section className="relative py-24">
+            <section className="relative py-6 md:py-24">
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-900 to-boy">
                     <div className="absolute inset-0 opacity-30 mix-blend-soft-light bg-[radial-gradient(at_top_right,_#1dbffe_0%,_transparent_50%)]" />
                 </div>
@@ -52,7 +50,7 @@ export default function DonatePage() {
                 </div>
                 <div className="relative z-10 container mx-auto px-4 pt-24">
                     <div className="max-w-4xl">
-                        <h1 className="text-6xl font-bold text-white mb-6">
+                        <h1 className="text-center md:text-left text-4xl md:text-6xl font-bold text-white mb-6">
                             Word een Steunpilaar
                         </h1>
                     </div>
@@ -60,46 +58,46 @@ export default function DonatePage() {
             </section>
 
             {/* Impact Section */}
-            <section className="pt-24 bg-white">
+            <section className="text-center md:text-left py-16 md:py-24 bg-white">
                 <div className="container mx-auto px-4">
                     <div className="max-w-7xl mx-auto">
-                        <h2 className="text-5xl font-bold text-gray-800 mb-4">
+                        <h2 className="text-3xl md:text-5xl font-bold text-gray-800 mb-4">
                             Jouw bijdrage is essentieel
                         </h2>
-                        <p className="text-xl text-gray-600 mb-12">
+                        <p className="text-base md:text-xl text-gray-600 mb-8 md:mb-12">
                             Help ons bouwen aan een betere toekomst voor onze jongeren. Met jouw steun kunnen we kinderen
                             de kans geven om te leren, spelen en groeien in een veilige, inspirerende omgeving.
                         </p>
-                        <div className="grid md:grid-cols-3 gap-12 mb-16">
-                            <div className="bg-white/50 backdrop-blur-sm p-8 rounded-3xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.08)] transition-all duration-300">
-                                <div className="w-16 h-16 bg-crown/5 rounded-2xl flex items-center justify-center mx-auto mb-8">
-                                    <FaGraduationCap className="w-8 h-8 text-crown" />
+                        <div className="grid md:grid-cols-3 gap-4 md:gap-12 mb-8 md:mb-16">
+                            <div className="bg-white/50 backdrop-blur-sm p-6 md:p-8 rounded-3xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.08)] transition-all duration-300">
+                                <div className="w-12 h-12 md:w-16 md:h-16 bg-crown/5 rounded-2xl flex items-center justify-center mx-auto mb-6 md:mb-8">
+                                    <FaGraduationCap className="w-6 h-6 md:w-8 md:h-8 text-crown" />
                                 </div>
-                                <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">Educatie</h3>
-                                <p className="text-gray-600 text-lg leading-relaxed">
+                                <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-3 md:mb-4 text-center">Educatie</h3>
+                                <p className="text-sm md:text-base text-gray-600 leading-relaxed text-center">
                                     Kwaliteitsvolle lessen en educatieve momenten voor talentontwikkeling
                                 </p>
                             </div>
-                            <div className="bg-white/50 backdrop-blur-sm p-8 rounded-3xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.08)] transition-all duration-300">
-                                <div className="w-16 h-16 bg-crown/5 rounded-2xl flex items-center justify-center mx-auto mb-8">
-                                    <FaUsers className="w-8 h-8 text-crown" />
+                            <div className="bg-white/50 backdrop-blur-sm p-6 md:p-8 rounded-3xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.08)] transition-all duration-300">
+                                <div className="w-12 h-12 md:w-16 md:h-16 bg-crown/5 rounded-2xl flex items-center justify-center mx-auto mb-6 md:mb-8">
+                                    <FaUsers className="w-6 h-6 md:w-8 md:h-8 text-crown" />
                                 </div>
-                                <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">Activiteiten</h3>
-                                <p className="text-gray-600 text-lg leading-relaxed">
+                                <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-3 md:mb-4 text-center">Activiteiten</h3>
+                                <p className="text-sm md:text-base text-gray-600 leading-relaxed text-center">
                                     Inspirerende indoor en outdoor activiteiten die kinderen verbinden
                                 </p>
                             </div>
-                            <div className="bg-white/50 backdrop-blur-sm p-8 rounded-3xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.08)] transition-all duration-300">
-                                <div className="w-16 h-16 bg-crown/5 rounded-2xl flex items-center justify-center mx-auto mb-8">
-                                    <FaRegClock className="w-8 h-8 text-crown" />
+                            <div className="bg-white/50 backdrop-blur-sm p-6 md:p-8 rounded-3xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.08)] transition-all duration-300">
+                                <div className="w-12 h-12 md:w-16 md:h-16 bg-crown/5 rounded-2xl flex items-center justify-center mx-auto mb-6 md:mb-8">
+                                    <FaRegClock className="w-6 h-6 md:w-8 md:h-8 text-crown" />
                                 </div>
-                                <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">Duurzame Steun</h3>
-                                <p className="text-gray-600 text-lg leading-relaxed">
+                                <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-3 md:mb-4 text-center">Duurzame Steun</h3>
+                                <p className="text-sm md:text-base text-gray-600 leading-relaxed text-center">
                                     Vaste maandelijkse steun voor continue ontwikkeling
                                 </p>
                             </div>
                         </div>
-                        <blockquote className="text-xl text-gray-600 italic mb-8 text-center max-w-3xl mx-auto">
+                        <blockquote className="text-base md:text-xl text-gray-600 italic mb-8 text-center max-w-3xl mx-auto">
                             "De beste liefdadigheid is die welke regelmatig wordt gegeven, ook al is het weinig."
                             <footer className="text-sm text-gray-500 mt-4">
                                 - De Profeet Mohammed ﷺ
@@ -112,24 +110,24 @@ export default function DonatePage() {
             </section>
 
             {/* Donation Options */}
-            <section className="py-24">
+            <section className="py-16 md:py-24">
                 <div className="container mx-auto px-4">
-                    <div className="max-w-7xl mx-auto">
-                        <h2 className="text-5xl font-bold text-gray-800 mb-6">
+                    <div className="text-center md:text-left max-w-7xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl font-bold text-gray-800 mb-4 md:mb-6">
                             Word Steunpilaar
                         </h2>
-                        <p className="text-xl text-gray-600 mb-12">
+                        <p className="text-base md:text-xl text-gray-600 mb-8 md:mb-12">
                             Kies een maandelijkse bijdrage die bij jou past. Elke bijdrage, hoe klein ook, maakt een verschil
                             in het leven van onze kinderen.
                         </p>
-                        <div className="grid gap-8">
+                        <div className="grid gap-4 md:gap-8">
                             {/* Donation Amount Selection */}
-                            <div className="bg-white rounded-3xl p-10 shadow-lg border border-gray-100">
-                                <div className="flex items-center justify-between mb-8">
-                                    <h3 className="text-2xl font-bold text-gray-800">
+                            <div className="bg-white rounded-3xl p-6 md:p-10 shadow-lg border border-gray-100">
+                                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-8 mb-6 md:mb-8">
+                                    <h3 className="text-xl md:text-2xl font-bold text-gray-800">
                                         Kies je bijdrage
                                     </h3>
-                                    <div className="flex items-center gap-4">
+                                    <div className="flex items-center">
                                         <label className="flex items-center bg-crown/5 px-4 py-2 rounded-xl border-2 border-crown/10">
                                             <input
                                                 type="checkbox"
@@ -137,35 +135,35 @@ export default function DonatePage() {
                                                 onChange={(e) => setIsRecurring(e.target.checked)}
                                                 className="w-5 h-5 rounded border-gray-300 focus:ring-crown focus:ring-offset-0"
                                             />
-                                            <span className="ml-2 text-gray-700 font-medium">Maandelijkse donatie</span>
+                                            <span className="ml-2 text-gray-700 font-medium text-sm md:text-base">Maandelijkse donatie</span>
                                             <span className="ml-2 text-xs bg-crown/10 text-crown px-2 py-1 rounded-full">Aanbevolen</span>
                                         </label>
                                     </div>
                                 </div>
 
-                                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
+                                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-4 mb-6 md:mb-8">
                                     {SUGGESTED_AMOUNTS.map((amount) => (
                                         <button
                                             key={amount}
                                             onClick={() => {
                                                 setSelectedAmount({ amount, isCustom: false });
-                                                setCustomAmount(''); // Clear custom amount when selecting a preset
+                                                setCustomAmount('');
                                             }}
-                                            className={`p-4 rounded-xl border-2 transition-all duration-300 flex items-center justify-center gap-2
+                                            className={`p-3 md:p-4 rounded-xl border-2 transition-all duration-300 flex items-center justify-center gap-2
                                                 ${selectedAmount.amount === amount && !selectedAmount.isCustom
                                                     ? 'border-crown bg-crown/10 text-crown'
                                                     : 'border-gray-200 hover:border-crown/50 text-gray-600 hover:text-crown'
                                                 }`}
                                         >
-                                            <FaEuroSign className="w-4 h-4" />
-                                            <span className="text-lg font-semibold">{amount}</span>
+                                            <FaEuroSign className="w-3 h-3 md:w-4 md:h-4" />
+                                            <span className="text-base md:text-lg font-semibold">{amount}</span>
                                         </button>
                                     ))}
                                 </div>
 
                                 {/* Custom Amount Input */}
-                                <div className="mb-8">
-                                    <label className="block text-gray-700 font-medium mb-2">
+                                <div className="mb-6 md:mb-8">
+                                    <label className="block text-sm md:text-base text-gray-700 font-medium mb-2">
                                         Of voer een eigen bedrag in
                                     </label>
                                     <div className="relative">
@@ -177,7 +175,7 @@ export default function DonatePage() {
                                             value={customAmount}
                                             onChange={handleCustomAmountChange}
                                             placeholder="Voer bedrag in"
-                                            className="w-full pl-8 pr-4 py-3 rounded-xl border-2 text-gray-800 border-gray-200 focus:border-crown focus:ring-0 transition-all duration-300 outline-none"
+                                            className="w-full pl-8 pr-4 py-3 rounded-xl border-2 text-gray-800 border-gray-200 focus:border-crown focus:ring-0 transition-all duration-300 outline-none text-sm md:text-base"
                                         />
                                     </div>
                                 </div>
@@ -191,7 +189,7 @@ export default function DonatePage() {
                                         interval={isRecurring ? 'monthly' : undefined}
                                         onSuccess={handlePaymentSuccess}
                                         onError={handlePaymentError}
-                                        className="bg-crown text-white px-6 py-4 rounded-xl font-semibold hover:bg-opacity-90 transition-all duration-300 flex items-center justify-center group relative"
+                                        className="bg-crown text-white px-6 py-3 md:py-4 rounded-xl font-semibold hover:bg-opacity-90 transition-all duration-300 flex items-center justify-center group relative"
                                     >
                                         <span>{isRecurring ? 'Word Steunpilaar' : 'Doneer nu'}</span>
                                         <FaArrowRight className="ml-2 transform transition-transform duration-300 group-hover:translate-x-1" />
@@ -200,22 +198,22 @@ export default function DonatePage() {
                             </div>
 
                             {/* Bank Details Card */}
-                            <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl p-10 shadow-lg relative overflow-hidden">
+                            <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl p-6 md:p-10 shadow-lg relative overflow-hidden">
                                 {/* Subtle yellow gradient overlay */}
                                 <div className="absolute inset-0 bg-gradient-to-br from-crown/5 to-transparent" />
 
-                                <div className="relative z-10 grid md:grid-cols-2 gap-16 items-center">
+                                <div className="relative z-10 grid md:grid-cols-2 gap-8 md:gap-16 items-center">
                                     <div>
-                                        <div className="flex-shrink-0 w-16 h-16 bg-crown/10 rounded-xl flex items-center justify-center mb-6">
-                                            <FaCreditCard className="w-8 h-8 text-crown" />
+                                        <div className="flex-shrink-0 w-12 h-12 md:w-16 md:h-16 bg-crown/10 rounded-xl flex items-center justify-center mb-4 md:mb-6">
+                                            <FaCreditCard className="w-6 h-6 md:w-8 md:h-8 text-crown" />
                                         </div>
-                                        <h3 className="text-2xl font-bold text-white mb-4">
+                                        <h3 className="text-xl md:text-2xl font-bold text-white mb-3 md:mb-4">
                                             Bankgegevens
                                         </h3>
-                                        <p className="text-lg text-white/90 mb-8">
+                                        <p className="text-base md:text-lg text-white/90 mb-6 md:mb-8">
                                             U kunt uw donatie ook direct overmaken naar onze bankrekening.
                                         </p>
-                                        <div className="space-y-4">
+                                        <div className="space-y-3 md:space-y-4">
                                             <p className="text-white/90">
                                                 <span className="font-semibold text-crown/90">Naam:</span> De Kroon
                                             </p>
@@ -228,9 +226,9 @@ export default function DonatePage() {
                                         </div>
                                     </div>
 
-                                    <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8">
-                                        <h3 className="text-xl font-bold text-white mb-4">Vragen?</h3>
-                                        <p className="text-lg text-white/90 mb-6">
+                                    <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 md:p-8">
+                                        <h3 className="text-lg md:text-xl font-bold text-white mb-3 md:mb-4">Vragen?</h3>
+                                        <p className="text-base md:text-lg text-white/90 mb-6">
                                             Heeft u vragen over doneren of wilt u meer informatie? Neem gerust contact met ons op.
                                         </p>
                                         <a

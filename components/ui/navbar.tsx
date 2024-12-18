@@ -3,10 +3,12 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
+    const pathname = usePathname();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -38,11 +40,11 @@ export default function Navbar() {
 
     return (
         <nav className={`fixed w-full z-50 transition-all duration-300 
-            ${isScrolled ? 'bg-white/70 backdrop-blur-md shadow-sm' : ''}`}>
+            ${isOpen ? 'bg-white' : isScrolled ? 'bg-white/70 backdrop-blur-md shadow-sm' : ''}`}>
             <div className="max-w-[1800px] mx-auto px-4">
                 <div className="flex justify-between items-center h-20">
                     {/* Logo */}
-                    <Link href="/" className="flex items-center space-x-3">
+                    <Link href="/" className="flex items-center space-x-3 relative z-50">
                         <Image
                             src="/logo-2.png"
                             alt="Logo"
@@ -76,53 +78,50 @@ export default function Navbar() {
 
                     {/* Mobile Menu Button */}
                     <button
-                        className="md:hidden p-2 rounded-lg"
+                        className="md:hidden p-2 rounded-lg relative z-50"
                         onClick={() => setIsOpen(!isOpen)}
                         aria-label="Toggle menu"
                     >
-                        <svg
-                            className={`w-6 h-6 transition-colors ${isScrolled || isOpen ? 'text-gray-600' : 'text-white'}`}
-                            fill="none"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            {isOpen ? (
-                                <path d="M6 18L18 6M6 6l12 12" />
-                            ) : (
-                                <path d="M4 6h16M4 12h16M4 18h16" />
-                            )}
-                        </svg>
+                        <div className="w-6 h-6 flex items-center justify-center">
+                            <span className={`transform transition-all duration-300 ease-in-out ${isOpen ? 'rotate-45 translate-y-0.5' : ''}`}>
+                                <span className={`absolute block h-0.5 w-6 transform transition-all duration-300 ease-in-out 
+                                    ${isOpen ? 'rotate-90 bg-gray-900' : isScrolled ? 'bg-gray-600' : 'bg-white'}`} />
+                                <span className={`absolute block h-0.5 w-6 transform transition-all duration-300 ease-in-out
+                                    ${isOpen ? '-rotate-180 bg-gray-900' : isScrolled ? 'bg-gray-600' : 'bg-white'}`} />
+                            </span>
+                        </div>
                     </button>
                 </div>
 
-                {/* Mobile Menu */}
-                {isOpen && (
-                    <div className="md:hidden fixed inset-0 top-20 bg-white/95 backdrop-blur-md z-50 overflow-y-auto">
-                        <div className="flex flex-col space-y-6 p-6">
-                            {menuItems.map((item) => (
-                                <Link
-                                    key={item.name}
-                                    href={item.href}
-                                    className="relative text-gray-800 text-lg font-medium group"
-                                    onClick={() => setIsOpen(false)}
-                                >
-                                    {item.name}
-                                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-crown transition-all duration-300 group-hover:w-full" />
-                                </Link>
-                            ))}
+                {/* Mobile Menu Overlay */}
+                <div className={`md:hidden fixed inset-0 bg-white z-40 transition-transform duration-500 ease-in-out transform ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+                    <div className="flex flex-col justify-center items-center min-h-screen space-y-8 p-6">
+                        {menuItems.map((item, index) => (
                             <Link
-                                href="/donatie"
-                                className="bg-crown text-white px-6 py-3 rounded-xl font-semibold transition-colors text-center text-lg mt-4"
+                                key={item.name}
+                                href={item.href}
+                                className={`text-2xl font-medium text-gray-900 transition-all duration-300 transform
+                                    ${isOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
+                                    ${pathname === item.href ? 'text-crown' : 'hover:text-crown'}
+                                `}
+                                style={{ transitionDelay: `${index * 100}ms` }}
                                 onClick={() => setIsOpen(false)}
                             >
-                                Doneer
+                                {item.name}
                             </Link>
-                        </div>
+                        ))}
+                        <Link
+                            href="/donatie"
+                            className={`bg-crown text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform
+                                ${isOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
+                                text-lg uppercase tracking-wide mt-4`}
+                            style={{ transitionDelay: `${menuItems.length * 100}ms` }}
+                            onClick={() => setIsOpen(false)}
+                        >
+                            Doneer
+                        </Link>
                     </div>
-                )}
+                </div>
             </div>
         </nav>
     );

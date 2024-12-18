@@ -41,7 +41,7 @@ export default function EnrollmentModal({ isOpen, onClose, courseName }: Props) 
                             leaveTo="opacity-0 scale-95"
                         >
                             <Dialog.Panel className="relative w-full max-w-6xl transform transition-all">
-                                <div className="relative bg-white rounded-2xl shadow-xl max-h-[90vh] sm:max-h-[85vh] overflow-hidden">
+                                <div className="relative bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col max-h-[90vh] sm:max-h-[85vh]">
                                     {/* Header - Fixed */}
                                     <div className="sticky top-0 bg-white px-4 sm:px-8 py-4 sm:py-6 border-b border-gray-100 z-10">
                                         <button
@@ -60,7 +60,7 @@ export default function EnrollmentModal({ isOpen, onClose, courseName }: Props) 
                                     </div>
 
                                     {/* Scrollable Content */}
-                                    <div className="overflow-y-auto px-4 sm:px-8 py-4 sm:py-6" style={{ maxHeight: 'calc(90vh - 100px)' }}>
+                                    <div className="flex-1 overflow-y-auto px-4 sm:px-8 py-4 sm:py-6">
                                         <EnrollmentForm
                                             onSuccess={onClose}
                                             defaultValues={{ courseName }}
