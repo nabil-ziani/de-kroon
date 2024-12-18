@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { FaHandHoldingHeart, FaArrowRight, FaCreditCard, FaQrcode, FaEuroSign, FaRegClock, FaGraduationCap, FaUsers } from 'react-icons/fa';
+import { FaArrowRight, FaCreditCard, FaQrcode, FaEuroSign, FaRegClock, FaGraduationCap, FaUsers } from 'react-icons/fa';
 import BuckarooPaymentButton from '@/components/donation/buckaroo-payment-button';
 import toast from 'react-hot-toast';
 
@@ -60,7 +60,7 @@ export default function DonatePage() {
             </section>
 
             {/* Impact Section */}
-            <section className="pt-24 bg-gradient-to-br from-gray-50 to-white">
+            <section className="pt-24 bg-white">
                 <div className="container mx-auto px-4">
                     <div className="max-w-7xl mx-auto">
                         <h2 className="text-5xl font-bold text-gray-800 mb-4">

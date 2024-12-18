@@ -231,8 +231,7 @@ export default function ActiviteitenPage() {
                                 Bekijk onze agenda
                             </h2>
                             <p className="text-lg text-gray-600">
-                                Ontdek onze diverse activiteiten en onderwijsprogramma's.
-                                Van Arabische lessen tot sportactiviteiten, er is voor ieder wat wils.
+                                Ontdek onze diverse activiteiten voor het komende jaar.
                             </p>
                         </div>
 
