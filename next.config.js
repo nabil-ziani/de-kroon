@@ -10,7 +10,7 @@ const nextConfig = {
     return config
   },
   images: {
-    domains: ['knwrbdsefflxgrvtgfrc.supabase.co']
+    remotePatterns: [{ hostname: 'knwrbdsefflxgrvtgfrc.supabase.co' }]
   }
 }
 

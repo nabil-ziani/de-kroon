@@ -1,5 +1,3 @@
-'use client';
-
 import Hero from "@/components/hero";
 import PrayerTimes from "@/components/prayer-times";
 import CourseSection from "@/components/course-section";
@@ -8,8 +6,15 @@ import CTASection from "@/components/cta-section";
 import { nlBE } from "date-fns/locale";
 import { format } from 'date-fns';
 import { FaExternalLinkAlt } from 'react-icons/fa';
+import prisma from '@/lib/prisma';
 
-export default function Home() {
+export default async function Home() {
+  const courses = await prisma.course.findMany({
+    orderBy: {
+      createdAt: 'desc'
+    }
+  });
+
   return (
     <main className="font-sans">
       <Hero />
@@ -73,7 +78,7 @@ export default function Home() {
               Wij helpen kinderen van 6 tot 15 jaar groeien door toegankelijke en kwalitatieve vorming.
             </p>
           </div>
-          <CourseSection />
+          <CourseSection courses={courses} />
         </div>
       </section>
 
