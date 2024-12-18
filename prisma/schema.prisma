@@ -119,15 +119,24 @@ model Course {
     slug        String   @unique
     image       String
     level       String
-    dayOfWeek   String   // 'saturday' | 'sunday'
-    timeSlot    String   // 'morning' | 'afternoon'
-    startTime   String
-    endTime     String
-    subject     String   // 'quran' | 'arabic' | 'islam'
+    subjects    String[]
+    schedules   Schedule[]
     ageRange    String   // e.g. "6-15"
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
 
-    @@index([dayOfWeek])
-    @@index([subject])
+    @@index([subjects])
+}
+
+model Schedule {
+    id          String   @id @default(cuid())
+    period      String   // "morning" | "afternoon"
+    startTime   String
+    endTime     String
+    subject     String
+    isSaturday  Boolean  @default(true)
+    course      Course   @relation(fields: [courseId], references: [id])
+    courseId    String
+
+    @@index([courseId])
 }
