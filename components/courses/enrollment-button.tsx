@@ -15,7 +15,7 @@ export default function EnrollmentButton({ courseName }: EnrollmentButtonProps) 
         <>
             <button
                 onClick={() => setIsModalOpen(true)}
-                className="w-full bg-crown text-white px-8 py-4 rounded-xl font-semibold hover:bg-opacity-90 transition-all duration-300 flex items-center justify-center group"
+                className="w-full bg-crown/95 text-white px-8 py-4 rounded-xl font-semibold hover:bg-crown transition-all duration-300 flex items-center justify-center group"
             >
                 <span>Inschrijven</span>
                 <FaArrowRight className="ml-2 transform transition-transform duration-300 group-hover:translate-x-1" />

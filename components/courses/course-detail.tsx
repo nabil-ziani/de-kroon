@@ -59,7 +59,9 @@ export default function CourseDetail({ course }: CourseDetailProps) {
                                 {/* Description */}
                                 <div>
                                     <h2 className="text-3xl font-bold text-gray-800 mb-6 flex items-center gap-3">
-                                        <FaBook className="w-8 h-8 text-crown" />
+                                        <div className="w-16 h-16 bg-crown/10 rounded-xl flex items-center justify-center">
+                                            <FaBook className="w-8 h-8 text-crown" />
+                                        </div>
                                         Beschrijving
                                     </h2>
                                     <div className="text-lg max-w-none">
@@ -72,14 +74,16 @@ export default function CourseDetail({ course }: CourseDetailProps) {
                                 {/* Subjects */}
                                 <div>
                                     <h2 className="text-3xl font-bold text-gray-800 mb-6 flex items-center gap-3">
-                                        <FaGraduationCap className="w-8 h-8 text-crown" />
+                                        <div className="w-16 h-16 bg-crown/10 rounded-xl flex items-center justify-center">
+                                            <FaGraduationCap className="w-8 h-8 text-crown" />
+                                        </div>
                                         Inhoud
                                     </h2>
                                     <div className="grid gap-4">
                                         {course.subjects.map((subject, index) => (
                                             <div
                                                 key={index}
-                                                className="flex items-center gap-4 p-4 rounded-xl bg-gray-50 border border-gray-100"
+                                                className="flex items-center gap-4 p-4 rounded-xl bg-gray-50 shadow-sm"
                                             >
                                                 <div className="w-2 h-2 rounded-full bg-crown"></div>
                                                 <span className="text-lg text-gray-700">{subject}</span>
@@ -91,13 +95,15 @@ export default function CourseDetail({ course }: CourseDetailProps) {
                                 {/* Schedule */}
                                 <div>
                                     <h2 className="text-3xl font-bold text-gray-800 mb-6 flex items-center gap-3">
-                                        <FaClock className="w-8 h-8 text-crown" />
+                                        <div className="w-16 h-16 bg-crown/10 rounded-xl flex items-center justify-center">
+                                            <FaClock className="w-8 h-8 text-crown" />
+                                        </div>
                                         Lestijden
                                     </h2>
 
                                     <div className="grid md:grid-cols-2 gap-8">
                                         {/* Saturday Schedule */}
-                                        <div className="bg-gradient-to-br from-crown/5 to-crown/10 p-6 rounded-2xl border border-crown/10">
+                                        <div className="bg-gradient-to-br from-crown/5 to-crown/10 p-6 rounded-2xl">
                                             <h3 className="text-xl font-bold text-gray-800 mb-4">Zaterdag</h3>
                                             <p className="text-crown font-medium mb-4">Koranlessen</p>
                                             <div className="space-y-3">
@@ -118,7 +124,7 @@ export default function CourseDetail({ course }: CourseDetailProps) {
                                         </div>
 
                                         {/* Sunday Schedule */}
-                                        <div className="bg-gradient-to-br from-boy/5 to-boy/10 p-6 rounded-2xl border border-boy/10">
+                                        <div className="bg-gradient-to-br from-boy/5 to-boy/10 p-6 rounded-2xl">
                                             <h3 className="text-xl font-bold text-gray-800 mb-4">Zondag</h3>
                                             <p className="text-boy font-medium mb-4">Arabisch en Islam</p>
                                             <div className="space-y-3">
@@ -143,12 +149,20 @@ export default function CourseDetail({ course }: CourseDetailProps) {
 
                             {/* Enrollment Widget */}
                             <div className="lg:col-span-4">
-                                <div className="sticky top-8 bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
-                                    <div className="p-8">
-                                        <h3 className="text-2xl font-bold text-gray-800 mb-6">
-                                            Schrijf je in
-                                        </h3>
-                                        <EnrollmentButton courseName={course.title} />
+                                <div className="sticky top-24 bg-gradient-to-br from-boy to-boy/80 rounded-3xl shadow-xl overflow-hidden">
+                                    <div className="absolute inset-0 bg-[radial-gradient(at_top_right,_#ffffff20_0%,_transparent_60%)]" />
+                                    <div className="relative p-8">
+                                        <div className="mb-6">
+                                            <h3 className="text-2xl font-bold text-white mb-2">
+                                                Klaar om te starten?
+                                            </h3>
+                                            <p className="text-white">
+                                                Schrijf je zoon/dochter in voor {course.title.toLowerCase()}.
+                                            </p>
+                                        </div>
+                                        <div className="mt-8">
+                                            <EnrollmentButton courseName={course.title} />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
