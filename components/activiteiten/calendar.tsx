@@ -14,7 +14,7 @@ import {
 } from 'date-fns';
 import { nl } from 'date-fns/locale';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import { Event } from '@/types/event';
+import { Event } from '@/types';
 
 interface CalendarProps {
     events: Event[];

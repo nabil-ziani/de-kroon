@@ -5,7 +5,7 @@ import { format } from 'date-fns';
 import { nl } from 'date-fns/locale';
 import { FaTimes } from 'react-icons/fa';
 import Calendar from '@/components/activiteiten/calendar';
-import { Event } from '@/types/event';
+import { Event } from '@/types';
 
 // Event Modal Component
 function EventModal({ event, onClose, allEvents }: { event: Event; onClose: () => void; allEvents?: Event[] }) {
