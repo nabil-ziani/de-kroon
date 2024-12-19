@@ -180,6 +180,33 @@ export default function DonatePage() {
                                     </div>
                                 </div>
 
+                                {/* Recurring Info */}
+                                {isRecurring && (
+                                    <div className="mb-6 md:mb-8">
+                                        <div className="bg-gray-50 rounded-xl p-4 md:p-6">
+                                            <h4 className="text-sm md:text-base font-medium text-gray-800 mb-2">
+                                                Informatie over maandelijkse donaties
+                                            </h4>
+                                            <div className="space-y-2 text-sm text-gray-600">
+                                                <p>
+                                                    Door een maandelijkse donatie in te stellen, geeft u toestemming voor een doorlopende SEPA-incasso.
+                                                </p>
+                                                <p>
+                                                    U kunt uw machtiging op twee manieren stopzetten:
+                                                </p>
+                                                <ul className="list-disc list-inside ml-2 space-y-1">
+                                                    <li>Via uw eigen bank (intrekken SEPA-machtiging)</li>
+                                                    <li>Door contact op te nemen met De Kroon via{' '}
+                                                        <a href="mailto:info@kidskroon.be" className="text-crown hover:underline">
+                                                            info@kidskroon.be
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
                                 {/* Donation Buttons */}
                                 <div className="grid gap-4">
                                     <BuckarooPaymentButton
