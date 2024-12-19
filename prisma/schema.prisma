@@ -140,3 +140,16 @@ model Schedule {
 
     @@index([courseId])
 }
+
+model Event {
+    id              String   @id @default(cuid())
+    title           String
+    start           DateTime
+    end             DateTime
+    audience        String   // 'man' | 'vrouw' | 'gemengd'
+    location        String
+    description     String
+    maxParticipants Int
+    createdAt       DateTime @default(now())
+    updatedAt       DateTime @updatedAt
+}

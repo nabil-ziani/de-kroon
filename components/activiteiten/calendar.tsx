@@ -14,17 +14,7 @@ import {
 } from 'date-fns';
 import { nl } from 'date-fns/locale';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-
-type Event = {
-    id: string;
-    title: string;
-    start: Date;
-    end: Date;
-    audience: 'man' | 'vrouw' | 'gemengd';
-    location: string;
-    description: string;
-    maxParticipants: number;
-};
+import { Event } from '@/types/event';
 
 interface CalendarProps {
     events: Event[];
@@ -116,15 +106,15 @@ export default function Calendar({ events, onEventClick }: CalendarProps) {
             {/* Calendar Grid */}
             <div className="grid grid-cols-7 gap-2 md:gap-4 px-1 md:px-4">
                 {/* Weekday Headers */}
-                {['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo'].map(day => (
-                    <div key={day} className="text-center text-sm font-medium text-gray-400 tracking-wider mb-2 md:mb-4
+                {['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo'].map((day, index) => (
+                    <div key={`desktop-${day}-${index}`} className="text-center text-sm font-medium text-gray-400 tracking-wider mb-2 md:mb-4
                                             hidden md:block">
                         {day}
                     </div>
                 ))}
                 {/* Mobile Weekday Headers */}
-                {['M', 'D', 'W', 'D', 'V', 'Z', 'Z'].map(day => (
-                    <div key={day} className="text-center text-xs font-medium text-gray-400 tracking-wider mb-2
+                {['M', 'D', 'W', 'D', 'V', 'Z', 'Z'].map((day, index) => (
+                    <div key={`mobile-${day}-${index}`} className="text-center text-xs font-medium text-gray-400 tracking-wider mb-2
                                             md:hidden">
                         {day}
                     </div>
