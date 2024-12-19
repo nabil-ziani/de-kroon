@@ -78,7 +78,7 @@ export default function EnrollmentForm({ onSuccess, defaultValues }: Props) {
         }
     };
 
-    const handleConfirmationCancel = () => {
+    const handleConfirmationClose = () => {
         setShowConfirmationDialog(false);
         formRef.setValue('hadPreviousClasses', false);
     };
@@ -298,7 +298,7 @@ export default function EnrollmentForm({ onSuccess, defaultValues }: Props) {
             {/* Confirmation Dialog */}
             <Dialog
                 open={showConfirmationDialog}
-                onClose={() => setShowConfirmationDialog(false)}
+                onClose={handleConfirmationClose}
                 className="relative z-[200]"
             >
                 <div className="fixed inset-0 bg-black/30 backdrop-blur-sm" aria-hidden="true" />
@@ -321,7 +321,7 @@ export default function EnrollmentForm({ onSuccess, defaultValues }: Props) {
                         </div>
                         <div className="flex justify-end gap-4 pt-4 border-t border-gray-100">
                             <button
-                                onClick={handleConfirmationCancel}
+                                onClick={handleConfirmationClose}
                                 className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors focus:outline-none"
                             >
                                 Annuleren
