@@ -130,7 +130,7 @@ export class BuckarooService {
 }
 
 export const buckarooConfig: BuckarooConfig = {
-    websiteKey: process.env.NEXT_PUBLIC_BUCKAROO_WEBSITE_KEY || '',
+    websiteKey: process.env.BUCKAROO_WEBSITE_KEY || '',
     secretKey: process.env.BUCKAROO_SECRET_KEY || '',
     mode: process.env.BUCKAROO_TEST_MODE === 'true' ? 'test' : 'live'
 }; 
