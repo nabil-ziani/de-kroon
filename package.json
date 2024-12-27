@@ -12,6 +12,7 @@
     "@headlessui/react": "^1.7.17",
     "@hookform/resolvers": "3.3.2",
     "@prisma/client": "^6.0.1",
+    "@radix-ui/react-tooltip": "^1.1.6",
     "@react-email/components": "0.0.11",
     "date-fns": "^2.30.0",
     "iconv-lite": "^0.6.3",

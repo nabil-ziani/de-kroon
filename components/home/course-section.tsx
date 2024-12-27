@@ -2,11 +2,7 @@ import { Course } from '@prisma/client';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaClock, FaGraduationCap, FaArrowRight } from 'react-icons/fa';
-
-function truncateText(text: string, maxLength: number = 150) {
-    if (text.length <= maxLength) return text;
-    return text.slice(0, maxLength).trim() + '...';
-}
+import { truncateText } from '@/lib/utils';
 
 interface CourseSectionProps {
     courses: Course[];
