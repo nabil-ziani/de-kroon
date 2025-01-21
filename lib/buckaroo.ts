@@ -58,10 +58,16 @@ export class BuckarooService {
 
         // Add recurring parameters if needed
         if (request.isRecurring) {
-            payload.serviceList[0].parameters = [{
-                name: 'recurring',
-                value: 'true'
-            }];
+            payload.serviceList[0].parameters = [
+                {
+                    name: 'StartRecurrent',
+                    value: 'true'
+                },
+                {
+                    name: 'recurring',
+                    value: 'true'
+                }
+            ];
 
             if (request.interval) {
                 payload.serviceList[0].parameters.push({
