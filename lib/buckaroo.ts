@@ -105,7 +105,7 @@ export class BuckarooService {
             ReturnURLCancel: request.returnUrlCancel || request.returnUrl,
             ReturnURLError: request.returnUrlError || request.returnUrl,
             ReturnURLReject: request.returnUrlReject || request.returnUrl,
-            ServicesSelectableByClient: "ideal,payconiq,bancontactmrcash",
+            ServicesSelectableByClient: request.isRecurring ? "bancontactmrcash,paypal" : "ideal,payconiq,bancontactmrcash,paypal",
             Services: {
                 ServiceList: [] as ServiceListItem[]
             },
@@ -156,23 +156,18 @@ export class BuckarooService {
             AmountDebit: request.amount,
             Invoice: crypto.randomUUID(),
             Services: {
-                ServiceList: [] as ServiceListItem[]
+                ServiceList: [
+                    {
+                        Name: "bancontactmrcash",
+                        Action: "PayRecurring"
+                    },
+                    {
+                        Name: "paypal",
+                        Action: "PayRecurring"
+                    }
+                ] as ServiceListItem[]
             }
         };
-
-        const services = ["bancontactmrcash", "ideal", "payconiq"];
-        services.forEach(serviceName => {
-            payload.Services.ServiceList.push({
-                Name: serviceName,
-                Action: "PayRecurring"
-                /*Parameters: [
-                    {
-                        Name: 'CollectDate',
-                        Value: request.collectDate || new Date().toISOString().split('T')[0]
-                    }
-                ]*/
-            });
-        });
 
         const { content, nonce, timestamp, signature } = await this.createAuthenticationComponents(payload);
 
