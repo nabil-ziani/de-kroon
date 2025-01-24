@@ -44,7 +44,7 @@ interface PaymentRequest {
     returnUrlCancel?: string;
     returnUrlError?: string;
     returnUrlReject?: string;
-    isRecurring: boolean;
+    isRecurring?: boolean;
     originalTransactionKey?: string;
     collectDate?: string;
 }
