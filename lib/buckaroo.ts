@@ -28,6 +28,7 @@ interface BuckarooPayload {
     ReturnURLError?: string;
     ReturnURLReject?: string;
     ServicesSelectableByClient?: string;
+    ServicesExcludedForClient?: string;
     StartRecurrent?: boolean;
     Services: {
         ServiceList: ServiceListItem[];
@@ -96,6 +97,8 @@ export class BuckarooService {
     }
 
     async createPayment(request: PaymentRequest) {
+        console.log("ik kom hier, we gaan de payment aanmaken")
+        console.log("isRecurring: ", request.isRecurring)
         const payload: BuckarooPayload = {
             Currency: request.currency || 'EUR',
             AmountDebit: request.amount,
@@ -105,7 +108,8 @@ export class BuckarooService {
             ReturnURLCancel: request.returnUrlCancel || request.returnUrl,
             ReturnURLError: request.returnUrlError || request.returnUrl,
             ReturnURLReject: request.returnUrlReject || request.returnUrl,
-            ServicesSelectableByClient: request.isRecurring ? "bancontactmrcash,paypal" : "ideal,payconiq,bancontactmrcash,paypal",
+            ServicesSelectableByClient: request.isRecurring ? "bancontactmrcash" : "ideal,payconiq,bancontactmrcash",
+            ServicesExcludedForClient: request.isRecurring ? "ideal,payconiq" : "",
             Services: {
                 ServiceList: [] as ServiceListItem[]
             },
@@ -155,14 +159,11 @@ export class BuckarooService {
             OriginalTransactionKey: request.originalTransactionKey,
             AmountDebit: request.amount,
             Invoice: crypto.randomUUID(),
+            ServicesSelectableByClient: "bancontactmrcash",
             Services: {
                 ServiceList: [
                     {
                         Name: "bancontactmrcash",
-                        Action: "PayRecurring"
-                    },
-                    {
-                        Name: "paypal",
                         Action: "PayRecurring"
                     }
                 ] as ServiceListItem[]
