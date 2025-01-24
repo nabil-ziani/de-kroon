@@ -30,5 +30,8 @@ jobs:
       - name: Generate Prisma Client
         run: npx prisma generate
 
+      - name: Compile TypeScript
+        run: npx tsc --project tsconfig.json
+
       - name: Process recurring donations
-        run: npx ts-node --project tsconfig.json scripts/process-recurring-donations.ts 
+        run: node dist/scripts/process-recurring-donations.js
