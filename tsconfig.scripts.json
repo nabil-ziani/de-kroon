@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "target": "ES2017",
+        "module": "commonjs",
+        "lib": [
+            "esnext"
+        ],
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "resolveJsonModule": true,
+        "rootDir": "./",
+        "outDir": "./dist",
+        "baseUrl": ".",
+        "paths": {
+            "@/*": [
+                "./*"
+            ]
+        }
+    },
+    "include": [
+        "scripts/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
