@@ -156,20 +156,23 @@ export class BuckarooService {
             AmountDebit: request.amount,
             Invoice: crypto.randomUUID(),
             Services: {
-                ServiceList: [
-                    {
-                        Name: "SepaDirectDebit",
-                        Action: "PayRecurrent",
-                        Parameters: [
-                            {
-                                Name: 'CollectDate',
-                                Value: request.collectDate || new Date().toISOString().split('T')[0]
-                            }
-                        ]
-                    }
-                ] as ServiceListItem[]
+                ServiceList: [] as ServiceListItem[]
             }
         };
+
+        const services = ["bancontactmrcash", "ideal", "payconiq"];
+        services.forEach(serviceName => {
+            payload.Services.ServiceList.push({
+                Name: serviceName,
+                Action: "PayRecurring"
+                /*Parameters: [
+                    {
+                        Name: 'CollectDate',
+                        Value: request.collectDate || new Date().toISOString().split('T')[0]
+                    }
+                ]*/
+            });
+        });
 
         const { content, nonce, timestamp, signature } = await this.createAuthenticationComponents(payload);
 
