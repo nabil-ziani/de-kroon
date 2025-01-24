@@ -5,7 +5,6 @@ interface BuckarooPaymentButtonProps {
     amount: number;
     description: string;
     isRecurring?: boolean;
-    interval?: 'monthly' | 'yearly';
     onSuccess?: () => void;
     onError?: (error: Error) => void;
     className?: string;
@@ -15,8 +14,7 @@ interface BuckarooPaymentButtonProps {
 export default function BuckarooPaymentButton({
     amount,
     description,
-    isRecurring = false,
-    interval,
+    isRecurring,
     onSuccess,
     onError,
     className = '',
@@ -39,7 +37,6 @@ export default function BuckarooPaymentButton({
                     amount,
                     description,
                     isRecurring,
-                    interval,
                     returnUrl,
                     returnUrlCancel: returnUrl,
                     returnUrlError: returnUrl,
@@ -55,8 +52,8 @@ export default function BuckarooPaymentButton({
             }
 
             // Redirect naar Buckaroo checkout
-            if (data.redirectUrl) {
-                window.location.href = data.redirectUrl;
+            if (data.RequiredAction?.RedirectURL) {
+                window.location.href = data.RequiredAction.RedirectURL;
                 onSuccess?.();
             } else {
                 throw new Error('No redirect URL received');

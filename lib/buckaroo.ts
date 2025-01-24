@@ -7,12 +7,33 @@ interface BuckarooConfig {
 }
 
 interface ServiceListItem {
-    name: string;
-    action: string;
-    parameters?: Array<{
-        name: string;
-        value: string;
+    Name: string;
+    Action: string;
+    Version?: number;
+    Parameters?: Array<{
+        Name: string;
+        GroupType?: string;
+        GroupID?: string;
+        Value: string;
     }>;
+}
+
+interface BuckarooPayload {
+    Currency: string;
+    AmountDebit: number;
+    Invoice: string;
+    Description?: string;
+    ReturnURL?: string;
+    ReturnURLCancel?: string;
+    ReturnURLError?: string;
+    ReturnURLReject?: string;
+    ServicesSelectableByClient?: string;
+    StartRecurrent?: boolean;
+    Services: {
+        ServiceList: ServiceListItem[];
+    };
+    ContinueOnIncomplete?: any;
+    OriginalTransactionKey?: string;
 }
 
 interface PaymentRequest {
@@ -23,8 +44,9 @@ interface PaymentRequest {
     returnUrlCancel?: string;
     returnUrlError?: string;
     returnUrlReject?: string;
-    isRecurring?: boolean;
-    interval?: 'monthly' | 'yearly';
+    isRecurring: boolean;
+    originalTransactionKey?: string;
+    collectDate?: string;
 }
 
 export class BuckarooService {
@@ -38,45 +60,8 @@ export class BuckarooService {
             : 'https://checkout.buckaroo.nl/json';
     }
 
-    async createPayment(request: PaymentRequest) {
-        // Basic payment data
-        const payload = {
-            currency: request.currency || 'EUR',
-            amountDebit: request.amount,
-            invoice: crypto.randomUUID(),
-            description: request.description,
-            returnURL: request.returnUrl,
-            returnURLCancel: request.returnUrlCancel || request.returnUrl,
-            returnURLError: request.returnUrlError || request.returnUrl,
-            returnURLReject: request.returnUrlReject || request.returnUrl,
-            serviceList: [{
-                name: 'ideal',
-                action: 'Pay'
-            }] as ServiceListItem[],
-            continueOnIncomplete: 1
-        };
-
-        // Add recurring parameters if needed
-        if (request.isRecurring) {
-            payload.serviceList[0].parameters = [
-                {
-                    name: 'StartRecurrent',
-                    value: 'true'
-                },
-                {
-                    name: 'recurring',
-                    value: 'true'
-                }
-            ];
-
-            if (request.interval) {
-                payload.serviceList[0].parameters.push({
-                    name: 'recurringInterval',
-                    value: request.interval
-                });
-            }
-        }
-
+    // Helper function to create authentication components
+    private async createAuthenticationComponents(payload: BuckarooPayload) {
         // Create authentication components
         const nonce = crypto.randomBytes(16).toString('hex');
         const timestamp = Math.floor(Date.now() / 1000);
@@ -107,6 +92,39 @@ export class BuckarooService {
         hmac.update(signatureString, 'utf8');
         const signature = hmac.digest('base64');
 
+        return { content, nonce, timestamp, signature };
+    }
+
+    async createPayment(request: PaymentRequest) {
+        const payload: BuckarooPayload = {
+            Currency: request.currency || 'EUR',
+            AmountDebit: request.amount,
+            Invoice: crypto.randomUUID(),
+            Description: request.description,
+            ReturnURL: request.returnUrl,
+            ReturnURLCancel: request.returnUrlCancel || request.returnUrl,
+            ReturnURLError: request.returnUrlError || request.returnUrl,
+            ReturnURLReject: request.returnUrlReject || request.returnUrl,
+            ServicesSelectableByClient: "ideal,payconiq,bancontactmrcash",
+            Services: {
+                ServiceList: [] as ServiceListItem[]
+            },
+            StartRecurrent: request.isRecurring,
+            ContinueOnIncomplete: 1
+        };
+
+        const services = ["ideal", "payconiq", "bancontactmrcash"];
+        services.forEach(serviceName => {
+            const service: ServiceListItem = {
+                Name: serviceName,
+                Action: "Pay"
+            }
+
+            payload.Services.ServiceList.push(service);
+        })
+
+        const { content, nonce, timestamp, signature } = await this.createAuthenticationComponents(payload);
+
         try {
             const response = await fetch(`${this.baseUrl}/Transaction`, {
                 method: 'POST',
@@ -124,10 +142,58 @@ export class BuckarooService {
             }
 
             const data = await response.json();
-            return {
-                redirectUrl: data.RequiredAction?.RedirectURL,
-                transactionKey: data.Key
-            };
+            return data;
+        } catch (error) {
+            console.error('Buckaroo request failed:', error);
+            throw error;
+        }
+    }
+
+    async createRecurringPayment(request: PaymentRequest) {
+        const payload: BuckarooPayload = {
+            Currency: request.currency || 'EUR',
+            OriginalTransactionKey: request.originalTransactionKey,
+            AmountDebit: request.amount,
+            Invoice: crypto.randomUUID(),
+            Services: {
+                ServiceList: [] as ServiceListItem[]
+            }
+        };
+
+        const services = ["ideal", "payconiq", "bancontactmrcash"];
+        services.forEach(serviceName => {
+            payload.Services.ServiceList.push({
+                Name: serviceName,
+                Action: "PayRecurrent",
+                Parameters: [
+                    {
+                        Name: 'CollectDate',
+                        Value: request.collectDate || new Date().toISOString().split('T')[0]
+                    }
+                ]
+            });
+        });
+
+        const { content, nonce, timestamp, signature } = await this.createAuthenticationComponents(payload);
+
+        try {
+            const response = await fetch(`${this.baseUrl}/Transaction`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `hmac ${this.config.websiteKey}:${signature}:${nonce}:${timestamp}`,
+                    'Culture': 'nl-NL'
+                },
+                body: content
+            });
+
+            if (!response.ok) {
+                const text = await response.text();
+                throw new Error(`Buckaroo error: ${text}`);
+            }
+
+            const data = await response.json();
+            return data;
         } catch (error) {
             console.error('Buckaroo request failed:', error);
             throw error;

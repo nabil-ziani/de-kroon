@@ -11,36 +11,36 @@ datasource db {
 }
 
 model Enrollment {
-    id              String   @id @default(cuid())
-    createdAt       DateTime @default(now())
-    updatedAt       DateTime @updatedAt
-    
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
     // Kind gegevens
-    childName       String
-    birthDate       DateTime
-    hadPreviousClasses Boolean @default(false)
+    childName          String
+    birthDate          DateTime
+    hadPreviousClasses Boolean             @default(false)
     previousExperience PreviousExperience?
-    
+
     // Ouder gegevens
-    father          Parent?  @relation("FatherRelation", fields: [fatherId], references: [id])
-    fatherId        String?
-    mother          Parent?  @relation("MotherRelation", fields: [motherId], references: [id])
-    motherId        String?
-    
+    father   Parent? @relation("FatherRelation", fields: [fatherId], references: [id])
+    fatherId String?
+    mother   Parent? @relation("MotherRelation", fields: [motherId], references: [id])
+    motherId String?
+
     // Adres
-    street          String
-    houseNumber     String
-    city            String
-    
+    street      String
+    houseNumber String
+    city        String
+
     // Extra info
     learningDisorders String?
-    allergies        String?
-    pickupMethod     PickupMethod
-    
+    allergies         String?
+    pickupMethod      PickupMethod
+
     // Cursus info
-    courseName      String
-    message         String?
-    status          String   @default("pending") // pending, approved, rejected
+    courseName String
+    message    String?
+    status     String  @default("pending") // pending, approved, rejected
 }
 
 enum PickupMethod {
@@ -50,93 +50,95 @@ enum PickupMethod {
 }
 
 model Donation {
-    id            String   @id @default(cuid())
-    createdAt     DateTime @default(now())
-    updatedAt     DateTime @updatedAt
-    amount        Float
-    isRecurring   Boolean  @default(false)
-    status        String   @default("pending") // pending, completed, failed
-    donorEmail    String?
-    donorName     String?
-    transactionId String?  @unique
-    buckarooKey   String?  @unique
+    id              String    @id @default(cuid())
+    createdAt       DateTime  @default(now())
+    updatedAt       DateTime  @updatedAt
+    amount          Float
+    isRecurring     Boolean   @default(false)
+    status          String    @default("pending") // pending, completed, failed
+    donorEmail      String?
+    donorName       String?
+    transactionId   String?   @unique
+    buckarooKey     String?   @unique
+    nextPaymentDate DateTime?
+    lastProcessedAt DateTime?
 }
 
 model Parent {
-    id            String     @id @default(cuid())
-    firstName     String?
-    lastName      String?
-    phone         String?
-    email         String?
-    fatherOf      Enrollment[] @relation("FatherRelation")
-    motherOf      Enrollment[] @relation("MotherRelation")
+    id        String       @id @default(cuid())
+    firstName String?
+    lastName  String?
+    phone     String?
+    email     String?
+    fatherOf  Enrollment[] @relation("FatherRelation")
+    motherOf  Enrollment[] @relation("MotherRelation")
 }
 
 model PreviousExperience {
-    id              String     @id @default(cuid())
-    enrollment      Enrollment @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
-    enrollmentId    String     @unique
+    id           String     @id @default(cuid())
+    enrollment   Enrollment @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
+    enrollmentId String     @unique
 
     // Leesvaardigheid
-    canRecognizeLetters Boolean?
-    canRecognizeLetterForms Boolean?
-    canReadDiacritics Boolean?
-    canReadExtensions Boolean?
-    canReadThreeLetterWords Boolean?
-    canReadFourLetterWords Boolean?
-    canReadShadda Boolean?
-    canReadSokoun Boolean?
+    canRecognizeLetters      Boolean?
+    canRecognizeLetterForms  Boolean?
+    canReadDiacritics        Boolean?
+    canReadExtensions        Boolean?
+    canReadThreeLetterWords  Boolean?
+    canReadFourLetterWords   Boolean?
+    canReadShadda            Boolean?
+    canReadSokoun            Boolean?
     canReadThreeWordSentence Boolean?
-    canReadFourWordSentence Boolean?
-    canStopAtEndOfSentence Boolean?
+    canReadFourWordSentence  Boolean?
+    canStopAtEndOfSentence   Boolean?
 
     // Schrijfvaardigheid
-    canWriteLetters Boolean?
-    canWriteLetterForms Boolean?
-    canConnectLetters Boolean?
+    canWriteLetters        Boolean?
+    canWriteLetterForms    Boolean?
+    canConnectLetters      Boolean?
     knowsSunAndMoonLetters Boolean?
-    canWriteDictation Boolean?
+    canWriteDictation      Boolean?
 
     // Spreekvaardigheid
-    canTranslateToNL Boolean?
-    canAnswerYesNo Boolean?
-    canAnswerQuestions Boolean?
-    canIntroduceInArabic Boolean?
+    canTranslateToNL            Boolean?
+    canAnswerYesNo              Boolean?
+    canAnswerQuestions          Boolean?
+    canIntroduceInArabic        Boolean?
     canGivePresentationInArabic Boolean?
 
     // Koran
     canReadQuranIndependently Boolean?
-    canReadQuranWithRules Boolean?
-    numberOfAhzaab String?
-    lastKnownSurah String?
-    threeYearGoal String?
+    canReadQuranWithRules     Boolean?
+    numberOfAhzaab            String?
+    lastKnownSurah            String?
+    threeYearGoal             String?
 }
 
 model Course {
-    id          String   @id @default(cuid())
+    id          String     @id @default(cuid())
     title       String
     description String
-    slug        String   @unique
+    slug        String     @unique
     image       String
     level       String
     subjects    String[]
     schedules   Schedule[]
-    ageRange    String   // e.g. "6-15"
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
+    ageRange    String // e.g. "6-15"
+    createdAt   DateTime   @default(now())
+    updatedAt   DateTime   @updatedAt
 
     @@index([subjects])
 }
 
 model Schedule {
-    id          String   @id @default(cuid())
-    period      String   // "morning" | "afternoon"
-    startTime   String
-    endTime     String
-    subject     String
-    isSaturday  Boolean  @default(true)
-    course      Course   @relation(fields: [courseId], references: [id])
-    courseId    String
+    id         String  @id @default(cuid())
+    period     String // "morning" | "afternoon"
+    startTime  String
+    endTime    String
+    subject    String
+    isSaturday Boolean @default(true)
+    course     Course  @relation(fields: [courseId], references: [id])
+    courseId   String
 
     @@index([courseId])
 }
@@ -146,7 +148,7 @@ model Event {
     title           String
     start           DateTime
     end             DateTime
-    audience        String   // 'man' | 'vrouw' | 'gemengd'
+    audience        String // 'man' | 'vrouw' | 'gemengd'
     location        String
     description     String
     maxParticipants Int

@@ -213,7 +213,6 @@ export default function DonatePage() {
                                         amount={selectedAmount.amount}
                                         description={`${isRecurring ? 'Maandelijkse' : 'Eenmalige'} donatie aan De Kroon`}
                                         isRecurring={isRecurring}
-                                        interval={isRecurring ? 'monthly' : undefined}
                                         onSuccess={handlePaymentSuccess}
                                         onError={handlePaymentError}
                                         className="bg-crown text-white px-6 py-3 md:py-4 rounded-xl font-semibold hover:bg-opacity-90 transition-all duration-300 flex items-center justify-center group relative"

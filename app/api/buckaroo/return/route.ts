@@ -9,22 +9,10 @@ export async function POST(request: NextRequest) {
         // Extract data from Buckaroo's response
         const transactionKey = data.get('brq_transactions') as string;
         const statusCode = data.get('brq_statuscode') as string;
-        const statusMessage = data.get('brq_statusmessage') as string;
         const donorName = data.get('brq_customer_name') as string;
         const amount = parseFloat(data.get('brq_amount') as string);
         const description = data.get('brq_description') as string;
-        const isRecurring = description?.toLowerCase().includes('maandelijkse') || false;
-
-        console.log('Buckaroo return data:', {
-            transactionKey,
-            statusCode,
-            statusMessage,
-            donorName,
-            amount,
-            description,
-            isRecurring,
-            allData: Object.fromEntries(data.entries())
-        });
+        const isRecurring = description?.toLowerCase().includes('maandelijkse');
 
         // Map Buckaroo status codes to our status
         let status = 'error'; // Default to error for unknown status codes
@@ -55,21 +43,33 @@ export async function POST(request: NextRequest) {
 
         // Create or update donation record
         if (transactionKey) {
+            const updateData: any = {
+                status,
+                donorName
+            };
+
+            // If this is a completed recurring donation, set the next payment date
+            if (status === 'completed' && isRecurring) {
+                const nextMonth = new Date();
+                nextMonth.setMonth(nextMonth.getMonth() + 1);
+                updateData.nextPaymentDate = nextMonth;
+            }
+
             await prisma.donation.upsert({
                 where: {
                     buckarooKey: transactionKey
                 },
-                update: {
-                    status,
-                    donorName
-                },
+                update: updateData,
                 create: {
                     buckarooKey: transactionKey,
                     transactionId: crypto.randomUUID(),
                     amount,
                     isRecurring,
                     status,
-                    donorName
+                    donorName,
+                    ...(isRecurring && status === 'completed' ? {
+                        nextPaymentDate: new Date(new Date().setMonth(new Date().getMonth() + 1))
+                    } : {})
                 }
             });
         }
