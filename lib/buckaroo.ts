@@ -97,8 +97,6 @@ export class BuckarooService {
     }
 
     async createPayment(request: PaymentRequest) {
-        console.log("ik kom hier, we gaan de payment aanmaken")
-        console.log("isRecurring: ", request.isRecurring)
         const payload: BuckarooPayload = {
             Currency: request.currency || 'EUR',
             AmountDebit: request.amount,
@@ -108,8 +106,6 @@ export class BuckarooService {
             ReturnURLCancel: request.returnUrlCancel || request.returnUrl,
             ReturnURLError: request.returnUrlError || request.returnUrl,
             ReturnURLReject: request.returnUrlReject || request.returnUrl,
-            ServicesSelectableByClient: request.isRecurring ? "bancontactmrcash" : "ideal,payconiq,bancontactmrcash",
-            ServicesExcludedForClient: request.isRecurring ? "ideal,payconiq" : "",
             Services: {
                 ServiceList: [] as ServiceListItem[]
             },
@@ -117,7 +113,7 @@ export class BuckarooService {
             ContinueOnIncomplete: 1
         };
 
-        const services = ["ideal", "payconiq", "bancontactmrcash"];
+        const services = request.isRecurring ? ["bancontactmrcash"] : ["ideal", "payconiq", "bancontactmrcash"];
         services.forEach(serviceName => {
             const service: ServiceListItem = {
                 Name: serviceName,
