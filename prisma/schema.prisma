@@ -62,6 +62,7 @@ model Donation {
     buckarooKey     String?   @unique
     nextPaymentDate DateTime?
     lastProcessedAt DateTime?
+    campaign        String? // To identify specific fundraising campaigns
 }
 
 model Parent {

@@ -14,7 +14,7 @@ const config: Config = {
         boy: "#1dbdfe",     // Lichtblauw voor jongen
         crown: "#e4a500",   // Donkerder geel voor de kroon (was #f6c028)
         accent: "#2fae55",  // Groen voor subtext/accenten
-        
+
         // Afgeleide kleuren voor moderne UI
         pink: {
           light: "#ffd9e3",
@@ -36,6 +36,15 @@ const config: Config = {
           DEFAULT: "#2fae55",
           dark: "#278f46",
         },
+      },
+      keyframes: {
+        'fade-in': {
+          '0%': { opacity: '0', transform: 'translateY(10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' }
+        }
+      },
+      animation: {
+        'fade-in': 'fade-in 0.6s ease-out forwards'
       },
       fontFamily: {
         sans: ['Poppins', 'system-ui', 'sans-serif'],

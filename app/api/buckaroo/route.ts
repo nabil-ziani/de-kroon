@@ -18,7 +18,8 @@ export async function POST(request: Request) {
                     isRecurring: data.isRecurring,
                     status: 'pending',
                     buckarooKey: response.transactionKey,
-                    transactionId: crypto.randomUUID()
+                    transactionId: crypto.randomUUID(),
+                    campaign: data.description?.includes('Inzameling moskee') ? 'dekroon-2025' : undefined
                 }
             });
         }
