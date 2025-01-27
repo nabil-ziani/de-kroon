@@ -35,7 +35,7 @@ interface BuckarooPayload {
     };
     ContinueOnIncomplete?: any;
     OriginalTransactionKey?: string;
-    CustomParameters: {
+    CustomParameters?: {
         List: Array<{
             Name: string;
             Value: string;
@@ -126,14 +126,14 @@ export class BuckarooService {
 
         // Add customer info as custom parameters
         if (request.customerName) {
-            payload.CustomParameters.List.push({
+            payload.CustomParameters?.List.push({
                 Name: 'CustomerName',
                 Value: request.customerName
             });
         }
 
         if (request.customerEmail) {
-            payload.CustomParameters.List.push({
+            payload.CustomParameters?.List.push({
                 Name: 'CustomerEmail',
                 Value: request.customerEmail
             });
@@ -188,26 +188,8 @@ export class BuckarooService {
                         Action: "PayRecurring"
                     }
                 ] as ServiceListItem[]
-            },
-            CustomParameters: {
-                List: []
             }
         };
-
-        // Add customer info as custom parameters
-        if (request.customerName) {
-            payload.CustomParameters.List.push({
-                Name: 'CustomerName',
-                Value: request.customerName
-            });
-        }
-
-        if (request.customerEmail) {
-            payload.CustomParameters.List.push({
-                Name: 'CustomerEmail',
-                Value: request.customerEmail
-            });
-        }
 
         const { content, nonce, timestamp, signature } = await this.createAuthenticationComponents(payload);
 

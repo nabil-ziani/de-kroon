@@ -36,12 +36,12 @@ async function processRecurringDonations(): Promise<void> {
                 await buckaroo.createRecurringPayment({
                     amount: donation.amount,
                     currency: 'EUR',
-                    description: `Maandelijkse donatie aan De Kroon`,
+                    description: `Herhaling donatie aan De Kroon`,
                     returnUrl: new URL('/api/buckaroo/return', process.env.NEXT_PUBLIC_BASE_URL || '').toString(),
                     originalTransactionKey: donation.buckarooKey,
                     collectDate: nextMonth.toISOString().split('T')[0],
                     customerName: donation.donorName || undefined,
-                    customerEmail: donation.donorEmail || undefined
+                    customerEmail: donation.donorEmail || undefined,
                 });
 
                 // Update the donation record
