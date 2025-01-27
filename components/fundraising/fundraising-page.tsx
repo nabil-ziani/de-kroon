@@ -11,9 +11,10 @@ interface FundraisingPageProps {
     progress: number;
     campaignId: string;
     goal: number;
+    donorCount: number;
 }
 
-export default function FundraisingPage({ totalDonated, progress, campaignId, goal }: FundraisingPageProps) {
+export default function FundraisingPage({ totalDonated, progress, campaignId, goal, donorCount }: FundraisingPageProps) {
     const [showDonationModal, setShowDonationModal] = useState(false);
     const [showAutoModal, setShowAutoModal] = useState(false);
 
@@ -58,6 +59,7 @@ export default function FundraisingPage({ totalDonated, progress, campaignId, go
                         current={totalDonated}
                         goal={goal}
                         progress={progress}
+                        donorCount={donorCount}
                     />
                 </div>
 

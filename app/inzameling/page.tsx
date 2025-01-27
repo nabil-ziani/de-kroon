@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 };
 
 const CAMPAIGN_ID = 'dekroon-2025';
-const CAMPAIGN_GOAL = 10000; // 100 donateurs × €100
+const CAMPAIGN_GOAL = 10000;
 
 async function getTotalDonations() {
     const donations = await prisma.donation.findMany({
@@ -25,8 +25,20 @@ async function getTotalDonations() {
     return donations.reduce((sum, donation) => sum + donation.amount, 0);
 }
 
+async function getDonorCount() {
+    const donors = await prisma.donation.count({
+        where: {
+            campaign: CAMPAIGN_ID,
+            status: 'completed'
+        }
+    });
+
+    return donors;
+}
+
 export default async function Page() {
     const totalDonated = await getTotalDonations();
+    const donorCount = await getDonorCount();
     const progress = (totalDonated / CAMPAIGN_GOAL) * 100;
 
     return (
@@ -35,6 +47,7 @@ export default async function Page() {
             progress={progress}
             campaignId={CAMPAIGN_ID}
             goal={CAMPAIGN_GOAL}
+            donorCount={donorCount}
         />
     );
 } 

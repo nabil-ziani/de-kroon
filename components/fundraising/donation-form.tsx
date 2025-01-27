@@ -74,7 +74,8 @@ export default function DonationForm({ campaignId }: DonationFormProps) {
             <div className="flex justify-center">
                 <BuckarooPaymentButton
                     amount={amount}
-                    description={`Inzameling moskee - ${campaignId}`}
+                    description={`Donatie - ${campaignId}`}
+                    campaign={campaignId}
                     className="w-full sm:w-auto px-8 py-4 bg-crown text-white rounded-xl font-semibold hover:bg-opacity-90 transition-all duration-200 disabled:opacity-50"
                 >
                     Doneer €{amount.toLocaleString()}

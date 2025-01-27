@@ -6,9 +6,10 @@ interface FundraisingProgressProps {
     current: number;
     goal: number;
     progress: number;
+    donorCount: number;
 }
 
-export default function FundraisingProgress({ current, goal, progress }: FundraisingProgressProps) {
+export default function FundraisingProgress({ current, goal, progress, donorCount }: FundraisingProgressProps) {
     const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
@@ -17,7 +18,6 @@ export default function FundraisingProgress({ current, goal, progress }: Fundrai
 
     const circumference = 2 * Math.PI * 140;
     const offset = circumference - (progress / 100) * circumference;
-    const donorsCount = Math.round(current / 100);
 
     return (
         <div className="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-24">
@@ -42,8 +42,9 @@ export default function FundraisingProgress({ current, goal, progress }: Fundrai
                             strokeWidth="16"
                             strokeLinecap="round"
                             strokeDasharray={circumference}
-                            strokeDashoffset={offset}
-                            className="transition-[stroke-dashoffset] duration-1000 ease-out"
+                            strokeDashoffset={circumference}
+                            className="transition-[stroke-dashoffset] duration-[1500ms] ease-in-out delay-300"
+                            style={{ strokeDashoffset: offset }}
                         />
                     )}
                     <defs>
@@ -71,9 +72,9 @@ export default function FundraisingProgress({ current, goal, progress }: Fundrai
                 </div>
                 <div className="text-center md:text-left">
                     <div className="text-3xl md:text-4xl font-bold text-gray-900 mb-1">
-                        {donorsCount}
+                        {donorCount}
                     </div>
-                    <div className="text-sm md:text-base text-gray-500">Donateurs</div>
+                    <div className="text-sm md:text-base text-gray-500">{donorCount === 1 ? 'Donateur' : 'Donateurs'}</div>
                 </div>
                 <div className="text-center md:text-left">
                     <div className="text-3xl md:text-4xl font-bold text-gray-900 mb-1">

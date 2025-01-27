@@ -9,6 +9,7 @@ interface BuckarooPaymentButtonProps {
     onError?: (error: Error) => void;
     className?: string;
     children?: React.ReactNode;
+    campaign?: string;
 }
 
 export default function BuckarooPaymentButton({
@@ -18,7 +19,8 @@ export default function BuckarooPaymentButton({
     onSuccess,
     onError,
     className = '',
-    children
+    children,
+    campaign
 }: BuckarooPaymentButtonProps) {
     const [isLoading, setIsLoading] = useState(false);
 
@@ -41,7 +43,8 @@ export default function BuckarooPaymentButton({
                     returnUrlCancel: returnUrl,
                     returnUrlError: returnUrl,
                     returnUrlReject: returnUrl,
-                    currency: 'EUR'
+                    currency: 'EUR',
+                    campaign
                 }),
             });
 
