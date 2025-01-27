@@ -181,7 +181,6 @@ export class BuckarooService {
             OriginalTransactionKey: request.originalTransactionKey,
             AmountDebit: request.amount,
             Invoice: crypto.randomUUID(),
-            ServicesSelectableByClient: "bancontactmrcash",
             Services: {
                 ServiceList: [
                     {
@@ -194,6 +193,21 @@ export class BuckarooService {
                 List: []
             }
         };
+
+        // Add customer info as custom parameters
+        if (request.customerName) {
+            payload.CustomParameters.List.push({
+                Name: 'CustomerName',
+                Value: request.customerName
+            });
+        }
+
+        if (request.customerEmail) {
+            payload.CustomParameters.List.push({
+                Name: 'CustomerEmail',
+                Value: request.customerEmail
+            });
+        }
 
         const { content, nonce, timestamp, signature } = await this.createAuthenticationComponents(payload);
 

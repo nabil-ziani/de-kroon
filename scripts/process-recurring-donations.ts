@@ -30,6 +30,8 @@ async function processRecurringDonations(): Promise<void> {
                 const nextMonth = new Date(donation.nextPaymentDate!);
                 nextMonth.setMonth(nextMonth.getMonth() + 1);
 
+                console.log(donation)
+
                 // Process the recurring payment
                 await buckaroo.createRecurringPayment({
                     amount: donation.amount,
@@ -37,7 +39,9 @@ async function processRecurringDonations(): Promise<void> {
                     description: `Maandelijkse donatie aan De Kroon`,
                     returnUrl: new URL('/api/buckaroo/return', process.env.NEXT_PUBLIC_BASE_URL || '').toString(),
                     originalTransactionKey: donation.buckarooKey,
-                    collectDate: nextMonth.toISOString().split('T')[0]
+                    collectDate: nextMonth.toISOString().split('T')[0],
+                    customerName: donation.donorName || undefined,
+                    customerEmail: donation.donorEmail || undefined
                 });
 
                 // Update the donation record

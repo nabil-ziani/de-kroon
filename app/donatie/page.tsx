@@ -11,13 +11,8 @@ import { donorFields } from '@/utils/form-fields';
 // Voorgestelde donatiebedragen
 const SUGGESTED_AMOUNTS = [10, 15, 25, 50, 100, 250];
 
-interface DonationAmount {
-    amount: number;
-    isCustom: boolean;
-}
-
 export default function DonatePage() {
-    const [selectedAmount, setSelectedAmount] = useState<DonationAmount>({ amount: 10, isCustom: false });
+    const [selectedAmount, setSelectedAmount] = useState<number>(10);
     const [customAmount, setCustomAmount] = useState<string>('');
     const [isRecurring, setIsRecurring] = useState<boolean>(true);
     const [formRef, setFormRef] = useState<any>(null);
@@ -26,9 +21,9 @@ export default function DonatePage() {
         const value = e.target.value.replace(/[^0-9]/g, '');
         setCustomAmount(value);
         if (value) {
-            setSelectedAmount({ amount: parseInt(value) || 0, isCustom: true });
+            setSelectedAmount(parseInt(value) || 0);
         } else {
-            setSelectedAmount({ amount: 10, isCustom: false });
+            setSelectedAmount(10);
         }
     };
 
@@ -151,11 +146,11 @@ export default function DonatePage() {
                                         <button
                                             key={amount}
                                             onClick={() => {
-                                                setSelectedAmount({ amount, isCustom: false });
+                                                setSelectedAmount(amount);
                                                 setCustomAmount('');
                                             }}
                                             className={`p-3 md:p-4 rounded-xl border-2 transition-all duration-300 flex items-center justify-center gap-2
-                                                ${selectedAmount.amount === amount && !selectedAmount.isCustom
+                                                ${selectedAmount === amount
                                                     ? 'border-crown bg-crown/10 text-crown'
                                                     : 'border-gray-200 hover:border-crown/50 text-gray-600 hover:text-crown'
                                                 }`}
@@ -232,7 +227,7 @@ export default function DonatePage() {
                                 {/* Donation Buttons */}
                                 <div className="grid gap-4">
                                     <BuckarooPaymentButton
-                                        amount={selectedAmount.amount}
+                                        amount={selectedAmount}
                                         description={`${isRecurring ? 'Maandelijkse' : 'Eenmalige'} donatie aan De Kroon`}
                                         isRecurring={isRecurring}
                                         onSuccess={handlePaymentSuccess}
