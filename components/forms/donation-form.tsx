@@ -102,8 +102,6 @@ export default function DonationForm({ campaignId }: DonationFormProps) {
                 <BuckarooPaymentButton
                     amount={amount}
                     description={`Inzameling` + ` - ${campaignId}`}
-                    customerName={formRef?.getValues('name')}
-                    customerEmail={formRef?.getValues('email')}
                     onError={handlePaymentError}
                     className="w-full px-8 py-4 bg-crown text-white rounded-xl font-semibold hover:bg-opacity-90 transition-all duration-200 disabled:opacity-50"
                     formRef={formRef}

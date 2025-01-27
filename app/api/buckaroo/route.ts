@@ -18,6 +18,7 @@ export async function POST(request: Request) {
                     isRecurring: data.isRecurring || false,
                     status: 'pending',
                     buckarooKey: response.Key,
+                    transactionId: crypto.randomUUID(),
                     donorName: data.customerName,
                     donorEmail: data.customerEmail,
                     campaign: data.description?.includes('Inzameling') ? 'dekroon-2025' : undefined,

@@ -44,8 +44,7 @@ export async function POST(request: NextRequest) {
         // Create or update donation record
         if (transactionKey) {
             const updateData: any = {
-                status,
-                donorName
+                status
             };
 
             // If this is a completed recurring donation, set the next payment date
@@ -66,7 +65,6 @@ export async function POST(request: NextRequest) {
                     amount,
                     isRecurring,
                     status,
-                    donorName,
                     ...(isRecurring && status === 'completed' ? {
                         nextPaymentDate: new Date(new Date().setMonth(new Date().getMonth() + 1))
                     } : {})

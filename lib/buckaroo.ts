@@ -35,7 +35,7 @@ interface BuckarooPayload {
     };
     ContinueOnIncomplete?: any;
     OriginalTransactionKey?: string;
-    CustomParameters?: {
+    CustomParameters: {
         List: Array<{
             Name: string;
             Value: string;
@@ -117,29 +117,26 @@ export class BuckarooService {
             Services: {
                 ServiceList: [] as ServiceListItem[]
             },
+            CustomParameters: {
+                List: []
+            },
             StartRecurrent: request.isRecurring,
             ContinueOnIncomplete: 1
         };
 
         // Add customer info as custom parameters
-        if (request.customerName || request.customerEmail) {
-            payload.CustomParameters = {
-                List: []
-            };
+        if (request.customerName) {
+            payload.CustomParameters.List.push({
+                Name: 'CustomerName',
+                Value: request.customerName
+            });
+        }
 
-            if (request.customerName) {
-                payload.CustomParameters.List.push({
-                    Name: 'CustomerName',
-                    Value: request.customerName
-                });
-            }
-
-            if (request.customerEmail) {
-                payload.CustomParameters.List.push({
-                    Name: 'CustomerEmail',
-                    Value: request.customerEmail
-                });
-            }
+        if (request.customerEmail) {
+            payload.CustomParameters.List.push({
+                Name: 'CustomerEmail',
+                Value: request.customerEmail
+            });
         }
 
         const services = request.isRecurring ? ["bancontactmrcash"] : ["ideal", "payconiq", "bancontactmrcash"];
@@ -192,6 +189,9 @@ export class BuckarooService {
                         Action: "PayRecurring"
                     }
                 ] as ServiceListItem[]
+            },
+            CustomParameters: {
+                List: []
             }
         };
 

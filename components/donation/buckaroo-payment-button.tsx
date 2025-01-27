@@ -1,13 +1,10 @@
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { FaSpinner } from 'react-icons/fa';
 
 interface BuckarooPaymentButtonProps {
     amount: number;
     description: string;
     isRecurring?: boolean;
-    customerName?: string;
-    customerEmail?: string;
     onSuccess?: () => void;
     onError?: (error: Error) => void;
     className?: string;
@@ -19,8 +16,6 @@ export default function BuckarooPaymentButton({
     amount,
     description,
     isRecurring,
-    customerName,
-    customerEmail,
     onSuccess,
     onError,
     className = '',
@@ -31,15 +26,24 @@ export default function BuckarooPaymentButton({
 
     const handleClick = async () => {
         try {
-            // Check if form is valid
-            if (formRef && !formRef.formState.isValid) {
-                formRef.handleSubmit(() => { })(); // Trigger form validation
+            if (!formRef) {
+                return;
+            }
+
+            // Trigger validation and wait for it
+            const isValid = await formRef.trigger();
+
+            if (!isValid) {
                 return;
             }
 
             setIsLoading(true);
 
             const returnUrl = new URL('/api/buckaroo/return', window.location.origin).toString();
+
+            // Get form values at time of click
+            const customerName = formRef.getValues('name');
+            const customerEmail = formRef.getValues('email');
 
             const response = await fetch('/api/buckaroo', {
                 method: 'POST',
@@ -68,8 +72,8 @@ export default function BuckarooPaymentButton({
 
             // Redirect naar Buckaroo checkout
             if (data.RequiredAction?.RedirectURL) {
-                onSuccess?.();
                 window.location.href = data.RequiredAction.RedirectURL;
+                onSuccess?.();
             } else {
                 throw new Error('No redirect URL received');
             }
