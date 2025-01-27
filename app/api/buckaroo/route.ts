@@ -11,15 +11,16 @@ export async function POST(request: Request) {
         const response = await buckaroo.createPayment(data);
 
         // Create initial donation record
-        if (response.transactionKey) {
+        if (response.RequiredAction?.RedirectURL) {
             await prisma.donation.create({
                 data: {
                     amount: data.amount,
-                    isRecurring: data.isRecurring,
+                    isRecurring: data.isRecurring || false,
                     status: 'pending',
-                    buckarooKey: response.transactionKey,
-                    transactionId: crypto.randomUUID(),
-                    campaign: data.description?.includes('Inzameling moskee') ? 'dekroon-2025' : undefined
+                    buckarooKey: response.Key,
+                    donorName: data.customerName,
+                    donorEmail: data.customerEmail,
+                    campaign: data.description?.includes('Inzameling') ? 'dekroon-2025' : undefined,
                 }
             });
         }

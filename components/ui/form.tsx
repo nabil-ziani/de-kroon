@@ -53,7 +53,7 @@ export function Form<T extends z.ZodType>({
     sections,
     fields,
     defaultValues,
-    submitLabel = 'Submit',
+    submitLabel,
     className = '',
     inputClassName = '',
     labelClassName = '',
@@ -226,7 +226,7 @@ export function Form<T extends z.ZodType>({
     };
 
     const renderFields = (fields: Field[]) => (
-        <div className={`grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 ${gridClassName}`}>
+        <div className={` gap-4 md:gap-6 ${gridClassName}`}>
             {fields.map(renderField)}
         </div>
     );
@@ -257,15 +257,17 @@ export function Form<T extends z.ZodType>({
                 renderFields(fields)
             ) : null}
 
-            <div className="flex justify-end">
-                <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className={`relative bg-crown text-white px-6 py-3 rounded-xl font-semibold hover:bg-opacity-90 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed ${submitClassName}`}
-                >
-                    {isSubmitting && <FaSpinner className="w-4 h-4 animate-spin" />}
-                    {submitLabel}
-                </button>
+            <div className="flex">
+                {submitLabel && (
+                    <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className={`relative bg-crown text-white px-6 py-3 rounded-xl font-semibold hover:bg-opacity-90 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed ${submitClassName}`}
+                    >
+                        {isSubmitting && <FaSpinner className="w-4 h-4 animate-spin" />}
+                        {submitLabel}
+                    </button>
+                )}
             </div>
         </form>
     );

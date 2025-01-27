@@ -1,31 +1,42 @@
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { FaSpinner } from 'react-icons/fa';
 
 interface BuckarooPaymentButtonProps {
     amount: number;
     description: string;
     isRecurring?: boolean;
+    customerName?: string;
+    customerEmail?: string;
     onSuccess?: () => void;
     onError?: (error: Error) => void;
     className?: string;
     children?: React.ReactNode;
-    campaign?: string;
+    formRef?: any;
 }
 
 export default function BuckarooPaymentButton({
     amount,
     description,
     isRecurring,
+    customerName,
+    customerEmail,
     onSuccess,
     onError,
     className = '',
     children,
-    campaign
+    formRef,
 }: BuckarooPaymentButtonProps) {
     const [isLoading, setIsLoading] = useState(false);
 
     const handleClick = async () => {
         try {
+            // Check if form is valid
+            if (formRef && !formRef.formState.isValid) {
+                formRef.handleSubmit(() => { })(); // Trigger form validation
+                return;
+            }
+
             setIsLoading(true);
 
             const returnUrl = new URL('/api/buckaroo/return', window.location.origin).toString();
@@ -44,7 +55,8 @@ export default function BuckarooPaymentButton({
                     returnUrlError: returnUrl,
                     returnUrlReject: returnUrl,
                     currency: 'EUR',
-                    campaign
+                    customerName,
+                    customerEmail
                 }),
             });
 
@@ -56,8 +68,8 @@ export default function BuckarooPaymentButton({
 
             // Redirect naar Buckaroo checkout
             if (data.RequiredAction?.RedirectURL) {
-                window.location.href = data.RequiredAction.RedirectURL;
                 onSuccess?.();
+                window.location.href = data.RequiredAction.RedirectURL;
             } else {
                 throw new Error('No redirect URL received');
             }
@@ -72,7 +84,7 @@ export default function BuckarooPaymentButton({
     return (
         <button
             onClick={handleClick}
-            disabled={isLoading}
+            disabled={isLoading || amount <= 0}
             className={`relative ${className}`}
         >
             <span className={`flex items-center justify-center ${isLoading ? 'opacity-0' : 'opacity-100'} text-inherit`}>

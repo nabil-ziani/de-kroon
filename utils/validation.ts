@@ -10,10 +10,6 @@ const emailSchema = z.string()
     .min(5, 'E-mailadres moet minimaal 5 karakters bevatten')
     .max(100, 'E-mailadres mag maximaal 100 karakters bevatten');
 
-const messageSchema = z.string()
-    .min(10, 'Bericht moet minimaal 10 karakters bevatten')
-    .max(1000, 'Bericht mag maximaal 1000 karakters bevatten');
-
 // ------------------------------------------------------------------------------------------------
 
 // Contact form schema
@@ -180,6 +176,13 @@ export const enrollmentFormSchema = z.object({
     path: ["father"]
 });
 
+// Donation form schema
+export const donorSchema = z.object({
+    name: z.string().min(1, 'Vul je naam in').max(50, 'Naam mag maximaal 50 karakters bevatten'),
+    email: z.string().min(1, 'Vul je e-mailadres in').email('Ongeldig e-mailadres').max(100, 'E-mailadres mag maximaal 100 karakters bevatten'),
+});
+
 // Types
 export type ContactFormData = z.infer<typeof contactFormSchema>;
-export type EnrollmentFormData = z.infer<typeof enrollmentFormSchema>; 
+export type EnrollmentFormData = z.infer<typeof enrollmentFormSchema>;
+export type DonorFormData = z.infer<typeof donorSchema>;

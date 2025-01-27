@@ -4,7 +4,7 @@ import { useState, useEffect, Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { FaTimes } from 'react-icons/fa';
 import FundraisingProgress from './progress';
-import DonationForm from './donation-form';
+import DonationForm from '../forms/donation-form';
 
 interface FundraisingPageProps {
     totalDonated: number;

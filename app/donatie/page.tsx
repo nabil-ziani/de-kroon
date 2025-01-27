@@ -1,9 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { FaArrowRight, FaCreditCard, FaQrcode, FaEuroSign, FaRegClock, FaGraduationCap, FaUsers } from 'react-icons/fa';
+import { FaArrowRight, FaCreditCard, FaEuroSign, FaRegClock, FaGraduationCap, FaUsers } from 'react-icons/fa';
 import BuckarooPaymentButton from '@/components/donation/buckaroo-payment-button';
 import toast from 'react-hot-toast';
+import { Form } from '@/components/ui/form';
+import { donorSchema } from '@/utils/validation';
+import { donorFields } from '@/utils/form-fields';
 
 // Voorgestelde donatiebedragen
 const SUGGESTED_AMOUNTS = [10, 15, 25, 50, 100, 250];
@@ -17,6 +20,7 @@ export default function DonatePage() {
     const [selectedAmount, setSelectedAmount] = useState<DonationAmount>({ amount: 10, isCustom: false });
     const [customAmount, setCustomAmount] = useState<string>('');
     const [isRecurring, setIsRecurring] = useState<boolean>(true);
+    const [formRef, setFormRef] = useState<any>(null);
 
     const handleCustomAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value.replace(/[^0-9]/g, '');
@@ -34,6 +38,7 @@ export default function DonatePage() {
 
     const handlePaymentError = (error: Error) => {
         toast.error('Er is iets misgegaan bij het verwerken van uw donatie. Probeer het opnieuw.');
+        console.error('Buckaroo API error:', error);
     };
 
     return (
@@ -180,6 +185,23 @@ export default function DonatePage() {
                                     </div>
                                 </div>
 
+                                {/* Donor Information */}
+                                <div>
+                                    <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-4">
+                                        Persoonlijke gegevens
+                                    </h3>
+                                    <Form
+                                        schema={donorSchema}
+                                        onSubmit={() => { }}
+                                        formRef={setFormRef}
+                                        fields={donorFields}
+                                        className="space-y-4"
+                                        labelClassName="block text-gray-700 font-medium mb-2"
+                                        inputClassName="w-full pl-8 pr-4 py-3 rounded-xl border-2 text-gray-800 border-gray-200 focus:border-crown focus:ring-0 transition-all duration-300 outline-none text-sm md:text-base"
+                                        gridClassName="grid md:grid-cols-2 gap-4"
+                                    />
+                                </div>
+
                                 {/* Recurring Info */}
                                 {isRecurring && (
                                     <div className="mb-6 md:mb-8">
@@ -213,6 +235,8 @@ export default function DonatePage() {
                                         amount={selectedAmount.amount}
                                         description={`${isRecurring ? 'Maandelijkse' : 'Eenmalige'} donatie aan De Kroon`}
                                         isRecurring={isRecurring}
+                                        customerName={formRef?.getValues('name')}
+                                        customerEmail={formRef?.getValues('email')}
                                         onSuccess={handlePaymentSuccess}
                                         onError={handlePaymentError}
                                         className="bg-crown text-white px-6 py-3 md:py-4 rounded-xl font-semibold hover:bg-opacity-90 transition-all duration-300 flex items-center justify-center group relative"

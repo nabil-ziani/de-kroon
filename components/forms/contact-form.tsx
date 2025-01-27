@@ -84,10 +84,10 @@ export default function ContactForm() {
                 </div>
             }
             className="space-y-4"
-            inputClassName="w-full px-4 py-3 rounded-xl bg-gray-50 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-crown/50 transition-all duration-300"
             labelClassName="block text-gray-700 font-medium mb-2"
+            inputClassName="w-full pl-8 pr-4 py-3 rounded-xl border-2 text-gray-800 border-gray-200 focus:border-crown focus:ring-0 transition-all duration-300 outline-none text-sm md:text-base"
             submitClassName="w-full bg-crown text-white px-6 py-3.5 rounded-xl font-semibold hover:bg-opacity-90 transition-colors text-sm uppercase tracking-wide flex items-center justify-center group"
-            gridClassName="grid md:grid-cols-2 gap-4"
+            gridClassName="grid md:grid-cols-1 gap-4"
         />
     );
 } 
