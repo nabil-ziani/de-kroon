@@ -5,6 +5,7 @@ import Navbar from "@/components/ui/navbar";
 import Footer from "@/components/ui/footer";
 import { Toaster } from 'react-hot-toast';
 import DonationWidget from "@/components/ui/donation-widget";
+import FundraisingBanner from "@/components/fundraising/fundraising-banner";
 
 const poppins = Poppins({
   weight: ['400', '500', '600', '700', '800', '900'],
@@ -21,11 +22,14 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="nl" className={poppins.variable}>
-      <body className={`${poppins.className}`}>
-        <Navbar />
-        <div>
-          {children}
+      <body className={poppins.className}>
+        <div className="fixed top-0 left-0 right-0 z-50">
+          <FundraisingBanner />
+          <Navbar />
         </div>
+        <main>
+          {children}
+        </main>
         <Footer />
         <DonationWidget />
         <Toaster

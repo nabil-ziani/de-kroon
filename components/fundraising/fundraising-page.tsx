@@ -48,7 +48,7 @@ export default function FundraisingPage({ totalDonated, progress, campaignId, go
 
             <div id="donate-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
                 <div className="max-w-3xl mx-auto text-center mb-12">
-                    <p className="text-lg text-gray-600">
+                    <p className="text-md sm:text-lg md:text-xl text-gray-600">
                         Elke bijdrage, groot of klein, helpt ons dit doel te bereiken.
                         Samen maken we het verschil voor onze gemeenschap.
                     </p>

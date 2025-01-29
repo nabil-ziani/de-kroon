@@ -33,8 +33,6 @@ async function getTotalDonations() {
         }
     });
 
-    console.log('All donations for campaign:', donations);
-
     return donations.reduce((sum, donation) => sum + donation.amount, 0);
 }
 
