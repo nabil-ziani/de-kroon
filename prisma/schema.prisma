@@ -1,158 +1,138 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Enrollment {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    // Kind gegevens
-    childName          String
-    birthDate          DateTime
-    hadPreviousClasses Boolean             @default(false)
-    previousExperience PreviousExperience?
-
-    // Ouder gegevens
-    father   Parent? @relation("FatherRelation", fields: [fatherId], references: [id])
-    fatherId String?
-    mother   Parent? @relation("MotherRelation", fields: [motherId], references: [id])
-    motherId String?
-
-    // Adres
-    street      String
-    houseNumber String
-    city        String
-
-    // Extra info
-    learningDisorders String?
-    allergies         String?
-    pickupMethod      PickupMethod
-
-    // Cursus info
-    courseName String
-    message    String?
-    status     String  @default("pending") // pending, approved, rejected
-}
-
-enum PickupMethod {
-    ALONE
-    PARENTS
-    SIBLINGS
+  id                 String              @id @default(cuid())
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  childName          String
+  birthDate          DateTime
+  hadPreviousClasses Boolean             @default(false)
+  fatherId           String?
+  motherId           String?
+  street             String
+  houseNumber        String
+  city               String
+  learningDisorders  String?
+  allergies          String?
+  pickupMethod       PickupMethod
+  courseName         String
+  message            String?
+  status             String              @default("pending")
+  father             Parent?             @relation("FatherRelation", fields: [fatherId], references: [id])
+  mother             Parent?             @relation("MotherRelation", fields: [motherId], references: [id])
+  previousExperience PreviousExperience?
 }
 
 model Donation {
-    id              String    @id @default(cuid())
-    createdAt       DateTime  @default(now())
-    updatedAt       DateTime  @updatedAt
-    amount          Float
-    isRecurring     Boolean   @default(false)
-    status          String    @default("pending") // pending, completed, failed
-    donorEmail      String?
-    donorName       String?
-    transactionId   String?   @unique
-    buckarooKey     String?   @unique
-    nextPaymentDate DateTime?
-    lastProcessedAt DateTime?
-    campaign        String? // To identify specific fundraising campaigns
+  id              String    @id @default(cuid())
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  amount          Float
+  isRecurring     Boolean   @default(false)
+  status          String    @default("pending")
+  donorEmail      String?
+  donorName       String?
+  transactionId   String?   @unique
+  buckarooKey     String?   @unique
+  nextPaymentDate DateTime?
+  lastProcessedAt DateTime?
+  campaign        String?
 }
 
 model Parent {
-    id        String       @id @default(cuid())
-    firstName String?
-    lastName  String?
-    phone     String?
-    email     String?
-    fatherOf  Enrollment[] @relation("FatherRelation")
-    motherOf  Enrollment[] @relation("MotherRelation")
+  id        String       @id @default(cuid())
+  firstName String?
+  lastName  String?
+  phone     String?
+  email     String?
+  fatherOf  Enrollment[] @relation("FatherRelation")
+  motherOf  Enrollment[] @relation("MotherRelation")
 }
 
 model PreviousExperience {
-    id           String     @id @default(cuid())
-    enrollment   Enrollment @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
-    enrollmentId String     @unique
-
-    // Leesvaardigheid
-    canRecognizeLetters      Boolean?
-    canRecognizeLetterForms  Boolean?
-    canReadDiacritics        Boolean?
-    canReadExtensions        Boolean?
-    canReadThreeLetterWords  Boolean?
-    canReadFourLetterWords   Boolean?
-    canReadShadda            Boolean?
-    canReadSokoun            Boolean?
-    canReadThreeWordSentence Boolean?
-    canReadFourWordSentence  Boolean?
-    canStopAtEndOfSentence   Boolean?
-
-    // Schrijfvaardigheid
-    canWriteLetters        Boolean?
-    canWriteLetterForms    Boolean?
-    canConnectLetters      Boolean?
-    knowsSunAndMoonLetters Boolean?
-    canWriteDictation      Boolean?
-
-    // Spreekvaardigheid
-    canTranslateToNL            Boolean?
-    canAnswerYesNo              Boolean?
-    canAnswerQuestions          Boolean?
-    canIntroduceInArabic        Boolean?
-    canGivePresentationInArabic Boolean?
-
-    // Koran
-    canReadQuranIndependently Boolean?
-    canReadQuranWithRules     Boolean?
-    numberOfAhzaab            String?
-    lastKnownSurah            String?
-    threeYearGoal             String?
+  id                          String     @id @default(cuid())
+  enrollmentId                String     @unique
+  canRecognizeLetters         Boolean?
+  canRecognizeLetterForms     Boolean?
+  canReadDiacritics           Boolean?
+  canReadExtensions           Boolean?
+  canReadThreeLetterWords     Boolean?
+  canReadFourLetterWords      Boolean?
+  canReadShadda               Boolean?
+  canReadSokoun               Boolean?
+  canReadThreeWordSentence    Boolean?
+  canReadFourWordSentence     Boolean?
+  canStopAtEndOfSentence      Boolean?
+  canWriteLetters             Boolean?
+  canWriteLetterForms         Boolean?
+  canConnectLetters           Boolean?
+  knowsSunAndMoonLetters      Boolean?
+  canWriteDictation           Boolean?
+  canTranslateToNL            Boolean?
+  canAnswerYesNo              Boolean?
+  canAnswerQuestions          Boolean?
+  canIntroduceInArabic        Boolean?
+  canGivePresentationInArabic Boolean?
+  canReadQuranIndependently   Boolean?
+  canReadQuranWithRules       Boolean?
+  numberOfAhzaab              String?
+  lastKnownSurah              String?
+  threeYearGoal               String?
+  enrollment                  Enrollment @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
 }
 
 model Course {
-    id          String     @id @default(cuid())
-    title       String
-    description String
-    slug        String     @unique
-    image       String
-    level       String
-    subjects    String[]
-    schedules   Schedule[]
-    ageRange    String // e.g. "6-15"
-    createdAt   DateTime   @default(now())
-    updatedAt   DateTime   @updatedAt
+  id          String     @id @default(cuid())
+  title       String
+  description String
+  slug        String     @unique
+  image       String
+  level       String
+  subjects    String[]
+  ageRange    String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  schedules   Schedule[]
 
-    @@index([subjects])
+  @@index([subjects])
 }
 
 model Schedule {
-    id         String  @id @default(cuid())
-    period     String // "morning" | "afternoon"
-    startTime  String
-    endTime    String
-    subject    String
-    isSaturday Boolean @default(true)
-    course     Course  @relation(fields: [courseId], references: [id])
-    courseId   String
+  id         String  @id @default(cuid())
+  period     String
+  startTime  String
+  endTime    String
+  subject    String
+  courseId   String
+  isSaturday Boolean @default(true)
+  course     Course  @relation(fields: [courseId], references: [id])
 
-    @@index([courseId])
+  @@index([courseId])
 }
 
 model Event {
-    id              String   @id @default(cuid())
-    title           String
-    start           DateTime
-    end             DateTime
-    audience        String // 'man' | 'vrouw' | 'gemengd'
-    location        String
-    description     String
-    maxParticipants Int
-    createdAt       DateTime @default(now())
-    updatedAt       DateTime @updatedAt
+  title           String
+  start           DateTime
+  end             DateTime
+  audience        String
+  location        String
+  description     String
+  maxParticipants Int
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  url             String?
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+}
+
+enum PickupMethod {
+  ALONE
+  PARENTS
+  SIBLINGS
 }

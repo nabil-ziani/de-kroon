@@ -11,6 +11,11 @@ async function getEvents() {
         }
     });
 
+    // Log the first event to check if url is present
+    if (events.length > 0) {
+        console.log('First event data:', events[0]);
+    }
+
     // Convert dates from strings to Date objects and assert the audience type
     return events.map(event => ({
         ...event,

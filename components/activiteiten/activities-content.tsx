@@ -3,9 +3,11 @@
 import { useState } from 'react';
 import { format } from 'date-fns';
 import { nl } from 'date-fns/locale';
-import { FaTimes } from 'react-icons/fa';
+import { FaTimes, FaLink } from 'react-icons/fa';
 import Calendar from '@/components/activiteiten/calendar';
 import { Event } from '@/types';
+import QRCode from 'react-qr-code';
+import ReactMarkdown from 'react-markdown';
 
 // Event Modal Component
 function EventModal({ event, onClose, allEvents }: { event: Event; onClose: () => void; allEvents?: Event[] }) {
@@ -55,15 +57,15 @@ function EventModal({ event, onClose, allEvents }: { event: Event; onClose: () =
                                 </div>
                             </div>
 
-                            <div className="grid gap-8">
+                            <div className="grid gap-4">
                                 <div>
-                                    <div className="text-sm text-gray-400 mb-1">Locatie</div>
-                                    <div className="text-gray-900">{event.location}</div>
+                                    <div className="text-sm text-gray-500 mb-1">Locatie</div>
+                                    <div className="prose prose-md text-gray-900 max-w-none">{event.location}</div>
                                 </div>
 
                                 <div>
-                                    <div className="text-sm text-gray-400 mb-1">Voor wie?</div>
-                                    <div className="text-gray-900">
+                                    <div className="text-sm text-gray-500 mb-1">Voor wie?</div>
+                                    <div className="text-gray-900 prose prose-md max-w-none">
                                         {event.audience === 'man' ? 'Alleen broeders' :
                                             event.audience === 'vrouw' ? 'Alleen zusters' :
                                                 'Iedereen welkom'}
@@ -72,8 +74,45 @@ function EventModal({ event, onClose, allEvents }: { event: Event; onClose: () =
 
                                 {event.description && (
                                     <div>
-                                        <div className="text-sm text-gray-400 mb-1">Beschrijving</div>
-                                        <p className="text-gray-600 leading-relaxed">{event.description}</p>
+                                        <div className="text-sm text-gray-500 mb-1">Beschrijving</div>
+                                        <div className="prose prose-md text-gray-900 max-w-none">
+                                            <ReactMarkdown>{event.description}</ReactMarkdown>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {event.url && (
+                                    <div>
+                                        <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl border border-gray-100 shadow-lg p-6 md:p-8 hover:shadow-xl transition-all duration-300">
+                                            <div className="grid md:grid-cols-2 gap-8 items-center">
+                                                <div className="relative group">
+                                                    {/* Decorative elements */}
+                                                    <div className="absolute -inset-1 bg-gradient-to-r from-crown/20 to-boy/20 rounded-lg blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
+                                                    {/* QR Container */}
+                                                    <div className="relative bg-white rounded-xl p-4 ring-1 ring-gray-200/50 shadow-sm">
+                                                        <QRCode
+                                                            value={event.url}
+                                                            className="w-full h-auto max-w-[200px] mx-auto transition-transform duration-300 group-hover:scale-[1.02]"
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className="flex flex-col gap-4">
+                                                    <h4 className="font-medium text-gray-900">Inschrijven</h4>
+                                                    <p className="text-gray-600 text-sm">
+                                                        Scan de QR-code met je telefoon of gebruik onderstaande link om je in te schrijven.
+                                                    </p>
+                                                    <a
+                                                        href={event.url}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="inline-flex items-center gap-2 text-crown hover:text-crown/80 transition-all duration-300 group/link w-fit"
+                                                    >
+                                                        <FaLink className="w-4 h-4 transition-transform duration-300 group-hover/link:rotate-[-12deg]" />
+                                                        <span className="underline underline-offset-4">Bezoek link</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 )}
                             </div>
@@ -107,7 +146,36 @@ function EventModal({ event, onClose, allEvents }: { event: Event; onClose: () =
                                         </div>
 
                                         {evt.description && (
-                                            <p className="text-gray-600 text-sm leading-relaxed">{evt.description}</p>
+                                            <div className="prose prose-sm prose-gray max-w-none mb-4">
+                                                <ReactMarkdown>{evt.description}</ReactMarkdown>
+                                            </div>
+                                        )}
+
+                                        {evt.url && (
+                                            <div className="mt-4 pt-4 border-t border-gray-200">
+                                                <div className="grid md:grid-cols-2 gap-6 items-start">
+                                                    <div className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm">
+                                                        <QRCode
+                                                            value={evt.url}
+                                                            className="w-full h-auto max-w-[200px] mx-auto"
+                                                        />
+                                                    </div>
+                                                    <div className="flex flex-col gap-4">
+                                                        <p className="text-gray-600 text-sm">
+                                                            Scan de QR-code of gebruik onderstaande link:
+                                                        </p>
+                                                        <a
+                                                            href={evt.url}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="inline-flex items-center gap-2 text-crown hover:text-crown/80 transition-colors"
+                                                        >
+                                                            <FaLink className="w-4 h-4" />
+                                                            <span className="underline">Open link</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         )}
                                     </div>
                                 ))}

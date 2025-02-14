@@ -6,5 +6,6 @@ export type Event = {
     audience: 'man' | 'vrouw' | 'gemengd';
     location: string;
     description: string;
+    url?: string;
     maxParticipants: number;
 }; 
