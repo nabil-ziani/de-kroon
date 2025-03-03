@@ -143,7 +143,13 @@ export class BuckarooService {
         services.forEach(serviceName => {
             const service: ServiceListItem = {
                 Name: serviceName,
-                Action: "Pay"
+                Action: "Pay",
+                Parameters: request.isRecurring ? [
+                    {
+                        Name: "savetoken",
+                        Value: "true"
+                    }
+                ] : undefined
             }
 
             payload.Services.ServiceList.push(service);
