@@ -33,7 +33,7 @@ export default function AboutPage() {
                         <h2 className="text-3xl md:text-5xl font-bold text-gray-800 mb-4 md:mb-6">
                             Educatief Jeugdcentrum
                         </h2>
-                        <p className="text-base md:text-xl text-gray-600 leading-relaxed">
+                        <p className="text-base md:text-lg text-gray-600 leading-relaxed">
                             De Kroon is een vereniging gevestigd in het hart van Borgerhout. We zetten ons in voor de ontwikkeling en vorming van jongeren, met als doel hen te helpen een actieve rol in de samenleving te vervullen.
                         </p>
                     </div>
@@ -72,7 +72,7 @@ export default function AboutPage() {
                                 <h2 className="text-3xl md:text-5xl font-bold text-gray-800 mb-4 md:mb-6">
                                     Ontwikkeling & Vorming
                                 </h2>
-                                <p className="text-base md:text-xl text-gray-600 mb-6 md:mb-8">
+                                <p className="text-base md:text-lg text-gray-600 mb-6 md:mb-8">
                                     Bij De Kroon streven we ernaar om een inspirerende leeromgeving te creëren waar jongeren zich kunnen ontwikkelen op alle vlakken.
                                 </p>
                                 <div className="text-left space-y-3 md:space-y-4">

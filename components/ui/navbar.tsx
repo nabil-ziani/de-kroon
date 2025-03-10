@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import { FaChevronDown } from 'react-icons/fa';
 
 export default function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -31,12 +32,20 @@ export default function Navbar() {
     }, [isOpen]);
 
     const menuItems = [
-        { name: 'Over ons', href: '/over-ons' },
+        {
+            name: 'Over ons',
+            href: '/over-ons',
+            dropdownItems: [
+                { name: 'Zusterwerking', href: '/zusterwerking' }
+            ]
+        },
         { name: 'Vorming', href: '/vorming' },
         { name: 'Activiteiten', href: '/activiteiten' },
         { name: 'Live', href: '/live' },
         { name: 'Contact', href: '/contact' },
     ];
+
+    const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
     return (
         <nav className={`fixed w-full z-50 transition-all duration-300 
@@ -58,15 +67,44 @@ export default function Navbar() {
                     {/* Desktop Menu */}
                     <div className="hidden md:flex items-center space-x-10">
                         {menuItems.map((item) => (
-                            <Link
+                            <div
                                 key={item.name}
-                                href={item.href}
-                                className={`relative group text-base tracking-wide
-                                    ${isScrolled ? 'text-gray-600 hover:text-gray-900' : 'text-white/90 hover:text-white'}`}
+                                className="relative group"
+                                onMouseEnter={() => setActiveDropdown(item.name)}
+                                onMouseLeave={() => setActiveDropdown(null)}
                             >
-                                {item.name}
-                                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-crown transition-all duration-300 group-hover:w-full" />
-                            </Link>
+                                <Link
+                                    href={item.href}
+                                    className={`relative group inline-flex items-center gap-1
+                                        ${isScrolled ? 'text-gray-600 hover:text-gray-900' : 'text-white/90 hover:text-white'}`}
+                                >
+                                    {item.name}
+                                    {item.dropdownItems && (
+                                        <FaChevronDown className="w-3 h-3 mt-0.5 transition-transform duration-200 group-hover:rotate-180" />
+                                    )}
+                                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-crown transition-all duration-300 group-hover:w-full" />
+                                </Link>
+
+                                {item.dropdownItems && (
+                                    <>
+                                        {/* Add invisible bridge to prevent hover gap */}
+                                        <div className="absolute h-3 w-full -bottom-3" />
+
+                                        <div className={`absolute top-full left-0 mt-2 w-48 bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-200
+                                            ${activeDropdown === item.name ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2 pointer-events-none'}`}>
+                                            {item.dropdownItems.map((dropdownItem) => (
+                                                <Link
+                                                    key={dropdownItem.name}
+                                                    href={dropdownItem.href}
+                                                    className="block px-4 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors"
+                                                >
+                                                    {dropdownItem.name}
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    </>
+                                )}
+                            </div>
                         ))}
                         <Link
                             href="/donatie"
@@ -97,18 +135,32 @@ export default function Navbar() {
                 <div className={`md:hidden fixed inset-0 bg-white z-40 transition-transform duration-500 ease-in-out transform ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
                     <div className="flex flex-col justify-center items-center min-h-screen space-y-8 p-6">
                         {menuItems.map((item, index) => (
-                            <Link
-                                key={item.name}
-                                href={item.href}
-                                className={`text-2xl font-medium text-gray-900 transition-all duration-300 transform
-                                    ${isOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
-                                    ${pathname === item.href ? 'text-crown' : 'hover:text-crown'}
-                                `}
-                                style={{ transitionDelay: `${index * 100}ms` }}
-                                onClick={() => setIsOpen(false)}
-                            >
-                                {item.name}
-                            </Link>
+                            <div key={item.name} className="flex flex-col items-center">
+                                <Link
+                                    href={item.href}
+                                    className={`text-2xl font-medium text-gray-900 transition-all duration-300 transform
+                                        ${isOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
+                                        ${pathname === item.href ? 'text-crown' : 'hover:text-crown'}`}
+                                    style={{ transitionDelay: `${index * 100}ms` }}
+                                    onClick={() => setIsOpen(false)}
+                                >
+                                    {item.name}
+                                </Link>
+                                {item.dropdownItems && (
+                                    <div className="mt-4 space-y-2">
+                                        {item.dropdownItems.map((dropdownItem) => (
+                                            <Link
+                                                key={dropdownItem.name}
+                                                href={dropdownItem.href}
+                                                className="block text-lg text-gray-600 hover:text-crown"
+                                                onClick={() => setIsOpen(false)}
+                                            >
+                                                {dropdownItem.name}
+                                            </Link>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
                         ))}
                         <Link
                             href="/donatie"
