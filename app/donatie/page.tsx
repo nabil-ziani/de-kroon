@@ -14,7 +14,7 @@ const SUGGESTED_AMOUNTS = [10, 15, 25, 50, 100, 250];
 export default function DonatePage() {
     const [selectedAmount, setSelectedAmount] = useState<number>(10);
     const [customAmount, setCustomAmount] = useState<string>('');
-    const [isRecurring, setIsRecurring] = useState<boolean>(true);
+    const [isRecurring, setIsRecurring] = useState<boolean>(false);
     const [formRef, setFormRef] = useState<any>(null);
 
     const handleCustomAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -110,14 +110,14 @@ export default function DonatePage() {
             </section>
 
             {/* Donation Options */}
-            <section className="py-16 md:py-24">
+            <section className="py-8">
                 <div className="container mx-auto px-4">
                     <div className="text-center md:text-left max-w-7xl mx-auto">
                         <h2 className="text-3xl md:text-5xl font-bold text-gray-800 mb-4 md:mb-6">
                             Word Steunpilaar
                         </h2>
                         <p className="text-base md:text-xl text-gray-600 mb-8 md:mb-12">
-                            Kies een maandelijkse bijdrage die bij jou past. Elke bijdrage, hoe klein ook, maakt een verschil
+                            Kies een bijdrage die bij jou past. Elke bijdrage, hoe klein ook, maakt een verschil
                             in het leven van onze kinderen.
                         </p>
                         <div className="grid gap-4 md:gap-8">
@@ -127,7 +127,8 @@ export default function DonatePage() {
                                     <h3 className="text-xl md:text-2xl font-bold text-gray-800">
                                         Kies je bijdrage
                                     </h3>
-                                    <div className="flex items-center">
+                                    {/* 
+                                    <div<div className="flex items-center">
                                         <label className="flex items-center bg-crown/5 px-4 py-2 rounded-xl border-2 border-crown/10">
                                             <input
                                                 type="checkbox"
@@ -138,7 +139,8 @@ export default function DonatePage() {
                                             <span className="ml-2 text-gray-700 font-medium text-sm md:text-base">Maandelijkse donatie</span>
                                             <span className="ml-2 text-xs bg-crown/10 text-crown px-2 py-1 rounded-full">Aanbevolen</span>
                                         </label>
-                                    </div>
+                                    </div> className="flex items-center">
+                                    */}
                                 </div>
 
                                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-4 mb-6 md:mb-8">
@@ -197,7 +199,7 @@ export default function DonatePage() {
                                     />
                                 </div>
 
-                                {/* Recurring Info */}
+                                {/* 
                                 {isRecurring && (
                                     <div className="mb-6 md:mb-8">
                                         <div className="bg-gray-50 rounded-xl p-4 md:p-6">
@@ -223,6 +225,7 @@ export default function DonatePage() {
                                         </div>
                                     </div>
                                 )}
+                                */}
 
                                 {/* Donation Buttons */}
                                 <div className="grid gap-4">

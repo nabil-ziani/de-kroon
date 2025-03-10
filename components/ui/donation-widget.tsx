@@ -72,7 +72,7 @@ export default function DonationWidget() {
                         onClick={handleDonateClick}
                         className="block w-full bg-gradient-to-br from-girl/80 to-girl text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition-all duration-300"
                     >
-                        Steun vanaf €10 per maand
+                        Steun vanaf €10
                     </button>
                 </div>
             </div>
