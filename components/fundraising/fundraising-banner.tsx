@@ -3,12 +3,12 @@
 import Link from 'next/link';
 import { FaArrowRight } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
+// import { usePathname } from 'next/navigation';
 
 export default function FundraisingBanner() {
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
-    const pathname = usePathname();
+    // const pathname = usePathname();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -28,7 +28,7 @@ export default function FundraisingBanner() {
     }, [lastScrollY]);
 
     // Don't render anything on the fundraising page
-    if (pathname === '/inzameling') return null;
+    // if (pathname === '/inzameling') return null;
 
     return (
         <div

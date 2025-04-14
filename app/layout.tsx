@@ -24,7 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="nl" className={poppins.variable}>
       <body className={poppins.className}>
         <div className="fixed top-0 left-0 right-0 z-50">
-          <FundraisingBanner />
+          {/* <FundraisingBanner /> */}
           <Navbar />
         </div>
         <main>
