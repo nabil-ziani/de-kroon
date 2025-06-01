@@ -7,13 +7,11 @@ import EnrollmentModal from '@/components/dialogs/enrollment-modal';
 import DisabledTooltip from '@/components/ui/disabled-tooltip';
 import { Course } from '@prisma/client';
 import { truncateText } from '@/lib/utils';
+import { ENROLLMENTS_OPEN } from '@/constants';
 
 interface CourseListProps {
     initialCourses: Course[];
 }
-
-// Tijdelijk gesloten tot juni 2024
-const ENROLLMENTS_OPEN = false;
 
 export default function CourseList({ initialCourses }: CourseListProps) {
     const [selectedCourse, setSelectedCourse] = useState<string | null>(null);

@@ -2,9 +2,7 @@ import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { enrollmentFormSchema } from '@/utils/validation';
 import { sendEnrollmentEmail } from '@/lib/email';
-
-// Tijdelijk gesloten tot juni 2024
-const ENROLLMENTS_OPEN = false;
+import { ENROLLMENTS_OPEN } from '@/constants';
 
 export async function POST(request: Request) {
     if (!ENROLLMENTS_OPEN) {

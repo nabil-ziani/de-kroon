@@ -4,13 +4,11 @@ import { useState } from 'react';
 import { FaArrowRight } from 'react-icons/fa';
 import EnrollmentModal from '@/components/dialogs/enrollment-modal';
 import DisabledTooltip from '@/components/ui/disabled-tooltip';
+import { ENROLLMENTS_OPEN } from '@/constants';
 
 interface EnrollmentButtonProps {
     courseName: string;
 }
-
-// Tijdelijk gesloten tot juni 2024
-const ENROLLMENTS_OPEN = false;
 
 export default function EnrollmentButton({ courseName }: EnrollmentButtonProps) {
     const [isModalOpen, setIsModalOpen] = useState(false);
