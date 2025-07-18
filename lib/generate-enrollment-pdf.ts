@@ -3,57 +3,64 @@ import { EnrollmentFormData } from '@/utils/validation';
 import path from 'path';
 
 export async function generateEnrollmentPDF(data: EnrollmentFormData): Promise<Buffer> {
-    return new Promise((resolve) => {
-        const doc = new PDFDocument({
-            size: 'A4',
-            margins: {
-                top: 20,
-                bottom: 50,
-                left: 50,
-                right: 50
-            },
-            autoFirstPage: true,
-            font: undefined
-        });
+    // Validate that we have previous experience data
+    if (!data.previousExperience) {
+        throw new Error('No previous experience data provided for PDF generation');
+    }
 
-        // Register Poppins fonts
-        doc.registerFont('Poppins', path.join(process.cwd(), 'public/fonts/Poppins-Regular.ttf'));
-        doc.registerFont('Poppins-Bold', path.join(process.cwd(), 'public/fonts/Poppins-Bold.ttf'));
+    return new Promise((resolve, reject) => {
+        try {
+            const doc = new PDFDocument({
+                size: 'A4',
+                margins: {
+                    top: 20,
+                    bottom: 50,
+                    left: 50,
+                    right: 50
+                },
+                autoFirstPage: true
+            });
 
-        // Set default font immediately after registration
-        doc.font('Poppins').fontSize(10);
+            // Use built-in fonts to avoid production issues
+            // PDFKit will use Helvetica by default, which is available in all environments
+            doc.fontSize(10);
 
-        // Collect the PDF chunks
-        const chunks: Uint8Array[] = [];
-        doc.on('data', (chunk: Uint8Array) => chunks.push(chunk));
-        doc.on('end', () => resolve(Buffer.from(Buffer.concat(chunks))));
+            // Collect the PDF chunks
+            const chunks: Uint8Array[] = [];
+            doc.on('data', (chunk: Uint8Array) => chunks.push(chunk));
+            doc.on('end', () => resolve(Buffer.from(Buffer.concat(chunks))));
+            doc.on('error', (error) => reject(error));
 
-        // Calculate center position for logo
-        const pageWidth = doc.page.width - doc.page.margins.left - doc.page.margins.right;
-        const logoWidth = 200;
-        const logoX = doc.page.margins.left + (pageWidth - logoWidth) / 2;
+            // Calculate center position for logo
+            const pageWidth = doc.page.width - doc.page.margins.left - doc.page.margins.right;
+            const logoWidth = 200;
+            const logoX = doc.page.margins.left + (pageWidth - logoWidth) / 2;
 
-        // Add logo
-        const logoPath = path.join(process.cwd(), 'public', 'logo-2.png');
-        doc.image(logoPath, logoX, doc.page.margins.top, {
-            fit: [200, 100]
-        });
+            // Add logo (only if it exists)
+            try {
+                const logoPath = path.join(process.cwd(), 'public', 'logo-2.png');
+                doc.image(logoPath, logoX, doc.page.margins.top, {
+                    fit: [200, 100]
+                });
+            } catch (error) {
+                console.warn('Logo not found, continuing without logo');
+            }
 
-        doc.moveDown(5);
+            doc.moveDown(5);
 
-        // Title and student info
-        doc.fontSize(20)
-            .font('Poppins-Bold')
-            .text('Resultaten Instaptest', { align: 'center' });
+            // Title and student info
+            doc.fontSize(20)
+                .font('Helvetica-Bold')
+                .text('Resultaten Instaptest', { align: 'center' });
 
-        doc.moveDown();
+            doc.moveDown();
 
-        doc.fontSize(12)
-            .font('Poppins')
-            .text(`Student: ${data.childName}`, { align: 'center' })
-            .text(`Datum: ${new Date().toLocaleDateString('nl-BE')}`, { align: 'center' });
+            doc.fontSize(12)
+                .font('Helvetica')
+                .text(`Student: ${data.childName}`, { align: 'center' })
+                .text(`Datum: ${new Date().toLocaleDateString('nl-BE')}`, { align: 'center' });
 
-        doc.moveDown();
+            doc.moveDown();
 
         if (data.previousExperience) {
             // Reading Skills Section
@@ -104,22 +111,25 @@ export async function generateEnrollmentPDF(data: EnrollmentFormData): Promise<B
             ]);
         }
 
-        doc.end();
+            doc.end();
+        } catch (error) {
+            reject(error);
+        }
     });
 }
 
 function addSection(doc: typeof PDFDocument, title: string, items: Array<{ question: string, answer?: boolean, value?: string }>) {
     doc.moveDown()
         .fontSize(15)
-        .font('Poppins-Bold')
+        .font('Helvetica-Bold')
         .text(title)
         .moveDown();
 
     items.forEach(item => {
         doc.fontSize(10)
-            .font('Poppins-Bold')
+            .font('Helvetica-Bold')
             .text(item.question)
-            .font('Poppins');
+            .font('Helvetica');
 
         doc.moveDown(0.5);
 

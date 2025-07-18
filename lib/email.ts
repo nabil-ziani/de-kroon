@@ -42,8 +42,26 @@ export async function sendContactEmail(data: ContactFormData) {
 
 export async function sendEnrollmentEmail(data: EnrollmentFormData) {
     try {
-        // Generate PDF
-        const pdfBuffer = await generateEnrollmentPDF(data);
+        // Only generate PDF if there's previous experience data
+        let pdfBuffer: Buffer | undefined;
+        if (data.previousExperience) {
+            try {
+                pdfBuffer = await generateEnrollmentPDF(data);
+            } catch (pdfError) {
+                console.error('Error generating PDF:', pdfError);
+                // Continue without PDF if generation fails
+                pdfBuffer = undefined;
+            }
+        }
+
+        // Prepare attachments
+        const attachments = [];
+        if (pdfBuffer) {
+            attachments.push({
+                filename: `inschrijving-${data.childName.toLowerCase().replace(/\s+/g, '-')}.pdf`,
+                content: pdfBuffer
+            });
+        }
 
         // Send email to admin
         await resend.emails.send({
@@ -51,12 +69,7 @@ export async function sendEnrollmentEmail(data: EnrollmentFormData) {
             to: ADMIN_EMAIL,
             subject: `Nieuwe inschrijving voor ${data.courseName}`,
             react: EnrollmentEmail({ data }),
-            attachments: [
-                {
-                    filename: `inschrijving-${data.childName.toLowerCase().replace(/\s+/g, '-')}.pdf`,
-                    content: pdfBuffer
-                }
-            ]
+            attachments: attachments.length > 0 ? attachments : undefined
         });
 
         // Bevestigingsmail naar beide ouders
