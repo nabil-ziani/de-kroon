@@ -7,7 +7,7 @@ import { ENROLLMENTS_OPEN } from '@/constants';
 export async function POST(request: Request) {
     if (!ENROLLMENTS_OPEN) {
         return NextResponse.json(
-            { success: false, message: 'Inschrijvingen zijn momenteel gesloten. Nieuwe inschrijvingen zijn mogelijk vanaf juni 2024.' },
+            { success: false, message: 'Inschrijvingen zijn gesloten.' },
             { status: 403 }
         );
     }

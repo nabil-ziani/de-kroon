@@ -8,7 +8,7 @@ interface DisabledTooltipProps {
     message?: string;
 }
 
-export default function DisabledTooltip({ children, message = 'Inschrijvingen zijn momenteel gesloten. Nieuwe inschrijvingen zijn mogelijk vanaf juni 2025.' }: DisabledTooltipProps) {
+export default function DisabledTooltip({ children, message = 'Inschrijvingen zijn gesloten.' }: DisabledTooltipProps) {
     return (
         <Tooltip.Provider delayDuration={100}>
             <Tooltip.Root>
